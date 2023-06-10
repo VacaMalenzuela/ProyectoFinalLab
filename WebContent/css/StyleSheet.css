@@ -1,4 +1,4 @@
-table {
+/*table {
     border-collapse: collapse;
     width: 100%;
 	}
@@ -25,7 +25,7 @@ tr:nth-child(even)
 	{
 		background-color:#D6DFE6;
 		width:23%;
-		height:450px;
+		height:800px;
 		float:left
 	}
 
@@ -33,7 +33,7 @@ tr:nth-child(even)
 	{
 	 	background-color:white;
 	 	width:58%;
-	 	height:400px;
+	 	height:800px;
 	 	float:left;
 	 	padding: 30px;
 	}
@@ -87,3 +87,118 @@ tr:nth-child(even)
 	span{
 		margin-right:15px;
 	}
+*/
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;	
+}
+
+body{
+	background-image: url('./css/fondo1.jpg');
+	font-family: 'calibri';
+	min-height: 100vh;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+
+.form-r{
+	position: relative;
+	max-width: 900px;
+	width:100%;
+	border-radius: 6px;
+	padding: 30px;
+	margin: 0 15px;
+	background: #24303c;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+	color: white;
+}
+
+.form-r h4{
+ 	font-size: 25px;
+ 	font-weight: 600;
+ 	/*margin-bottom: 20px;	*/
+}
+
+.form-r form{
+	position: relative;
+	min-height:400px;
+	background: #24303c;
+	margin-top: 16px;
+}
+
+.form-r form .fila {
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	/*font-size: 15px;
+	padding: 10px;
+	width: 100%;
+	border: 1px solid #1f53c5;
+	border-radius: 4px;*/
+}
+
+form .fila .input-fila{
+	display: flex;
+	flex-direction: column;
+	width: calc(100% / 3 - 15px);
+	margin: 4px 0;	
+}
+
+.input-fila input{
+	outline: none;
+	border: 1px solid #333;
+	border-radius: 5px;
+	height: 42px;
+	margin: 8px 0;
+	padding: 0 15px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #333;
+}
+
+.input-fila select{
+	outline: none;
+	border: 1px solid #333;
+	border-radius: 5px;
+	height: 42px;
+	margin: 8px 0;
+	padding: 0 15px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #333;
+}
+
+.input-fila input[type="date"]{
+	color: black;
+}
+
+.input-fila input[type="date"]:valid{
+	color: white;
+}
+
+.input-fila label{
+	font-size: 12px;
+	font-weight: 500;
+	color: white;
+}
+
+.boton{
+	width: 50%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 15px 0;
+	font-size: 16px;
+	border: 1px solid #1f53c5;
+	border-radius: 4px;
+} 
+
+.boton:hover{
+	font-size:17px;
+	border: 1.5px solid white;
+}
