@@ -32,9 +32,10 @@
 				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni">
           	</div>
           	
-          	<div class="input-fila">
+          <div class="input-fila">
           		<label for="mail">Sexo</label>
-				<select id=sexo placeholder="Elegir Sexo" required name="sexo"> 
+				<select id=sexo required name="sexo"> 
+					<option disabled selected>Selecciona un Sexo</option> 
 					<option value= "hombre">Hombre</option>
 					<option value= "mujer">Mujer</option>
 				</select>
@@ -42,7 +43,8 @@
           	
           	<div class="input-fila">
           		<label for="nacionalidad">Nacionalidad</label>
-				<select id=nacionalidad placeholder="Elegir Nacionalidad" required name="nacionalidad"> 
+				<select id=nacionalidad required name="nacionalidad"> 
+				<option disabled selected>Selecciona una Nacionalidad</option>  
 				</select>
           	</div>
           	
@@ -57,15 +59,17 @@
           	</div>
           	
           	<div class="input-fila">
-          		<label for="mail">Localidad</label>
-				<select id=localidad placeholder="Elegir Localidad" required name="Slocalidad"> 
-            	</select>
-          	</div>
-          	
-          	<div class="input-fila">
           		<label for="mail">Provincia</label>
-				<select id=provincia placeholder="Elegir Provincia" required name="Sprovincia"> 
+				<select id=provincia required name="Sprovincia"> 
+				<option disabled selected>Selecciona una Provincia</option> 
 				</select>
+          	</div>
+       	
+          	<div class="input-fila">
+          		<label for="mail">Localidad</label>
+				<select id=localidad required name="Slocalidad">
+				<option disabled selected>Selecciona una Localidad</option>  
+            	</select>
           	</div>
           	
           	<div class="input-fila">

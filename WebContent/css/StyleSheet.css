@@ -173,7 +173,7 @@ form .fila .input-fila{
 }
 
 .input-fila input[type="date"]{
-	color: black;
+	color: #333;
 }
 
 .input-fila input[type="date"]:valid{
@@ -181,7 +181,7 @@ form .fila .input-fila{
 }
 
 .input-fila label{
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 500;
 	color: white;
 }
@@ -259,11 +259,11 @@ form .input-t{
 }
 
 .input-t input[type="date"]{
-	color: black;
+	color: #333;
 }
 
 .input-t input[type="date"]:valid{
-	color: white;
+	color: #300;
 }
 
 .input-t label{

@@ -17,12 +17,13 @@
  	<form method="post" action="ServletHTML">
  		<div class="input-t">
  			<label for="especialidad">Especialidad</label>
-			<select id=especialidad placeholder="Elegir Especialidad" required name="Sespecialidad"> 
+			<select id=especialidad required name="Sespecialidad">
+			<option disabled selected>Selecciona una Especialidad</option> 
 			</select>
  		</div>
  		<div class="input-t">
- 			<label for="medico">Nombre Medico</label>
-			<input id=medico type="search" name="BusquedaMedico" required name="medico"></input>
+ 			<label for="medico">Buscar Medico</label>
+			<input id=medico type="search" placeholder="Ingrese nombre del Medico"  name="BusquedaMedico" required name="medico"></input>
  		</div>
  		<div class="input-t">
  			<label for="fechaTurno">Fecha del turno</label>
@@ -33,8 +34,8 @@
 			<input id=horaTurno type="time" name="Hora" required name="horaTurno"></input>
  		</div>
  		<div class="input-t">
- 			<label for="paciente">DNI Paciente</label>
-			<input id=paciente type="search" name="BusquedaPaciente" required name="paciente"></input>
+ 			<label for="paciente">Busqueda Paciente</label>
+			<input id=paciente type="search" placeholder="Ingrese DNI del paciente"  name="BusquedaPaciente" required name="paciente"></input>
  		</div>
  		
  		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar" required name="btnGuardarTurno">
