@@ -83,7 +83,7 @@
           	
           </div>
           
-       		<input class="boton" id="btnGuardar" type="submit" value="Guardar" required name="btnGuardarPaciente">
+       		<input class="boton" id="btnGuardarPaciente" type="submit" value="Guardar" required name="btnGuardarPaciente">
     </form>
 </div>                
 

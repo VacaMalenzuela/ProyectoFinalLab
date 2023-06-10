@@ -101,9 +101,7 @@
           	
           </div>
           
-          <p>
-       		<input class="boton" id="btnGuardar" type="submit" value="Guardar" required name="btnGuardarPaciente">
-      	</p>
+       		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar" required name="btnGuardarMedico">
     </form>
 </div>                
 </body>
