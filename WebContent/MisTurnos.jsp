@@ -7,27 +7,20 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
+		.etiquetaA {
+	color:white;
+	text-decoration: none;
+  background-color: #909497;
+  padding:5px;
+  border-radius: 5px; 
+  font-size: 16px;
+}
 </style>
-<title>Login</title>
+<title>Insert title here</title>
 </head>
 <body>
-<div class="form-login" >
-	<h2>INGRESAR</h2>
-	
- 	<form method="post" action="ServletHTML">
-
- 		<div class="login">
-				<input id=usuarioLogin type="text" maxlenght="15" placeholder="Usuario" required name="txtUsuario">
-          	</div>
-          	
-          	<div class="input-t">
-				<input id=contrasenaLogin type="password" maxlenght="15" placeholder="Contraseña" required name="txtContrasena">
-          	</div>
-
- 		
- 		<input class="boton" id="btnIngresar" type="submit" value="Ingresar" required name="btnIngresar">
- 		<a href="MenuPrincipal.jsp">Ingresar</a>
- 		
- 	</form>
+<div style="width:100%; height:400px; text-align:center;">
+<h2>Mis turnos</h2>
+</div>
 </body>
 </html>
