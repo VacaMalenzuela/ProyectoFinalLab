@@ -7,25 +7,71 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
-		.etiquetaA {
-	color:white;
-	text-decoration: none;
-  background-color: #909497;
-  padding:5px;
-  border-radius: 5px; 
-  font-size: 16px;
-}
 </style>
-<title>Insert title here</title>
+<title>Administrar Pacientes</title>
 </head>
 <body>
-<div style="padding-bottom:500px;"> 
-<h1>Administrar Pacientes</h1>
-</div>
+<div class=adm>
+	
+	 	<h2>Administrar Pacientes</h2>
+		
+		<form method="post" action="ServletHTML">
 
-<div style="text-align:rigth; padding-bottom:370px;"> 
-<br><br>
-	<a href="NuevoPaciente.jsp" class="etiquetaA">Nuevo Paciente</a>
-</div>
+			<div class="fila">
+	          	<div class="input-fila">
+		          	<label for="BuscarPaciente">Buscar Paciente</label>
+					<input id=BuscarPaciente type="search" placeholder="Buscar"  name="Busqueda" required name="buscarPaciente"></input>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="Provincia">Provincia</label>
+					<select id=Provincia required name="SProvincia">
+					<option disabled selected>Filtrar por Provincia</option> 
+					</select>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+					<label for="fechaNac">Filtrar pot fecha de nacimiento</label>
+					<input id=fechaNac type="date" required name="fechaNac">
+	          	</div>
+ 	
+          	</div>
+			
+			<table class="tabla">
+				<thead>
+					<tr>
+			     		<th>APELLIDO</th>
+			     		<th>NOMBRE</th>
+			     		 <th>DNI</th>
+			     		 <th>CORREO ELECTRONICO</th>
+			     		 <th>TELEFONO</th>
+			     		 <th>NACIONALIDAD</th>
+			     		 <th>FECHA DE NACIMIENTO</th>
+			     		 <th>SEXO</th>
+			     		 <th>MODIFICAR</th> 
+			     		 <th>ELIMINAR</th>
+		     		</tr>
+				</thead>
+					
+				<tbody>
+					<tr>
+			     		<th>Perez</th>
+			     		<th>Juan</th>
+			     		 <th>11.111.111</th>
+			     		<th>jperez@gmail.com</th>
+			     		 <th>1156998574</th>
+			     		 <th>Argentino</th>
+			     		 <th>15/10/2003</th>
+			     		 <th>Hombre</th>
+			     		 <th><input class="botonTabla" id="btnModificarMedico" type="submit" value="Modificar"></th> 
+			     		 <th><input class="botonTabla" id="btnEliminarMedico" type="submit" value="Eliminar"></th>
+			     	</tr>
+				</tbody>
+
+		     	</table>
+		     	
+		     	<input class="botonAdm" id="btnNuevoPaciente" type="submit" value="Nuevo Paciente">
+	     	</form>	
+	</div>
 </body>
 </html>

@@ -7,22 +7,14 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
-	.etiquetaA {
-	color:white;
-	text-decoration: none;
-  background-color: #2980B9;
-  padding:5px;
-  border-radius: 5px; 
-  font-size: 16px;
-}
 </style>
-<title>Insert title here</title>
+<title>Inicio</title>
 </head>
 <body>
 <div> 
 
 <div class="form-r" >
-<h1 style="text-align:center;">Clinina Médica</h1>
+<h1 style="text-align:center;">Clinica Médica</h1>
 </div>
 <br><br>
 <div> 

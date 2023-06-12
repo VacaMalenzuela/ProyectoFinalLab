@@ -7,35 +7,69 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
-		.etiquetaA {
-	color:white;
-	text-decoration: none;
-  background-color: #909497;
-  padding:5px;
-  border-radius: 5px; 
-  font-size: 16px;
-}
 </style>
-<title>Insert title here</title>
+<title>Administrar Medicos</title>
 </head>
 <body>
-<div style="width:100%; height:400px; text-align:center;"> 
-<h1>Administrar Medicos</h1>
-</div>
 
-<div style="text-align:rigth;height:210px; width:210px;"> 
-<br><br>
-	<a href="NuevoMedico.jsp" class="etiquetaA">Nuevo Medico</a>
-</div>
-<div> 
-<table border="1">
-     <tr>
-     	<th>NOMBRE</th> <th>APELLIDO</th> <th>Modif.</th> <th>Eliminar</th>
-     </tr>
-     <tr>
-     	<td> pepito </td>   <td>pepito </td>  <td> Modificar</td>   <td> Eliminar</td> 
-     </tr>
-     </table>
-</div>
+	<div class=adm>
+	
+	 	<h2>Administrar Médicos</h2>
+		
+		<form method="post" action="ServletHTML">
+
+			<div class="fila">
+	          	<div class="input-fila">
+		          	<label for="buscarTurno">Buscar turno</label>
+					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda" required name="buscarTurno"></input>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="especialidad">Filtrar por especialidad</label>
+					<select id=especialidad required name="Sespecialidad">
+					<option disabled selected>Elegir especialidad</option> 
+					</select>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="provincia">Filtrar por provincia</label>
+					<select id=provincia required name="Sprovincia">
+					<option disabled selected>Elegir provincia</option> 
+					</select>
+	          	</div>
+ 	
+          	</div>
+			
+			<table class="tabla">
+				<thead>
+					<tr>
+			     		<th>APELLIDO</th>
+			     		<th>NOMBRE</th>
+			     		 <th>DNI</th>
+			     		 <th>ESPECIALIDAD</th>
+			     		 <th>TELEFONO</th>
+			     		 <th>MODIFICAR</th> 
+			     		 <th>ELIMINAR</th>
+		     		</tr>
+				</thead>
+					
+				<tbody>
+					<tr>
+			     		<th>Perez</th>
+			     		<th>Juan</th>
+			     		 <th>11.111.111</th>
+			     		 <th>Odontologo</th>
+			     		 <th>1234563789</th>
+			     		 <th><input class="botonTabla" id="btnModificarMedico" type="submit" value="Modificar"></th> 
+			     		 <th><input class="botonTabla" id="btnEliminarMedico" type="submit" value="Eliminar"></th>
+			     	</tr>
+				</tbody>
+
+		     	</table>
+		     	
+		     	<input class="botonAdm" id="btnNuevoMedico" type="submit" value="Nuevo Medico">
+	     	</form>	
+	</div>
+	
 </body>
 </html>

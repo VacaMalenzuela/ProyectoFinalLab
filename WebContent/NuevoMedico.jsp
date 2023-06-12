@@ -32,7 +32,7 @@
 				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni">
           	</div>
 
-          	<div class="input-fila">
+          	<div class="input-fila">	
           		<label for="mail">Sexo</label>
 				<select id=sexo required name="sexo"> 
 					<option disabled selected>Selecciona un Sexo</option> 
@@ -106,7 +106,7 @@
           	
           </div>
           
-       		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar" required name="btnGuardarMedico">
+       		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar">
     </form>
 </div>                
 </body>

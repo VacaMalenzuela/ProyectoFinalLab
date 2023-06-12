@@ -7,20 +7,71 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
-		.etiquetaA {
-	color:white;
-	text-decoration: none;
-  background-color: #909497;
-  padding:5px;
-  border-radius: 5px; 
-  font-size: 16px;
-}
 </style>
-<title>Insert title here</title>
+<title>Administrar turnos</title>
 </head>
 <body>
-<div style="width:100%; height:400px; text-align:center;">
-<h2>Mis turnos</h2>
-</div>
+	<div class=adm>
+	
+	 	<h2>Administrar Turnos</h2>
+		
+		<form method="post" action="ServletHTML">
+
+			<div class="fila">
+	          	<div class="input-fila">
+		          	<label for="fechaTurno">Buscar Turno</label>
+					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda" required name="buscarTurno"></input>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="estado">Estado</label>
+					<select id=estado required name="Sestado">
+					<option disabled selected>Filtrar por estado</option> 
+					</select>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+					<label for="fechaTurno">Fecha del turno</label>
+					<input id=fechaTurno type="date" required name="fechaTurno">
+	          	</div>
+ 	
+          	</div>
+			
+			<table class="tabla">
+				<thead>
+					<tr>
+			     		<th>APELLIDO PACIENTE</th>
+			     		<th>NOMBRE PACIENTE</th>
+			     		 <th>DNI PACIENTE</th>
+			     		 <th>APELLIDO MEDICO</th>
+			     		 <th>NOMBRE MEDICO</th>
+			     		 <th>ESPECIALIDAD</th>
+			     		 <th>FECHA</th>
+			     		 <th>ESTADO</th>
+			     		 <th>MODIFICAR</th> 
+			     		 <th>ELIMINAR</th>
+		     		</tr>
+				</thead>
+					
+				<tbody>
+					<tr>
+			     		<th>Perez</th>
+			     		<th>Juan</th>
+			     		 <th>11.111.111</th>
+			     		<th>Suarez</th>
+			     		 <th>Maria</th>
+			     		 <th>Odontologo</th>
+			     		 <th>15/10/2023</th>
+			     		 <th>OCUPADO</th>
+			     		 <th><input class="botonTabla" id="btnModificarMedico" type="submit" value="Modificar"></th> 
+			     		 <th><input class="botonTabla" id="btnEliminarMedico" type="submit" value="Eliminar"></th>
+			     	</tr>
+				</tbody>
+
+		     	</table>
+		     	
+		     	<input class="botonAdm" id="btnNuevoTurno" type="submit" value="Nuevo Turno">
+	     	</form>	
+	</div>
 </body>
 </html>

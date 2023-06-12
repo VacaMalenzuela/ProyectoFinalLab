@@ -17,15 +17,15 @@
  	<form method="post" action="ServletHTML">
 
  		<div class="login">
-				<input id=usuarioLogin type="text" maxlenght="15" placeholder="Usuario" required name="txtUsuario">
+				<input id=usuarioLogin type="text" maxlenght="15" placeholder="Usuario">
           	</div>
           	
           	<div class="input-t">
-				<input id=contrasenaLogin type="password" maxlenght="15" placeholder="Contraseña" required name="txtContrasena">
+				<input id=contrasenaLogin type="password" maxlenght="15" placeholder="Contraseña">
           	</div>
 
  		
- 		<input class="boton" id="btnIngresar" type="submit" value="Ingresar" required name="btnIngresar">
+ 		<input class="boton" id="btnIngresar" type="submit" value="Ingresar">
  		<a href="MenuPrincipal.jsp">Ingresar</a>
  		
  	</form>
