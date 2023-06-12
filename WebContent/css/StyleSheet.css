@@ -20,7 +20,6 @@ body{
 	background-image: url('./css/fondo1.jpg');
 	font-family: 'calibri';
 	min-height: 100vh;
-	display: flex;
 	align-items:center;
 	justify-content: center;
 }
@@ -31,7 +30,7 @@ body{
 	width:100%;
 	border-radius: 6px;
 	padding: 30px;
-	margin: 0 15px;
+	margin: 50px 200px;
 	background: #24303c;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 	color: white;
@@ -130,7 +129,7 @@ form .fila .input-fila{
 	width:100%;
 	border-radius: 6px;
 	padding: 30px;
-	margin: 0 15px;
+	margin: 50px 200px;
 	background: #24303c;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 	color: white;
@@ -194,12 +193,12 @@ form .input-t{
 }
 
 .form-login{
-	position: relative;
+	position: absolute;
 	max-width: 300px;
 	width:100%;
 	border-radius: 6px;
 	padding: 30px;
-	margin: 0 15px;
+	margin: 10% 40%;
 	background: #24303c;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 	color: white;
@@ -368,4 +367,43 @@ form .fila .input-fila{
 .botonAdm:hover{
 	font-size:17px;
 	border: 1.5px solid green;
+}
+
+header {
+	width:100%;
+	height: 80px;
+	background: #24303c;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 100px;
+}
+
+.logo{
+	font-size: 28px;
+	font-weight: bold;
+	color: #fefefe;
+}
+
+.hamburger {
+	display: none;
+}
+
+.nav-bar ul {
+	display: flex;
+}
+
+.nav-bar ul li a {
+	display: block;
+	color: #fefefe;
+	font-size: 20px;
+	padding: 10px 25px;
+	border-radius: 50px;
+	transition: 0.2s;
+	margin: 0 5px;
+}
+
+.nav-bar ul li a:hover{
+	color: #24303c;
+	background: #fefefe;
 }

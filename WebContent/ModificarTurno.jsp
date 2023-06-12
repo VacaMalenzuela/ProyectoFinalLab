@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="form-t" >
-	<h2>MODIFICAFR TURNO</h2>
+	<h2>MODIFICAR TURNO</h2>
 	
  	<form method="post" action="ServletHTML">
  		<div class="input-t">

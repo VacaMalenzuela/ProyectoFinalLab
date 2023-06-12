@@ -26,7 +26,6 @@
 
  		
  		<input class="boton" id="btnIngresar" type="submit" value="Ingresar">
- 		<a href="MenuPrincipal.jsp">Ingresar</a>
  		
  	</form>
 </body>

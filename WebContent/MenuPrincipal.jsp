@@ -11,18 +11,31 @@
 <title>Inicio</title>
 </head>
 <body>
-<div> 
-
-<div class="form-r" >
-<h1 style="text-align:center;">Clinica Médica</h1>
-</div>
-<br><br>
-<div> 
-<a href="MenuMedico.jsp" class="etiquetaA">Administrar Medico</a>
-<a href="MenuPaciente.jsp" class="etiquetaA">Administrar Paciente</a>
-<a href="AsignacionTurno.jsp" class="etiquetaA">Asignacion de Turnos</a>
-
-</div>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
 	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="" class="active">Turnos</a>
+			</li>
+			<li>
+				<a href="" class="active">Medicos</a>
+			</li>
+			<li>
+				<a href="" class="active">Pacientes</a>
+			</li>
+			<li>
+				<a href="" class="active">Usuarios</a>
+			</li>
+		</ul>
+	</nav>	
+</header>	
+
+
 </body>
 </html>
