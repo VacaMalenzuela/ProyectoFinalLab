@@ -1,3 +1,10 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dominio.Nacionalidad" %>
+<%@ page import="negocio.NacionalidadDao" %>
+<%@ page import="negocio.ProvinciaDao" %>
+<%@ page import="dominio.Provincia" %>
+<%@ page import="negocio.LocalidadDao" %>
+<%@ page import="dominio.Localidad" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,7 +21,7 @@
 <div class="form-r" >
 	<h2>AGREGAR NUEVO PACIENTE</h2>
 	
- <form method="post" action="ServletHTML">
+ <form method="get" action="ServletPaciente">
 
           <div class="fila">
           	<div class="input-fila">
@@ -44,7 +51,14 @@
           	<div class="input-fila">
           		<label for="nacionalidad">Nacionalidad</label>
 				<select id=nacionalidad required name="nacionalidad"> 
-				<option disabled selected>Selecciona una Nacionalidad</option>  
+				<% ArrayList<Nacionalidad> listaNac = new ArrayList<Nacionalidad> ();
+          				NacionalidadDao nacNegocio = new NacionalidadDao ();
+          				listaNac = nacNegocio.obtenerNacionalidades();
+          				if(listaNac != null){ 	
+				for (Nacionalidad objeto : listaNac) { %>
+    			<option value="<%=objeto.getId()%>"> <%=objeto.getNacionalidad()%></option>
+  <% } }%> 
+				<option disabled selected>Selecciona una Provincia</option> 
 				</select>
           	</div>
           	
@@ -61,6 +75,13 @@
           	<div class="input-fila">
           		<label for="mail">Provincia</label>
 				<select id=provincia required name="Sprovincia"> 
+						<% ArrayList<Provincia> listaProv = new ArrayList<Provincia>();
+          				ProvinciaDao provNegocio = new ProvinciaDao ();
+          				listaProv = provNegocio.obtenerProvincias();
+          				if(listaProv != null){ 	
+				for (Provincia objeto : listaProv) { %>
+    			<option value="<%=objeto.getId()%>"> <%=objeto.getProvincia()%></option>
+  <% } }%> 
 				<option disabled selected>Selecciona una Provincia</option> 
 				</select>
           	</div>
@@ -68,6 +89,13 @@
           	<div class="input-fila">
           		<label for="mail">Localidad</label>
 				<select id=localidad required name="Slocalidad">
+										<% ArrayList<Localidad> listaLoc = new ArrayList<Localidad>();
+          				LocalidadDao localidadNegocio = new LocalidadDao ();
+          				listaLoc = localidadNegocio.obtenerLocalidades();
+          				if(listaLoc != null){ 	
+				for (Localidad objeto : listaLoc) { %>
+    			<option value="<%=objeto.getId()%>"> <%=objeto.getLocalidad()%></option>
+  <% } }%> 
 				<option disabled selected>Selecciona una Localidad</option>  
             	</select>
           	</div>
@@ -89,6 +117,22 @@
           
        		<input class="boton" id="btnGuardarPaciente" type="submit" value="Guardar" required name="btnGuardarPaciente">
     </form>
+    
+<% int filas=0;
+if(request.getAttribute("seGuardo") != null){
+	  filas = Integer.parseInt(request.getAttribute("seGuardo").toString());
+}
+%>
+
+
+<% if(request.getAttribute("seGuardo") != null && filas == 0){ %>
+	Los campos ingresados no son correctos.
+	
+<%}%>
+<%if(filas!=0){ %>
+	Usuario agregado correctamente.
+<%}%>
+    
 </div>                
 
 </body>

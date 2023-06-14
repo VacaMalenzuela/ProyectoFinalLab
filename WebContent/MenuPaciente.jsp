@@ -70,7 +70,20 @@
 
 		     	</table>
 		     	
-		     	<input class="botonAdm" id="btnNuevoPaciente" type="submit" value="Nuevo Paciente">
+		     	<br><br>
+		     		<a href="NuevoPaciente.jsp" style="	width: 150px;
+					background: black;
+					border: none;
+					padding: 12px;
+					color: white;
+					margin: 15px 0;
+					font-size: 16px;
+					border: 1px solid black;
+					border-radius: 4px; text-decoration:none;">Nuevo Paciente</a>
+		 
+		     	
+		     	
+		     	
 	     	</form>	
 	</div>
 </body>
