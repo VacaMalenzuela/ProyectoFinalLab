@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -31,9 +32,32 @@ public class ServletPaciente extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Paciente objpaciente = new Paciente();
+		if(request.getParameter("btnModificarPaciente")!= null) {
+			pacienteDao pacDao = new pacienteDao();
+			
+			objpaciente = pacDao.obtenerPacientePorDni(request.getParameter("btnModificarPaciente"));
+			String valor = "Paciente";
 		
+		}
+		
+		if(request.getParameter("btnModificarPaciente")!= null) {
+			
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
+			rd.forward(request, response);
+		}
+		 		 
+	}
+	
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int seGuardo =0;
 		try {
+			
+			
 			if(request.getParameter("btnGuardarPaciente") != null){
 
 				Paciente pac = new Paciente(); 
@@ -64,7 +88,8 @@ public class ServletPaciente extends HttpServlet {
 				request.setAttribute("seGuardo", seGuardo);
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
 				rd.forward(request, response);
-			}		
+			}
+			
 
 		}
 		catch(Exception ex) {
@@ -73,12 +98,7 @@ public class ServletPaciente extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
 			rd.forward(request, response);
 		}
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

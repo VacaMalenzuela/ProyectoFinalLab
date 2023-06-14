@@ -7,7 +7,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import dominio.Localidad;
+import dominio.Nacionalidad;
 import dominio.Paciente;
+import dominio.Provincia;
+
 public class pacienteDao {
 	private String host = "jdbc:mysql://localhost:3306/";
 	private String user = "root";
@@ -40,5 +44,107 @@ public class pacienteDao {
 		}
 		return filas;
 	
+	}
+	
+	
+	
+	public ArrayList<Paciente> obtenerPacientes() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ArrayList<Paciente> lista = new ArrayList<Paciente>();
+		Connection conn = null;
+		try{
+			conn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = conn.createStatement();
+			
+			ResultSet rs = st.executeQuery("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES");
+			
+			while(rs.next()){
+				
+				Paciente paciente = new Paciente();
+				paciente.setDni(rs.getString("Dni"));
+				paciente.setNombre(rs.getString("Nombre"));
+				paciente.setApellido(rs.getString("Apellido"));
+				paciente.setSexo(rs.getString("Sexo"));
+				paciente.setFechaNacimiento(rs.getString("FechaNacimiento"));
+				paciente.setDireccion(rs.getString("Direccion"));
+				paciente.setCorreoElectronico(rs.getString("CorreoElectronico"));
+				paciente.setTelefono(rs.getString("Telefono"));
+				
+				NacionalidadDao nacDao = new NacionalidadDao(); 
+				Nacionalidad nac= nacDao.obtenerNacionalidadPorId(rs.getInt("idNacionalidad"));
+				paciente.setNacionalidad(nac);
+				
+				LocalidadDao locDao = new LocalidadDao(); 
+				Localidad loc= locDao.obtenerLocalidadPorId(rs.getInt("idLocalidad"));
+				paciente.setLocalidad(loc);
+				
+				ProvinciaDao provDao = new ProvinciaDao(); 
+				Provincia prov= provDao.obtenerProvinciaPorId(rs.getInt("idProvincia"));
+				paciente.setProvincia(prov);
+				
+				lista.add(paciente);
+			}
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+		
+		}
+		
+		return lista;
+	}
+	
+	
+	
+	public Paciente obtenerPacientePorDni(String id)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Paciente pac = new Paciente();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES where Dni = ? ");
+			miSentencia.setString(1, id); //Cargo el ID recibido
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			pac.setDni(resultado.getString(1));
+			pac.setNombre(resultado.getString(2));
+			pac.setApellido(resultado.getString(3));
+			pac.setSexo(resultado.getString(4));
+				NacionalidadDao nacDao = new NacionalidadDao(); 
+				Nacionalidad nac = nacDao.obtenerNacionalidadPorId(resultado.getInt(5));
+				pac.setNacionalidad(nac);
+			pac.setFechaNacimiento(resultado.getString(6));
+			pac.setDireccion(resultado.getString(7));
+				LocalidadDao locDao = new LocalidadDao();
+				Localidad loc = locDao.obtenerLocalidadPorId(resultado.getInt(8));
+				pac.setLocalidad(loc);
+				ProvinciaDao provDao = new ProvinciaDao(); 
+				Provincia prov = provDao.obtenerProvinciaPorId(resultado.getInt(9));
+				pac.setProvincia(prov);
+			pac.setCorreoElectronico(resultado.getString(10));
+			pac.setTelefono(resultado.getString(11));
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return pac;
 	}
 }

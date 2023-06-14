@@ -1,3 +1,13 @@
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dominio.Nacionalidad" %>
+<%@ page import="negocio.NacionalidadDao" %>
+<%@ page import="negocio.ProvinciaDao" %>
+<%@ page import="dominio.Provincia" %>
+<%@ page import="negocio.LocalidadDao" %>
+<%@ page import="dominio.Localidad" %>
+<%@ page import="negocio.pacienteDao" %>
+<%@ page import="dominio.Paciente" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,7 +25,7 @@
 	
 	 	<h2>Administrar Pacientes</h2>
 		
-		<form method="post" action="ServletHTML">
+		<form method="get" action="ServletPaciente">
 
 			<div class="fila">
 	          	<div class="input-fila">
@@ -36,7 +46,11 @@
 	          	</div>
  	
           	</div>
-			
+			          <% 
+          pacienteDao traeTodos = new pacienteDao();
+     ArrayList<Paciente> lstPaciente= traeTodos.obtenerPacientes();
+  
+    %>
 			<table class="tabla">
 				<thead>
 					<tr>
@@ -54,18 +68,28 @@
 				</thead>
 					
 				<tbody>
-					<tr>
-			     		<th>Perez</th>
-			     		<th>Juan</th>
-			     		 <th>11.111.111</th>
-			     		<th>jperez@gmail.com</th>
-			     		 <th>1156998574</th>
-			     		 <th>Argentino</th>
-			     		 <th>15/10/2003</th>
-			     		 <th>Hombre</th>
-			     		 <th><input class="botonTabla" id="btnModificarMedico" type="submit" value="Modificar"></th> 
-			     		 <th><input class="botonTabla" id="btnEliminarMedico" type="submit" value="Eliminar"></th>
-			     	</tr>
+					
+						     <%
+     if (lstPaciente!=null) 
+	 for(Paciente item : lstPaciente) {%>
+     <tr>
+     	<td> <%=item.getApellido()%></td>   
+     	<td><%=item.getNombre()%> </td>  
+     	<td><%=item.getDni()%> </td> 
+     	<td> <%=item.getCorreoElectronico()%></td>   
+     	<td> <%=item.getTelefono()%></td>  
+     	<td> <%=item.getNacionalidad().getNacionalidad()%></td>
+     	<td> <%=item.getFechaNacimiento()%></td>
+     	<td> <%=item.getSexo()%></td>
+     	<th> 
+     	 
+     		<button class="botonTabla" type="submit" name="btnModificarPaciente" value="<%= item.getDni() %>">Modificar</button>
+     	</th> 
+		<th><input class="botonTabla" id="btnEliminarPaciente" name="btnEliminarPaciente" type="submit" value="Eliminar"></th>
+     </tr>
+     <%} %>
+			     		 
+			     	
 				</tbody>
 
 		     	</table>
