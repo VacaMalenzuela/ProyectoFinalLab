@@ -90,6 +90,38 @@ public class ServletPaciente extends HttpServlet {
 				rd.forward(request, response);
 			}
 			
+			if(request.getParameter("btnModificarPaciente")!= null) {
+				Paciente pac = new Paciente(); 
+				pac.setApellido(request.getParameter("txtApellido"));
+				pac.setNombre(request.getParameter("txtNombre"));
+				pac.setDni(request.getParameter("txtDni"));
+				pac.setSexo(request.getParameter("sexo"));
+					NacionalidadDao nacNegocio = new NacionalidadDao(); 
+					
+					Nacionalidad nacionalidad = nacNegocio.obtenerNacionalidadPorId(Integer.parseInt(request.getParameter("nacionalidad")));
+				pac.setNacionalidad(nacionalidad);
+				pac.setFechaNacimiento(request.getParameter("fechaNac"));
+				pac.setDireccion(request.getParameter("txtDireccion"));
+					ProvinciaDao provNegocio = new ProvinciaDao(); 
+					Provincia provincia = provNegocio.obtenerProvinciaPorId(Integer.parseInt(request.getParameter("Sprovincia")));	
+					pac.setProvincia(provincia);
+					
+					LocalidadDao locNegocio = new LocalidadDao(); 
+					Localidad loc = locNegocio.obtenerLocalidadPorId(Integer.parseInt(request.getParameter("Slocalidad")));	
+					pac.setLocalidad(loc);
+				pac.setCorreoElectronico(request.getParameter("txtEmail"));
+				pac.setTelefono(request.getParameter("txtTel"));
+				
+				
+				
+				pacienteDao pacNeg = new pacienteDao(); 
+				seGuardo = pacNeg.ActualizarPaciente(pac);
+				request.setAttribute("seGuardo", seGuardo);
+				RequestDispatcher rd = request.getRequestDispatcher("/MenuPaciente.jsp");
+				rd.forward(request, response);
+				
+			}
+			
 
 		}
 		catch(Exception ex) {

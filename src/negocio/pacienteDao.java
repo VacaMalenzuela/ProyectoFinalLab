@@ -147,4 +147,29 @@ public class pacienteDao {
 		}
 		return pac;
 	}
+	
+	public int ActualizarPaciente (Paciente pac) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query = "UPDATE PACIENTES SET NOMBRE = '"+pac.getNombre()+"', APELLIDO = '"+pac.getApellido()+"', SEXO = '"+pac.getSexo()+"', idNacionalidad= "+pac.getNacionalidad().getId()+", FECHANACIMIENTO = '"+pac.getFechaNacimiento()+"', DIRECCION = '"+pac.getDireccion()+"', IdLocalidad ="+pac.getLocalidad().getId()+", idProvincia = "+pac.getProvincia().getId()+", CorreoElectronico = '"+pac.getCorreoElectronico()+"', Telefono = '"+pac.getTelefono()+"' WHERE DNI = '"+pac.getDni()+"';";
+			filas=st.executeUpdate(query);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+	}
 }

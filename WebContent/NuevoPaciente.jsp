@@ -20,11 +20,6 @@
 <title>Nuevo paciente</title>
 </head>
 <body>
-<div class="form-r" >
-	<h2>AGREGAR NUEVO PACIENTE</h2>
-	
- <form method="post" action="ServletPaciente">
-
 <%	
 Paciente objpaciente = new Paciente();
 if(request.getParameter("btnModificarPaciente")!= null) {
@@ -32,6 +27,17 @@ if(request.getParameter("btnModificarPaciente")!= null) {
 	
 	objpaciente = pacDao.obtenerPacientePorDni(request.getParameter("btnModificarPaciente"));	
 } %>
+<div class="form-r" >
+<%if (objpaciente.getDni()!= null) { %>
+<h2>MODIFICAR PACIENTE</h2>
+<%} else {%>
+<h2>AGREGAR NUEVO PACIENTE</h2>
+<%}%>
+	
+	
+ <form method="post" action="ServletPaciente">
+
+
 
 <% if (objpaciente.getDni()!= null){ %>
 	      <div class="fila">
@@ -147,7 +153,7 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           	
           </div>
           
-       		<input class="boton" id="btnGuardarPaciente" type="submit" value="Guardar" required name="btnGuardarPaciente">
+       		<input class="boton" id="btnModificarPaciente" type="submit" value="Guardar" required name="btnModificarPaciente">
  <% } else {%>
  
  				
