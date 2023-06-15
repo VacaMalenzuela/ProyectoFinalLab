@@ -275,6 +275,9 @@ if(request.getParameter("btnModificarPaciente")!= null) {
     
     </form>
     
+    
+    
+    
 <% int filas=0;
 if(request.getAttribute("seGuardo") != null){
 	  filas = Integer.parseInt(request.getAttribute("seGuardo").toString());
@@ -290,7 +293,7 @@ if(request.getAttribute("seGuardo") != null){
 	Usuario agregado correctamente.
 <%}%>
     
-</div>                
+</div>             
 
 </body>
 </html>
