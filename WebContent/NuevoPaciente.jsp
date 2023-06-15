@@ -200,14 +200,14 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           	<div class="input-fila">
           		<label style="color:white;" for="nacionalidad">Nacionalidad</label>
           	<select id=nacionalidad required name="nacionalidad"> 
-				
+				<option disabled selected>Selecciona una nacionalidad</option>
 				<% ArrayList<Nacionalidad> listaNac = new ArrayList<Nacionalidad> ();
           				NacionalidadDao nacNegocio = new NacionalidadDao ();
           				listaNac = nacNegocio.obtenerNacionalidades();
           				if(listaNac != null){ 	
 				for (Nacionalidad objeto : listaNac) { %>
 				<option value="<%= objeto.getId() %>"> <%= objeto.getNacionalidad() %></option>
-				<option disabled selected>Selecciona una nacionalidad</option> 
+				 
   <% } }%> 
 				</select>
 
