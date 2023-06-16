@@ -27,7 +27,7 @@
 				<a href="" class="active">Medicos</a>
 			</li>
 			<li>
-				<a href="" class="active">Pacientes</a>
+				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
 			</li>
 			<li>
 				<a href="" class="active">Usuarios</a>

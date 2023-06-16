@@ -35,7 +35,7 @@ public class pacienteDao {
 		{
 			cn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = cn.createStatement();
-			String query = "Insert into Pacientes (Dni,Nombre,Apellido,Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico,Telefono) values ('"+pac.getDni()+"','"+pac.getNombre()+"','"+ pac.getApellido()+"','"+ pac.getSexo()+"',"+ pac.getNacionalidad().getId()+",'"+ pac.getFechaNacimiento()+"','"+ pac.getDireccion()+"',"+ pac.getLocalidad().getId()+","+ pac.getProvincia().getId()+",'"+ pac.getCorreoElectronico()+"','"+ pac.getTelefono()+"');";
+			String query = "Insert into Pacientes (Dni,Nombre,Apellido,Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico,Telefono, Estado) values ('"+pac.getDni()+"','"+pac.getNombre()+"','"+ pac.getApellido()+"','"+ pac.getSexo()+"',"+ pac.getNacionalidad().getId()+",'"+ pac.getFechaNacimiento()+"','"+ pac.getDireccion()+"',"+ pac.getLocalidad().getId()+","+ pac.getProvincia().getId()+",'"+ pac.getCorreoElectronico()+"','"+ pac.getTelefono()+"',1);";
 			filas=st.executeUpdate(query);
 		}
 		catch(Exception e)
@@ -61,7 +61,7 @@ public class pacienteDao {
 			conn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = conn.createStatement();
 			
-			ResultSet rs = st.executeQuery("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES");
+			ResultSet rs = st.executeQuery("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES WHERE Estado = 1");
 			
 			while(rs.next()){
 				
@@ -114,7 +114,7 @@ public class pacienteDao {
 		Connection con = null;
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES where Dni = ? ");
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Dni, Nombre,Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono FROM PACIENTES where Estado = 1 AND Dni = ? ");
 			miSentencia.setString(1, id); //Cargo el ID recibido
 			ResultSet resultado = miSentencia.executeQuery();
 			resultado.next();
@@ -164,6 +164,31 @@ public class pacienteDao {
 			cn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = cn.createStatement();
 			String query = "UPDATE PACIENTES SET NOMBRE = '"+pac.getNombre()+"', APELLIDO = '"+pac.getApellido()+"', SEXO = '"+pac.getSexo()+"', idNacionalidad= "+pac.getNacionalidad().getId()+", FECHANACIMIENTO = '"+pac.getFechaNacimiento()+"', DIRECCION = '"+pac.getDireccion()+"', IdLocalidad ="+pac.getLocalidad().getId()+", idProvincia = "+pac.getProvincia().getId()+", CorreoElectronico = '"+pac.getCorreoElectronico()+"', Telefono = '"+pac.getTelefono()+"' WHERE DNI = '"+pac.getDni()+"';";
+			filas=st.executeUpdate(query);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+	}
+	
+	public int EliminarPaciente (String Dni) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query = "UPDATE PACIENTES SET ESTADO = 0 WHERE DNI="+Dni+";";
 			filas=st.executeUpdate(query);
 		}
 		catch(Exception e)

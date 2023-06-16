@@ -85,7 +85,7 @@
      	 
      		<button class="botonTabla" type="submit" name="btnModificarPaciente" value="<%= item.getDni() %>">Modificar</button>
      	</th> 
-		<th><input class="botonTabla" id="btnEliminarPaciente" name="btnEliminarPaciente" type="submit" value="Eliminar"></th>
+		<th><button class="botonTabla" type="submit" name="btnEliminarPaciente" value="<%= item.getDni() %>">Eliminar</button></th>
      </tr>
      <%} %>
 			     		 
@@ -109,6 +109,18 @@
 		     	
 		     	
 	     	</form>	
+	     	
+	     	
+	     	<%int filas = 0; 
+	     	if (request.getParameter("filasAfectadas")!= null){ 
+	     		filas = Integer.parseInt(request.getAttribute("filasAfectadas").toString());
+	     	}
+	     	if (request.getParameter("filasAfectadas")!= null && filas !=0){ %>
+	     		Paciente eliminado Correctamente.
+	     	<%} if(request.getParameter("filasAfectadas")!= null && filas ==0){ %>
+	     	Hubo un ERROR al eliminar.
+	     	<%} %>
+	     	
 	</div>
 </body>
 </html>
