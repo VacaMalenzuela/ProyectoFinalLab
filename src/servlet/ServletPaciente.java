@@ -35,17 +35,17 @@ public class ServletPaciente extends HttpServlet {
 		Paciente objpaciente = new Paciente();
 		if(request.getParameter("btnModificarPaciente")!= null) {
 			pacienteDao pacDao = new pacienteDao();
-			
 			objpaciente = pacDao.obtenerPacientePorDni(request.getParameter("btnModificarPaciente"));
-			String valor = "Paciente";
-		
+			RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
+			rd.forward(request, response);
 		}
 		
-		if(request.getParameter("btnModificarPaciente")!= null) {
-			
-			
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
+		if(request.getParameter("btnEliminarPaciente")!= null) {
+			pacienteDao pacDao = new pacienteDao();
+			int filasAfectadas = 0; 
+			filasAfectadas = pacDao.EliminarPaciente(request.getParameter("btnEliminarPaciente"));
+			request.setAttribute("filasAfectadas", filasAfectadas);
+			RequestDispatcher rd = request.getRequestDispatcher("/MenuPaciente.jsp");
 			rd.forward(request, response);
 		}
 		 		 

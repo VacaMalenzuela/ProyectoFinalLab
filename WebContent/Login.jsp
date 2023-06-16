@@ -14,19 +14,33 @@
 <div class="form-login" >
 	<h2>INGRESAR</h2>
 	
- 	<form method="post" action="ServletHTML">
+ 	<form method="post" action="ServletLogin">
 
  		<div class="login">
-				<input id=usuarioLogin type="text" maxlenght="15" placeholder="Usuario">
+				<input id="usuarioLogin" name ="txtUsuarioLogin" type="text" maxlenght="15" placeholder="Usuario">
           	</div>
           	
           	<div class="input-t">
-				<input id=contrasenaLogin type="password" maxlenght="15" placeholder="Contraseña">
+				<input id="contrasenaLogin" name ="txtClaveLogin"type="password" maxlenght="15" placeholder="Contraseña">
           	</div>
 
  		
- 		<input class="boton" id="btnIngresar" type="submit" value="Ingresar">
+ 		<input class="boton" id="btnIngresar" type="submit" value="Ingresar" required name="btnIngresar">
+ 		
  		
  	</form>
+ 	
+<% int ingresoCorrectamente=1;
+if(request.getAttribute("errorAlIngresar") != null){
+	ingresoCorrectamente = Integer.parseInt(request.getAttribute("errorAlIngresar").toString());
+}
+%>
+
+
+<% if(request.getAttribute("errorAlIngresar") != null && ingresoCorrectamente == 0){ %>
+	<p style = "color: red;">Usuario/contraseña incorrecta. </p>
+	
+<%}%>
+ 	
 </body>
 </html>
