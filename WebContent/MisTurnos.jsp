@@ -20,19 +20,19 @@
 			<div class="fila">
 	          	<div class="input-fila">
 		          	<label for="fechaTurno">Buscar Turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda" required name="buscarTurno"></input>
+					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 	          		<label for="estado">Estado</label>
-					<select id=estado required name="Sestado">
+					<select id=estado>
 					<option disabled selected>Filtrar por estado</option> 
 					</select>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 					<label for="fechaTurno">Fecha del turno</label>
-					<input id=fechaTurno type="date" required name="fechaTurno">
+					<input id=fechaTurno type="date">
 	          	</div>
  	
           	</div>

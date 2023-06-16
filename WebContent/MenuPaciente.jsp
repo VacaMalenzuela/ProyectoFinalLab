@@ -30,19 +30,19 @@
 			<div class="fila">
 	          	<div class="input-fila">
 		          	<label for="BuscarPaciente">Buscar Paciente</label>
-					<input id=BuscarPaciente type="search" placeholder="Buscar"  name="Busqueda" required name="buscarPaciente"></input>
+					<input id=BuscarPaciente type="search" placeholder="Buscar"  name="Busqueda"></input>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 	          		<label for="Provincia">Provincia</label>
-					<select id=Provincia required name="SProvincia">
+					<select id=Provincia>
 					<option disabled selected>Filtrar por Provincia</option> 
 					</select>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 					<label for="fechaNac">Filtrar pot fecha de nacimiento</label>
-					<input id=fechaNac type="date" required name="fechaNac">
+					<input id=fechaNac type="date">
 	          	</div>
  	
           	</div>

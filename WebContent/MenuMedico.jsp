@@ -21,19 +21,19 @@
 			<div class="fila">
 	          	<div class="input-fila">
 		          	<label for="buscarTurno">Buscar turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda" required name="buscarTurno"></input>
+					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 	          		<label for="especialidad">Filtrar por especialidad</label>
-					<select id=especialidad required name="Sespecialidad">
+					<select id=especialidad>
 					<option disabled selected>Elegir especialidad</option> 
 					</select>
 	          	</div>
 	          	
 	          	<div class="input-fila">
 	          		<label for="provincia">Filtrar por provincia</label>
-					<select id=provincia required name="Sprovincia">
+					<select id=provincia>
 					<option disabled selected>Elegir provincia</option> 
 					</select>
 	          	</div>
