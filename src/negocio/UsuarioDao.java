@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+
+import dominio.Especialidad;
+import dominio.Paciente;
 import dominio.TipoUser;
 import dominio.Usuario;
 
@@ -49,6 +53,72 @@ public class UsuarioDao {
 		{
 		}
 		return us;
+	}
+	
+	//
+	
+	public int AgregarUsuario(Usuario usu)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query = "Insert into Usuarios (Nombre, Clave, idTipoUsuario) values ('"+usu.getNombre()+"', '"+usu.getClave()+"', 2);";
+			filas=st.executeUpdate(query);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+	
+	}
+	
+	public Usuario obtenerUltimoUsuario()
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Usuario  usu = new Usuario();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("Select Id, Nombre, clave, idTipoUsuario from Usuarios order by Id Desc");
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			usu.setId(resultado.getInt(1));
+			usu.setNombre(resultado.getString(2));
+			usu.setClave(resultado.getString(3));
+			
+			TipoUser tipoUsuarios = new TipoUser (); 
+			TipoUserDao tipousuarioNeg = new TipoUserDao();
+			tipoUsuarios = tipousuarioNeg.obtenerPorId(resultado.getInt(4));
+			usu.setTipo(tipoUsuarios);
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return  usu;
 	}
 
 }

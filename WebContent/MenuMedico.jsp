@@ -16,7 +16,7 @@
 	
 	 	<h2>Administrar Médicos</h2>
 		
-		<form method="post" action="ServletHTML">
+		<form method="get" action="servletMedico">
 
 			<div class="fila">
 	          	<div class="input-fila">
@@ -66,8 +66,16 @@
 				</tbody>
 
 		     	</table>
-		     	
-		     	<input class="botonAdm" id="btnNuevoMedico" type="submit" value="Nuevo Medico">
+		     	<br><br>
+		     	  <a href="NuevoMedico.jsp" style="	width: 150px;
+					background: black;
+					border: none;
+					padding: 12px;
+					color: white;
+					margin: 15px 0;
+					font-size: 16px;
+					border: 1px solid black;
+					border-radius: 4px; text-decoration:none;">Nuevo Medico</a>
 	     	</form>	
 	</div>
 	

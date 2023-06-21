@@ -7,6 +7,6 @@ public class Turno {
 	private String fecha;
 	private String hora;
 	private Paciente paciente;
-	private Estado estado;
+	//private Estado estado;
 	
 }

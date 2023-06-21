@@ -19,8 +19,9 @@ import negocio.pacienteDao;
 
 import dominio.Provincia;
 import negocio.ProvinciaDao;
-
+import dominio.Especialidad;
 import dominio.Localidad;
+import negocio.EspecialidadDao;
 import negocio.LocalidadDao;
 @WebServlet("/ServletPaciente")
 public class ServletPaciente extends HttpServlet {
@@ -66,7 +67,6 @@ public class ServletPaciente extends HttpServlet {
 				pac.setDni(request.getParameter("txtDni"));
 				pac.setSexo(request.getParameter("sexo"));
 					NacionalidadDao nacNegocio = new NacionalidadDao(); 
-					
 					Nacionalidad nacionalidad = nacNegocio.obtenerNacionalidadPorId(Integer.parseInt(request.getParameter("nacionalidad")));
 				pac.setNacionalidad(nacionalidad);
 				pac.setFechaNacimiento(request.getParameter("fechaNac"));
@@ -74,13 +74,12 @@ public class ServletPaciente extends HttpServlet {
 					ProvinciaDao provNegocio = new ProvinciaDao(); 
 					Provincia provincia = provNegocio.obtenerProvinciaPorId(Integer.parseInt(request.getParameter("Sprovincia")));	
 					pac.setProvincia(provincia);
-					
 					LocalidadDao locNegocio = new LocalidadDao(); 
 					Localidad loc = locNegocio.obtenerLocalidadPorId(Integer.parseInt(request.getParameter("Slocalidad")));	
 					pac.setLocalidad(loc);
 				pac.setCorreoElectronico(request.getParameter("txtEmail"));
 				pac.setTelefono(request.getParameter("txtTel"));
-				
+								
 				
 				
 				pacienteDao pacNeg = new pacienteDao(); 

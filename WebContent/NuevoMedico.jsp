@@ -1,3 +1,19 @@
+<%@ page import="dominio.Especialidad" %>
+<%@ page import="negocio.EspecialidadDao" %>
+<%@ page import="java.util.ArrayList" %>
+
+
+<%@ page import="dominio.Nacionalidad" %>
+<%@ page import="negocio.NacionalidadDao" %>
+<%@ page import="negocio.ProvinciaDao" %>
+<%@ page import="dominio.Provincia" %>
+<%@ page import="negocio.LocalidadDao" %>
+<%@ page import="dominio.Localidad" %>
+<%@ page import="dominio.Paciente" %>
+<%@ page import="negocio.pacienteDao" %>
+<%@ page import="dominio.Horarios" %>
+<%@ page import="negocio.HorariosDao" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,7 +30,7 @@
 <div class="form-r" >
 	<h2>AGREGAR NUEVO MEDICO</h2>
 	
- <form method="post" action="ServletHTML">
+ <form method="post" action="servletMedico">
 
           <div class="fila">
           	<div class="input-fila">
@@ -45,6 +61,14 @@
           		<label for="nacionalidad">Nacionalidad</label>
 				<select id=nacionalidad required name="nacionalidad"> 
 				<option disabled selected>Selecciona una Nacionalidad</option>  
+								<% ArrayList<Nacionalidad> listaNac = new ArrayList<Nacionalidad> ();
+          				NacionalidadDao nacNegocio = new NacionalidadDao ();
+          				listaNac = nacNegocio.obtenerNacionalidades();
+          				if(listaNac != null){ 	
+				for (Nacionalidad objeto : listaNac) { %>
+				<option value="<%= objeto.getId() %>"> <%= objeto.getNacionalidad() %></option>
+				 
+  <% } }%> 
 				</select>
           	</div>
           	
@@ -62,6 +86,13 @@
           		<label for="mail">Provincia</label>
 				<select id=provincia required name="Sprovincia"> 
 				<option disabled selected>Selecciona una Provincia</option> 
+										<% ArrayList<Provincia> listaProv = new ArrayList<Provincia>();
+          				ProvinciaDao provNegocio = new ProvinciaDao ();
+          				listaProv = provNegocio.obtenerProvincias();
+          				if(listaProv != null){ 	
+				for (Provincia objeto : listaProv) { %>
+    			<option value="<%= objeto.getId() %>"><%= objeto.getProvincia() %></option>
+  <% } }%> 
 				</select>
           	</div>
           	
@@ -69,6 +100,13 @@
           		<label for="mail">Localidad</label>
 				<select id=localidad required name="Slocalidad">
 				<option disabled selected>Selecciona una Localidad</option>  
+														<% ArrayList<Localidad> listaLoc = new ArrayList<Localidad>();
+          				LocalidadDao localidadNegocio = new LocalidadDao ();
+          				listaLoc = localidadNegocio.obtenerLocalidades();
+          				if(listaLoc != null){ 	
+				for (Localidad objeto : listaLoc) { %>
+    			<option value="<%= objeto.getId() %>"><%= objeto.getLocalidad() %> </option>
+  <% } }%> 
             	</select>
           	</div>
 
@@ -86,8 +124,36 @@
           		<label for="especialidad">Especialidad</label>
 				<select id=especialidad required name="Sespecialidad"> 
 				<option disabled selected>Selecciona una Especialidad</option> 
+												<% ArrayList<Especialidad> listaEspe = new ArrayList<Especialidad> ();
+          				EspecialidadDao espeNegocio = new EspecialidadDao ();
+          				listaEspe = espeNegocio.obtenerEspecialidades();
+          				if(listaEspe != null){ 	
+				for (Especialidad objeto : listaEspe) { %>
+				<option value="<%= objeto.getId() %>"> <%= objeto.getEspecialidad() %></option>
+				 
+  <% } }%> 
 				</select>
           	</div>
+          	
+          <div class = "input-fila">
+			<label for="horarios" > Horarios</label>
+			
+        <% ArrayList<Horarios> lstHorarios = new ArrayList<Horarios>();
+		HorariosDao hsNeg = new HorariosDao(); 
+		lstHorarios = hsNeg.obtenerHorarios();	
+        %>
+        
+        <%-- Genera los checkboxes para cada registro --%>
+        <% for (Horarios registro : lstHorarios) { %>
+            <label style="color:white;">
+                <input   type="checkbox" name="especialidad" value="<%= registro.getId() %>" />
+                <%= registro.getTurno() %>
+            </label><br>
+        <% } %>
+          	</div>
+          	
+           <div class = "input-fila"></div>
+           <div class = "input-fila"></div>
           	
           	<div class="input-fila">
           		<label for="usuario">Nuevo Usuario</label>
@@ -106,7 +172,7 @@
           	
           </div>
           
-       		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar">
+       		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar" required name="btnGuardarMedico">
     </form>
 </div>                
 </body>
