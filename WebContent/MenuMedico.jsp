@@ -1,3 +1,7 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dominio.Medico" %>
+<%@ page import="negocio.MedicoDao" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,7 +43,11 @@
 	          	</div>
  	
           	</div>
-			
+						          <% 
+          MedicoDao traeTodos = new MedicoDao();
+     ArrayList<Medico> lstMedico= traeTodos.obtenerMedicos();
+  
+    %>
 			<table class="tabla">
 				<thead>
 					<tr>
@@ -55,14 +63,22 @@
 					
 				<tbody>
 					<tr>
-			     		<th>Perez</th>
-			     		<th>Juan</th>
-			     		 <th>11.111.111</th>
-			     		 <th>Odontologo</th>
-			     		 <th>1234563789</th>
-			     		 <th><input class="botonTabla" id="btnModificarMedico" type="submit" value="Modificar"></th> 
-			     		 <th><input class="botonTabla" id="btnEliminarMedico" type="submit" value="Eliminar"></th>
-			     	</tr>
+						     <%
+     if (lstMedico!=null) 
+	 for(Medico item : lstMedico) {%>
+     <tr>
+     	<td> <%=item.getApellido()%></td>   
+     	<td><%=item.getNombre()%> </td>  
+     	<td><%=item.getDni()%> </td> 
+     	<td> <%=item.getEspecialidad().getEspecialidad() %></td>   
+     	<td> <%=item.getTelefono()%></td>  
+     	<th> 
+     	 
+     		<button class="botonTabla" type="submit" name="btnModificarMedico" value="<%= item.getDni() %>">Modificar</button>
+     	</th> 
+		<th><button class="botonTabla" type="submit" name="btnEliminarMedico" value="<%= item.getDni() %>">Eliminar</button></th>
+     </tr>
+     <%} %>
 				</tbody>
 
 		     	</table>

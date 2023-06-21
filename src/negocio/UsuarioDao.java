@@ -120,5 +120,42 @@ public class UsuarioDao {
 		}
 		return  usu;
 	}
+	
+	public Usuario obtenerUsuarioPorId(int id)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Usuario  usu = new Usuario();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Id, Nombre, Clave, idTipoUsuario FROM USUARIOS where Id = ?;");
+			miSentencia.setInt(1, id); //Cargo el ID recibido
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			 usu.setId(resultado.getInt(1));
+			 usu.setNombre(resultado.getString(2));
+			 usu.setClave(resultado.getString(3));
+			 
+			 TipoUserDao tuserDao = new TipoUserDao();
+			 TipoUser tus = tuserDao.obtenerPorId(resultado.getInt(4));
+			 usu.setTipo(tus);
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return  usu;
+	}
 
 }
