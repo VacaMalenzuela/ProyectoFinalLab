@@ -1,128 +1,140 @@
 CREATE SCHEMA clinicamedica;
 
-USE clinicamedica; 
-
-CREATE TABLE nacionalidades (
-   Id int(11) NOT NULL AUTO_INCREMENT,
-   Nacionalidad varchar(50) DEFAULT NULL,
-   PRIMARY KEY (Id)
- ); 
- 
- 
+use clinicamedica;
  CREATE TABLE provincias (
    Id int(11) NOT NULL AUTO_INCREMENT,
-   Provincia varchar(50) DEFAULT NULL,
-   PRIMARY KEY (Id)
- );
- 
- 
- 
-CREATE TABLE localidades (
-   Id int(11) NOT NULL AUTO_INCREMENT,
-   Localidad varchar(50) DEFAULT NULL,
+   Provincia varchar(50) NOT NULL,
    PRIMARY KEY (Id)
  ) ;
- 
- 
- CREATE TABLE pacientes (
-   Dni varchar(50) NOT NULL,
-   Nombre varchar(50) NOT NULL,
-   Apellido varchar(50) NOT NULL,
-   Sexo varchar(50) NOT NULL,
-   idNacionalidad int(11) NOT NULL,
-   FechaNacimiento varchar(50) NOT NULL,
-   Direccion varchar(50) NOT NULL,
-   idLocalidad int(11) NOT NULL,
-   idProvincia int(11) NOT NULL,
-   CorreoElectronico varchar(50) NOT NULL,
-   Telefono varchar(50) NOT NULL,
-   Estado tinyint (1) not null,
-   PRIMARY KEY (Dni),
-   UNIQUE KEY Dni (Dni),
-   KEY idNacionalidad (idNacionalidad),
-   KEY idProvincia (idProvincia),
-   KEY idLocalidad (idLocalidad),
-   FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
-   FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
-   FOREIGN KEY (idLocalidad) REFERENCES localidades (Id)
- );
- 
- CREATE TABLE tipoUsuarios (
-  Id int NOT NULL AUTO_INCREMENT,
-	tipo varchar(50) DEFAULT NULL,
-   PRIMARY KEY (Id)
- );
- 
- 
-    CREATE TABLE horarios (
-    Id int NOT NULL AUTO_INCREMENT,
-   dia varchar(50) DEFAULT NULL,
-   horarioInicio int not NULL,
-   horarioFin int not NULL,
-   PRIMARY KEY (Id)
- );
- 
- 
-
- 
- CREATE TABLE usuarios (
-    Id int NOT NULL AUTO_INCREMENT,
-   Nombre varchar(50) DEFAULT NULL,
-   Clave varchar(50) DEFAULT NULL,
-   idTipoUsuario int not null,
-   PRIMARY KEY (Id),
-   FOREIGN KEY (idTipoUsuario) REFERENCES horarios (Id)
- );
- 
-  CREATE TABLE especialidades (
-    Id int NOT NULL AUTO_INCREMENT,
+CREATE TABLE especialidades (
+   Id int NOT NULL AUTO_INCREMENT,
    Especialidad varchar(50) DEFAULT NULL,
    PRIMARY KEY (Id)
  );
+ CREATE TABLE horarios (
+   Id int NOT NULL AUTO_INCREMENT,
+   dia varchar(50) DEFAULT NULL,
+   horarioInicio int NOT NULL,
+   horarioFin int NOT NULL,
+   PRIMARY KEY (Id)
+ ); 
  
-
+ CREATE TABLE localidades (
+   Id int NOT NULL AUTO_INCREMENT,
+   Localidad varchar(50) DEFAULT NULL,
+   PRIMARY KEY (Id)
+ ); 
+ 
+  CREATE TABLE nacionalidades (
+   Id int NOT NULL AUTO_INCREMENT,
+   Nacionalidad varchar(50) DEFAULT NULL,
+   PRIMARY KEY (Id)
+ );
+ 
+ 
+  CREATE TABLE tipousuarios (
+   Id int NOT NULL AUTO_INCREMENT,
+   tipo varchar(50) DEFAULT NULL,
+   PRIMARY KEY (Id)
+ );
+ 
+ 
+ CREATE TABLE usuarios (
+   Id int NOT NULL AUTO_INCREMENT,
+   Nombre varchar(50) DEFAULT NULL,
+   Clave varchar(50) DEFAULT NULL,
+   idTipoUsuario int NOT NULL,
+   PRIMARY KEY (Id),
+   KEY idTipoUsuario (idTipoUsuario),
+   FOREIGN KEY (idTipoUsuario) REFERENCES tipousuarios (Id)
+ );
+ 
+ use clinicamedica;
+ 
  CREATE TABLE medicos (
-    Dni varchar(50) NOT NULL,
+   Dni varchar(50) NOT NULL unique,
+   Nombre varchar(50) NOT NULL,
+   Apellido varchar(50) NOT NULL,
+   Sexo varchar(50) NOT NULL,
+   idNacionalidad int NOT NULL,
+   FechaNacimiento varchar(50) NOT NULL,
+   Direccion varchar(50) NOT NULL,
+   idLocalidad int NOT NULL,
+   idProvincia int NOT NULL,
+   CorreoElectronico varchar(50) NOT NULL,
+   Telefono varchar(50) NOT NULL,
+   idEspecialidad int NOT NULL,
+   idHorario int NOT NULL,
+   idUsuario int NOT NULL,
+   PRIMARY KEY (Dni),
+FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
+FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
+FOREIGN KEY (idLocalidad) REFERENCES localidades (ID),
+FOREIGN KEY (idUsuario) REFERENCES usuarios (Id),
+FOREIGN KEY (idEspecialidad) REFERENCES especialidades (Id),
+FOREIGN KEY (idHorario) REFERENCES horarios (Id)
+ );
+ 
+ 
+ 
+ CREATE TABLE pacientes (
+   Dni varchar(50) NOT NULL unique,
    Nombre varchar(50) NOT NULL,
    Apellido varchar(50) NOT NULL,
    Sexo varchar(50) NOT NULL,
    idNacionalidad int(11) NOT NULL,
    FechaNacimiento varchar(50) NOT NULL,
    Direccion varchar(50) NOT NULL,
-   idLocalidad int(11) NOT NULL,
-   idProvincia int(11) NOT NULL,
+   idLocalidad int NOT NULL,
+   idProvincia int NOT NULL,
    CorreoElectronico varchar(50) NOT NULL,
    Telefono varchar(50) NOT NULL,
-   idEspecialidad int not null,
-   idUsuario int not null,
-   Estado tinyint (1) not null, 
+   Estado tinyint(1) NOT NULL,
    PRIMARY KEY (Dni),
-   UNIQUE KEY Dni (Dni),
-   KEY idNacionalidad (idNacionalidad),
-   KEY idProvincia (idProvincia),
-   KEY idLocalidad (idLocalidad),
    FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
    FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
-   FOREIGN KEY (idLocalidad) REFERENCES localidades (Id),
-   FOREIGN KEY (idUsuario) REFERENCES usuarios (Id),
-   FOREIGN KEY (idEspecialidad) REFERENCES especialidades (Id)
- 
- );
- 
- 
- 
+   FOREIGN KEY (idLocalidad) REFERENCES localidades (Id)
+ ); 
+
+
  CREATE TABLE medicoXhorario (
     Id int NOT NULL AUTO_INCREMENT,
     dniMedico varchar(50) NOT NULL,
     idHorario int NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (dniMedico) REFERENCES medicos (Dni),
+    FOREIGN KEY (dniMedico) REFERENCES medico (Dni),
     FOREIGN KEY (idHorario) REFERENCES horarios (Id)
 );
+
+CREATE TABLE EstadosTurnos (
+   Id int NOT NULL AUTO_INCREMENT,
+   Estado varchar(50) NOT NULL,
+   PRIMARY KEY (Id)
+ );
+
+CREATE TABLE turnos (
+   Id int NOT NULL AUTO_INCREMENT,
+   dniMedico varchar(50) NOT NULL,
+   Fecha varchar(50) NOT NULL,
+   Hora int NOT NULL,
+   dniPaciente varchar(50) NOT NULL,
+   IdEstado int NOT NULL,
+   PRIMARY KEY (Id),
+FOREIGN KEY (dniMedico) REFERENCES medicos (Dni),
+FOREIGN KEY (dniPaciente) REFERENCES pacientes (Dni),
+FOREIGN KEY (IdEstado) REFERENCES EstadosTurnos (Id)
+ );
+
  
- Insert into nacionalidades (nacionalidad) values ('Argentina'); 
- Insert into nacionalidades (nacionalidad) values ('España');
- Insert into nacionalidades (nacionalidad) values ('Italia');
+   Insert into EstadosTurnos (Estado) values ('Ocupado'); 
+ Insert into EstadosTurnos (Estado) values ('Libre'); 
+ Insert into EstadosTurnos (Estado) values ('Ausente'); 
+ Insert into EstadosTurnos (Estado) values ('Presente'); 
+ 
+ 
+  Insert into Nacionalidades (nacionalidad) values ('Argentina'); 
+ Insert into Nacionalidades (nacionalidad) values ('España');
+ Insert into Nacionalidades (nacionalidad) values ('Italia');
  
  
  Insert into provincias (provincia) values ('Buenos Aires');
@@ -132,39 +144,14 @@ CREATE TABLE localidades (
    Insert into provincias (provincia) values ('Cordoba');
    Insert into provincias (provincia) values ('Mendoza');
    
-Insert into localidades (localidad) values ('Bahia Blaca');
-Insert into localidades (localidad) values ('Castelli');
-Insert into localidades (localidad) values ('Tigre');
-Insert into localidades (localidad) values ('Vicente Lopez');
+   Insert into localidades (localidad) values ('Bahia Blaca');
+   Insert into localidades (localidad) values ('Castelli');
+   Insert into localidades (localidad) values ('Tigre');
+   Insert into localidades (localidad) values ('Vicente Lopez');
    
    
+   insert into tipousuarios(tipo) values ('Administrador');
+   insert into tipousuarios(tipo) values ('Medico');
    
-Insert into especialidades (especialidad) values ('Alergología');
-Insert into especialidades (especialidad) values ('Aparato Digestivo');
-Insert into especialidades (especialidad) values ('Cardiología');
-Insert into especialidades (especialidad) values ('Cirugía General');
-Insert into especialidades (especialidad) values ('Dermatología Clínica');
-Insert into especialidades (especialidad) values ('Dermatología Estética');
-Insert into especialidades (especialidad) values ('Enfermería');
-Insert into especialidades (especialidad) values ('Fisioterapia');
-Insert into especialidades (especialidad) values ('Ginecología');
-Insert into especialidades (especialidad) values ('Medicina Estétic');
-
-
-
-Insert into tipoUsuarios (tipo) values ('Administrador');
-Insert into tipoUsuarios (tipo) values ('Medico');
-
-
-
-   
-   Insert into horarios (dia, horarioInicio, horarioFin) values ('Lunes',10,12);
-   Insert into horarios (dia, horarioInicio, horarioFin) values ('Martes',10,12);
-   Insert into horarios (dia, horarioInicio, horarioFin) values ('Miercoles',10,12);
-   Insert into horarios (dia, horarioInicio, horarioFin) values ('Jueves',10,12);
-   Insert into horarios (dia, horarioInicio, horarioFin) values ('Viernes',10,12);
-
-
-
-   Insert into usuarios (Nombre, Clave, idTipoUsuario) values ('ADMIN', 'ADMIN',1);
+	Insert into usuarios (Nombre, Clave, idTipoUsuario) VALUES ('ADMIN', 'ADMIN', 1);
    
