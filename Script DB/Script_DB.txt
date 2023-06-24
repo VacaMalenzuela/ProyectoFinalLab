@@ -1,6 +1,7 @@
 CREATE SCHEMA clinicamedica;
-
 use clinicamedica;
+
+
  CREATE TABLE provincias (
    Id int(11) NOT NULL AUTO_INCREMENT,
    Provincia varchar(50) NOT NULL,
@@ -49,7 +50,6 @@ CREATE TABLE especialidades (
    FOREIGN KEY (idTipoUsuario) REFERENCES tipousuarios (Id)
  );
  
- use clinicamedica;
  
  CREATE TABLE medicos (
    Dni varchar(50) NOT NULL unique,
@@ -64,16 +64,15 @@ CREATE TABLE especialidades (
    CorreoElectronico varchar(50) NOT NULL,
    Telefono varchar(50) NOT NULL,
    idEspecialidad int NOT NULL,
-   idHorario int NOT NULL,
    idUsuario int NOT NULL,
+   Estado tinyint (1) not null,
    PRIMARY KEY (Dni),
 FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
 FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
 FOREIGN KEY (idLocalidad) REFERENCES localidades (ID),
 FOREIGN KEY (idUsuario) REFERENCES usuarios (Id),
-FOREIGN KEY (idEspecialidad) REFERENCES especialidades (Id),
-FOREIGN KEY (idHorario) REFERENCES horarios (Id)
- );
+FOREIGN KEY (idEspecialidad) REFERENCES especialidades (Id)
+);
  
  
  
@@ -102,7 +101,7 @@ FOREIGN KEY (idHorario) REFERENCES horarios (Id)
     dniMedico varchar(50) NOT NULL,
     idHorario int NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (dniMedico) REFERENCES medico (Dni),
+    FOREIGN KEY (dniMedico) REFERENCES medicos (Dni),
     FOREIGN KEY (idHorario) REFERENCES horarios (Id)
 );
 
@@ -126,7 +125,7 @@ FOREIGN KEY (IdEstado) REFERENCES EstadosTurnos (Id)
  );
 
  
-   Insert into EstadosTurnos (Estado) values ('Ocupado'); 
+ Insert into EstadosTurnos (Estado) values ('Ocupado'); 
  Insert into EstadosTurnos (Estado) values ('Libre'); 
  Insert into EstadosTurnos (Estado) values ('Ausente'); 
  Insert into EstadosTurnos (Estado) values ('Presente'); 
@@ -149,9 +148,33 @@ FOREIGN KEY (IdEstado) REFERENCES EstadosTurnos (Id)
    Insert into localidades (localidad) values ('Tigre');
    Insert into localidades (localidad) values ('Vicente Lopez');
    
+   Insert into Especialidades (especialidad) values ('Pediatría');
+   Insert into Especialidades (especialidad) values ('Oftalmología');
+   Insert into Especialidades (especialidad) values ('Ortopedia');
+   Insert into Especialidades (especialidad) values ('Neumología');
+   Insert into Especialidades (especialidad) values ('Nefrología');
+   Insert into Especialidades (especialidad) values ('Hematología');
+   Insert into Especialidades (especialidad) values ('Oncología Pediátrica');
+   
    
    insert into tipousuarios(tipo) values ('Administrador');
    insert into tipousuarios(tipo) values ('Medico');
    
+   
+
+   Insert into Horarios (dia, horarioInicio, horarioFin)values ('Lunes', 7,15);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Lunes', 15,24);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Martes', 7,15);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Martes', 15,24);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Miercoles', 7,15);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Miercoles', 15,24);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Jueves', 7,15);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Jueves', 15,24);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Viernes', 7,15);
+     Insert into Horarios (dia, horarioInicio, horarioFin)values ('Viernes', 15,24);
+     
+     
+     
+     
 	Insert into usuarios (Nombre, Clave, idTipoUsuario) VALUES ('ADMIN', 'ADMIN', 1);
    

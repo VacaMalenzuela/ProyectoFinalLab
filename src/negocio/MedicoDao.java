@@ -150,6 +150,31 @@ public class MedicoDao {
 		return lista;
 	}
 	
+	public int EliminarMedico (String Dni) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query = "UPDATE MEDICOS SET ESTADO = 0 WHERE Dni= '"+Dni+"';";
+			filas=st.executeUpdate(query);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+	}
+	
 	
 	
 

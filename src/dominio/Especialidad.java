@@ -1,6 +1,6 @@
 package dominio;
 
-public class Especialidad extends Persona {
+public class Especialidad {
 	public int getId() {
 		return id;
 	}

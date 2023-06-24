@@ -23,6 +23,7 @@ import negocio.LocalidadDao;
 import negocio.NacionalidadDao;
 import negocio.ProvinciaDao;
 import negocio.UsuarioDao;
+import negocio.pacienteDao;
 import negocio.MedicoDao;
 
 @WebServlet("/servletMedico")
@@ -38,7 +39,14 @@ public class servletMedico extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		if(request.getParameter("btnEliminarMedico") != null) {
+			MedicoDao medDao = new MedicoDao();
+			int filasAfectadas = 0; 
+			filasAfectadas = medDao.EliminarMedico(request.getParameter("btnEliminarMedico"));
+			//request.setAttribute("filasAfectadas", filasAfectadas);
+			RequestDispatcher rd = request.getRequestDispatcher("/MenuMedico.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 
@@ -86,13 +94,13 @@ public class servletMedico extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoMedico.jsp");
 				rd.forward(request, response);
 			
-			}
-			
-			
-			
-			
-		}
+			}	
+		} 
+		
 	}
+	
+	
+	
 	
 	public int AgregarUsuario (String Usuario, String pass) { 
 		Usuario us = new Usuario(); 

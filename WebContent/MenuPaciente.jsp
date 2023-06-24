@@ -97,10 +97,7 @@
      	<td> <%=item.getNacionalidad().getNacionalidad()%></td>
      	<td> <%=item.getFechaNacimiento()%></td>
      	<td> <%=item.getSexo()%></td>
-     	<th> 
-     	 
-     		<button class="botonTabla" type="submit" name="btnModificarPaciente" value="<%= item.getDni() %>">Modificar</button>
-     	</th> 
+     	<th><button class="botonTabla" type="submit" name="btnModificarPaciente" value="<%= item.getDni() %>">Modificar</button></th> 
 		<th><button class="botonTabla" type="submit" name="btnEliminarPaciente" value="<%= item.getDni() %>">Eliminar</button></th>
      </tr>
      <%} %>
