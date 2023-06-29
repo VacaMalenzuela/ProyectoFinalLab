@@ -72,7 +72,7 @@
      	<td><%=item.getDni()%> </td> 
      	<td> <%=item.getEspecialidad().getEspecialidad() %></td>   
      	<td> <%=item.getTelefono()%></td>  
-     	<th><button class="botonTabla" type="submit" name="btnModificarMedico" value="<%= item.getDni() %>">Modificar</button></th>
+     	<th><button class="botonTabla" type="submit" name="btnModificarMedico" value="<%= item.getDni() %>">Modificar</button></th> 
      	
      	 <th><button class="botonTabla" type="submit" name="btnEliminarMedico" value="<%= item.getDni() %>">Eliminar</button></th>
      </tr>

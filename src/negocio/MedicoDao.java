@@ -177,5 +177,155 @@ public class MedicoDao {
 	
 	
 	
+	public Medico obtenerMedicoPorDni(String id)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Medico med = new Medico();
+		ArrayList<Horarios> lstHorarios = new ArrayList<Horarios>(); 
+		lstHorarios = obtenerHorariosPorMedico (id);
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			
+			
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Dni, Nombre, Apellido, sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono, idEspecialidad, idUsuario FROM MEDICOS WHERE Estado = 1 AND Dni = ? ;");
+			miSentencia.setString(1, id); //Cargo el ID recibido
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			med.setDni(resultado.getString(1));
+			med.setNombre(resultado.getString(2));
+			med.setApellido(resultado.getString(3));
+			med.setSexo(resultado.getString(4));
+				NacionalidadDao nacDao = new NacionalidadDao(); 
+				Nacionalidad nac = nacDao.obtenerNacionalidadPorId(resultado.getInt(5));
+				med.setNacionalidad(nac);
+			med.setFechaNacimiento(resultado.getString(6));
+			med.setDireccion(resultado.getString(7));
+				LocalidadDao locDao = new LocalidadDao();
+				Localidad loc = locDao.obtenerLocalidadPorId(resultado.getInt(8));
+				med.setLocalidad(loc);
+				ProvinciaDao provDao = new ProvinciaDao(); 
+				Provincia prov = provDao.obtenerProvinciaPorId(resultado.getInt(9));
+				med.setProvincia(prov);
+			med.setCorreoElectronico(resultado.getString(10));
+			med.setTelefono(resultado.getString(11));
+				EspecialidadDao espeDao = new EspecialidadDao(); 
+				Especialidad espe = espeDao.obtenerEspecialidadPorId(resultado.getInt(12));
+			med.setEspecialidad(espe);
+			med.setHorarios(lstHorarios);
+				
+				UsuarioDao usuDao = new UsuarioDao(); 
+				Usuario usu = usuDao.obtenerUsuarioPorId(resultado.getInt(13));
+		   med.setUsuario(usu);
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return med;
+	}
+	
+	
+	public ArrayList<Horarios> obtenerHorariosPorMedico (String Dni){ 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ArrayList<Horarios> lista = new ArrayList<Horarios>();
+		
+		Connection conn = null;
+		try{
+			conn = DriverManager.getConnection(host+dbName, user,pass);
+			PreparedStatement miSentencia = conn.prepareStatement("SELECT idHorario FROM medicoXhorario where dnimedico = ? ");
+			miSentencia.setString(1, Dni);
+			ResultSet rs = miSentencia.executeQuery();
+			
+			while(rs.next()){
+				Horarios hs = new Horarios(); 
+				HorariosDao hsDao = new HorariosDao(); 
+				hs = hsDao.obtenerHorarioPorId(rs.getString(1).toString());
+				
+				lista.add(hs);
+			}
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+		
+		}
+		
+		return lista;
+		
+	}
+	
+	public void ElimnaHorariosXMedico (String Dni) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query1 = "DELETE FROM medicoXhorario Where dniMedico = '"+Dni+"';";
+	
+			st.executeUpdate(query1);
+
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+
+	public int ActualizaMedico (Medico med) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query1 = "UPDATE MEDICOS SET Nombre='"+med.getNombre()+"', APELLIDO = '"+med.getApellido()+"', sexo='"+med.getSexo()+"', idNacionalidad = "+med.getNacionalidad().getId()+", fechaNacimiento = '"+med.getFechaNacimiento()+"', Direccion = '"+med.getDireccion()+"', idLocalidad = "+med.getLocalidad().getId()+", idProvincia = "+med.getProvincia().getId()+", CorreoElectronico = '"+med.getCorreoElectronico()+"', Telefono = '"+med.getTelefono()+"', idEspecialidad = "+med.getEspecialidad().getId()+" where Dni = '43383650';";
+	
+			filas+=st.executeUpdate(query1);		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+	}
+	
+	
+
+	
+	
 
 }

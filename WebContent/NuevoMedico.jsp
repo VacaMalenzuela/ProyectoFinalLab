@@ -9,8 +9,8 @@
 <%@ page import="dominio.Provincia" %>
 <%@ page import="negocio.LocalidadDao" %>
 <%@ page import="dominio.Localidad" %>
-<%@ page import="dominio.Paciente" %>
-<%@ page import="negocio.pacienteDao" %>
+<%@ page import="dominio.Medico" %>
+<%@ page import="negocio.MedicoDao" %>
 <%@ page import="dominio.Horarios" %>
 <%@ page import="negocio.HorariosDao" %>
 
@@ -27,12 +27,27 @@
 <title>Nuevo medico</title>
 </head>
 <body>
+<%	
+Medico objMedico = new Medico();
+if(request.getParameter("btnModificarMedico")!= null) {
+	MedicoDao medDao = new MedicoDao();
+	objMedico = medDao.obtenerMedicoPorDni(request.getParameter("btnModificarMedico"));	
+} %>
+
+
 <div class="form-r" >
-	<h2>AGREGAR NUEVO MEDICO</h2>
+<%if(objMedico.getDni()== null){  %>
+		<h2>AGREGAR NUEVO MEDICO</h2>
+<%} else { %>
+<h2>MODIFICAR MEDICO</h2>
+<%}%>
+
 	
  <form method="post" action="servletMedico">
 
-          <div class="fila">
+
+	<%if(objMedico.getDni() == null){%>
+		          <div class="fila">
           	<div class="input-fila">
           		<label for="apellido">Apellidos</label>
 				<input id=apellido type="text" placeholder="Ingrese Apellidos" required name="txtApellido">
@@ -173,7 +188,156 @@
           </div>
           
        		<input class="boton" id="btnGuardarMedico" type="submit" value="Guardar" required name="btnGuardarMedico">
-    </form>
+	<% } if (objMedico.getDni()!= null){ %>
+	
+	<div class="fila">
+          	<div class="input-fila">
+          	<label style="color:white;" for="apellido">Apellidos</label>
+          	<input id=apellido type="text" placeholder="Ingrese Apellidos" required name="txtApellido" value = "<%= objMedico.getApellido() %>">
+   
+          		
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label style="color:white;" for="nombre">Nombres</label>
+				<input id=nombre type="text" placeholder="Ingrese Nombres" required name="txtNombre" value="<%= objMedico.getNombre() %>" >
+          	
+          		
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label style="color:white;" for="dni">DNI</label>
+				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objMedico.getDni() %>" >
+
+          		
+          	</div>
+          	
+          <div class="input-fila">
+          		<label style="color:white;" for="mail">Sexo</label>
+          			<select id=sexo required name="sexo"> 
+					<option disabled selected>Selecciona un Sexo</option> 
+					<option value="hombre" <%= "hombre".equals(objMedico.getSexo()) ? "selected" : "" %>>Hombre</option>
+					<option value="mujer" <%= "mujer".equals(objMedico.getSexo()) ? "selected" : "" %>>Mujer</option>
+				</select>
+          		
+				
+          	</div>
+
+
+
+          	<div class="input-fila">
+          		<label style="color:white;" for="nacionalidad">Nacionalidad</label>
+          	<select id=nacionalidad required name="nacionalidad"> 
+				<option disabled selected>Selecciona una nacionalidad</option> 
+				<% ArrayList<Nacionalidad> listaNac = new ArrayList<Nacionalidad> ();
+          				NacionalidadDao nacNegocio = new NacionalidadDao ();
+          				listaNac = nacNegocio.obtenerNacionalidades();
+          				if(listaNac != null){ 	
+				for (Nacionalidad objeto : listaNac) { %>
+				<option value="<%= objeto.getId() %>" <%= (objeto.getId() == objMedico.getNacionalidad().getId()) ? "selected" : "" %>>
+      <%= objeto.getNacionalidad() %>
+    </option>
+  <% } }%> 
+				</select>
+
+          	</div>
+          	 
+          	<div class="input-fila">
+          		<label style="color:white;" for="fechaNac">Fecha de Nacimiento</label>
+				<input id=fechaNac type="date" required name="fechaNac" value="<%= objMedico.getFechaNacimiento() %>" >
+          	
+          	
+          		
+          	</div>
+
+          	<div class="input-fila">
+          		<label style="color:white;" for="direccion">Direccion</label>
+				<input id=direccion type="text" placeholder="Ingrese Direccion" required name="txtDireccion" value="<%= objMedico.getDireccion() %>" >
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label style="color:white;" for="mail">Provincia</label>
+				<select id=provincia required name="Sprovincia"> 
+				<option disabled selected>Selecciona una Provincia</option> 
+						<% ArrayList<Provincia> listaProv = new ArrayList<Provincia>();
+          				ProvinciaDao provNegocio = new ProvinciaDao ();
+          				listaProv = provNegocio.obtenerProvincias();
+          				if(listaProv != null){ 	
+				for (Provincia objeto : listaProv) { %>
+    			<option value="<%= objeto.getId() %>" <%= (objeto.getId() == objMedico.getProvincia().getId()) ? "selected" : "" %>>
+      <%= objeto.getProvincia() %>
+    </option>
+  <% } }%> 
+				</select>
+          	</div>
+       	
+          	<div class="input-fila">
+          		<label style="color:white;" for="mail">Localidad</label>
+				<select id=localidad required name="Slocalidad">
+				<option disabled selected>Selecciona una Localidad</option>  
+										<% ArrayList<Localidad> listaLoc = new ArrayList<Localidad>();
+          				LocalidadDao localidadNegocio = new LocalidadDao ();
+          				listaLoc = localidadNegocio.obtenerLocalidades();
+          				if(listaLoc != null){ 	
+				for (Localidad objeto : listaLoc) { %>
+    			<option value="<%= objeto.getId() %>" <%= (objeto.getId() == objMedico.getLocalidad().getId()) ? "selected" : "" %>>
+      <%= objeto.getLocalidad() %>
+    </option>
+  <% } }%> 
+				
+            	</select>
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label style="color:white;" for="mail">Correo Electronico</label>
+				<input id=mail type="email" placeholder="Ingrese Correo electrronico" required name="txtEmail" value="<%= objMedico.getCorreoElectronico() %>">
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label style="color:white;" for="tel">Telefono</label>
+				<input id=tel type="number" maxlenght="20" placeholder="Ingrese Telefono" required name="txtTel" value="<%= objMedico.getTelefono() %>" >
+          	</div>
+          	
+          	<div class="input-fila">
+          		<label for="especialidad">Especialidad</label>
+				<select id=especialidad required name="Sespecialidad"> 
+				<option disabled selected>Selecciona una Especialidad</option> 
+												<% ArrayList<Especialidad> listaEspe = new ArrayList<Especialidad> ();
+          				EspecialidadDao espeNegocio = new EspecialidadDao ();
+          				listaEspe = espeNegocio.obtenerEspecialidades();
+          				if(listaEspe != null){ 	
+				for (Especialidad objeto : listaEspe) { %>
+				<option value="<%= objeto.getId() %>" <%= (objeto.getId() == objMedico.getEspecialidad().getId()) ? "selected" : "" %>> <%= objeto.getEspecialidad() %></option>
+				 
+  <% } }%> 
+				</select>
+          	</div>
+          	
+          <div class = "input-fila">
+			<label for="horarios" > Horarios</label>
+			
+        <% ArrayList<Horarios> lstHorarios = new ArrayList<Horarios>();
+		HorariosDao hsNeg = new HorariosDao(); 
+		lstHorarios = hsNeg.obtenerHorarios();	
+        %>
+        
+        <%-- Genera los checkboxes para cada registro --%>
+        <% for (Horarios registro : lstHorarios) { %>
+            <label style="color:white;">
+            <input type="checkbox" name="horarios" value="<%= registro.getId() %>" <% if (objMedico.getHorarios().contains(registro)== true) { %> checked <% } %>> <%= registro.getTurno() %>
+            </label><br>
+        <% } %>
+          	</div>
+          	
+           <div class = "input-fila"></div>
+           <div class = "input-fila"></div>
+          	
+          	
+          </div>
+          	<input class="boton" id="btnModificarMedico" type="submit" value="Guardar" required name="btnModificarMedico">
+          
+       	<% }%>
+	 </form>
 </div>                
 </body>
 </html>

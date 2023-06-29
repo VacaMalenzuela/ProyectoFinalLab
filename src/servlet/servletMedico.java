@@ -15,6 +15,7 @@ import dominio.Horarios;
 import dominio.Localidad;
 import dominio.Medico;
 import dominio.Nacionalidad;
+import dominio.Paciente;
 import dominio.Provincia;
 import dominio.Usuario;
 import negocio.EspecialidadDao;
@@ -39,6 +40,13 @@ public class servletMedico extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(request.getParameter("btnModificarMedico")!= null) {
+			MedicoDao medDao = new MedicoDao();
+			Medico objMedico = medDao.obtenerMedicoPorDni(request.getParameter("btnModificarMedico"));
+			RequestDispatcher rd = request.getRequestDispatcher("/NuevoMedico.jsp");
+			rd.forward(request, response);
+		}
+		
 		if(request.getParameter("btnEliminarMedico") != null) {
 			MedicoDao medDao = new MedicoDao();
 			int filasAfectadas = 0; 
@@ -82,9 +90,9 @@ public class servletMedico extends HttpServlet {
 					Especialidad espe = espeNegocio.obtenerEspecialidadPorId(Integer.parseInt(request.getParameter("Sespecialidad")));	
 				med.setEspecialidad(espe);
 				med.setUsuario(usu);
-			       if (request.getParameter("especialidad") != null && request.getParameter("especialidad").length() > 0) {
-			    	   String[] especialidadesSeleccionadas = request.getParameterValues("especialidad");
-			    	   med.setHorarios(listaHorariosSeleccionado(especialidadesSeleccionadas, med));
+			       if (request.getParameter("horarios") != null && request.getParameter("horarios").length() > 0) {
+			    	   String[] horariosSeleccionadas = request.getParameterValues("horarios");
+			    	   med.setHorarios(listaHorariosSeleccionado(horariosSeleccionadas));
 			    	   
 			        }
 				
@@ -96,6 +104,47 @@ public class servletMedico extends HttpServlet {
 			
 			}	
 		} 
+		
+		if(request.getParameter("btnModificarMedico")!= null) {
+			Medico med = new Medico(); 
+			med.setApellido(request.getParameter("txtApellido"));
+			med.setNombre(request.getParameter("txtNombre"));
+			med.setDni(request.getParameter("txtDni"));
+			med.setSexo(request.getParameter("sexo"));
+				NacionalidadDao nacNegocio = new NacionalidadDao(); 
+				Nacionalidad nacionalidad = nacNegocio.obtenerNacionalidadPorId(Integer.parseInt(request.getParameter("nacionalidad")));
+			med.setNacionalidad(nacionalidad);
+			med.setFechaNacimiento(request.getParameter("fechaNac"));
+			med.setDireccion(request.getParameter("txtDireccion"));
+				ProvinciaDao provNegocio = new ProvinciaDao(); 
+				Provincia provincia = provNegocio.obtenerProvinciaPorId(Integer.parseInt(request.getParameter("Sprovincia")));	
+				med.setProvincia(provincia);
+				
+				LocalidadDao locNegocio = new LocalidadDao(); 
+				Localidad loc = locNegocio.obtenerLocalidadPorId(Integer.parseInt(request.getParameter("Slocalidad")));	
+				med.setLocalidad(loc);
+			med.setCorreoElectronico(request.getParameter("txtEmail"));
+			med.setTelefono(request.getParameter("txtTel"));
+			EspecialidadDao espeNegocio = new EspecialidadDao(); 
+			Especialidad espe = espeNegocio.obtenerEspecialidadPorId(Integer.parseInt(request.getParameter("Sespecialidad")));	
+		med.setEspecialidad(espe);
+		    if (request.getParameter("horarios") != null && request.getParameter("horarios").length() > 0) {
+		    	   String[] horariosSeleccionadas = request.getParameterValues("horarios");
+		    	   med.setHorarios(listaHorariosSeleccionado(horariosSeleccionadas));
+		    	   
+		        }
+			MedicoDao medDao = new MedicoDao(); 
+			//Primero Elimina los horarios q contiene 
+			medDao.ElimnaHorariosXMedico(med.getDni().toString()); 
+			//Inserta los nuevos horarios 
+			int fila = medDao.AgregarHorarios(med);
+			fila += medDao.ActualizaMedico(med);
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/MenuMedico.jsp");
+			rd.forward(request, response);
+			
+		}
 		
 	}
 	
@@ -114,7 +163,7 @@ public class servletMedico extends HttpServlet {
 		
 	}
 	
-	public ArrayList<Horarios> listaHorariosSeleccionado (String[] idSeleccionados,Medico med) {
+	public ArrayList<Horarios> listaHorariosSeleccionado (String[] idSeleccionados) {
 		HorariosDao horas = new HorariosDao();
 		ArrayList<Horarios> lstHoras = new ArrayList<Horarios>();
 		for (int i = 0; i < idSeleccionados.length; i++) {
