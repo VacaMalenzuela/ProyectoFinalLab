@@ -96,9 +96,10 @@ public class servletMedico extends HttpServlet {
 			    	   
 			        }
 				
-				
-				MedicoDao medicoNeg = new MedicoDao(); 
-				medicoNeg.agregarMedico(med);
+				if (validaCampoMedico(med)) { 
+					MedicoDao medicoNeg = new MedicoDao(); 
+					medicoNeg.agregarMedico(med);
+				}
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoMedico.jsp");
 				rd.forward(request, response);
 			
@@ -133,14 +134,15 @@ public class servletMedico extends HttpServlet {
 		    	   med.setHorarios(listaHorariosSeleccionado(horariosSeleccionadas));
 		    	   
 		        }
-			MedicoDao medDao = new MedicoDao(); 
-			//Primero Elimina los horarios q contiene 
-			medDao.ElimnaHorariosXMedico(med.getDni().toString()); 
-			//Inserta los nuevos horarios 
-			int fila = medDao.AgregarHorarios(med);
-			fila += medDao.ActualizaMedico(med);
-			
-			
+		    
+		    if (validaCampoMedico(med)) { 
+				MedicoDao medDao = new MedicoDao(); 
+				//Primero Elimina los horarios q contiene 
+				medDao.ElimnaHorariosXMedico(med.getDni().toString()); 
+				//Inserta los nuevos horarios 
+				int fila = medDao.AgregarHorarios(med);
+				fila += medDao.ActualizaMedico(med);
+		    }
 			RequestDispatcher rd = request.getRequestDispatcher("/MenuMedico.jsp");
 			rd.forward(request, response);
 			
@@ -171,6 +173,19 @@ public class servletMedico extends HttpServlet {
 		}
 		
 		return lstHoras;
+	}
+	
+	public Boolean validaCampoMedico(Medico med) { 
+		Boolean camposCargado = true;
+		if (med.getNombre() == null || med.getApellido() == null || med.getDni() == null || med.getSexo() == null || med.getNacionalidad() == null || med.getFechaNacimiento() == null || med.getDireccion() == null || med.getLocalidad() == null || med.getProvincia() == null || med.getCorreoElectronico() == null || med.getTelefono() == null || med.getEspecialidad() == null || med.getUsuario() == null) {
+			camposCargado=false;
+		} else { 
+			
+			if (med.getNombre() == "" || med.getApellido() == "" || med.getDni() == "" || med.getSexo() == "" || med.getFechaNacimiento() == "" || med.getDireccion() == "" ||  med.getCorreoElectronico() == "" || med.getTelefono() == "" || med.getUsuario().getNombre() == "" || med.getUsuario().getClave() == "") {
+				camposCargado=false;
+			}
+		}
+		return camposCargado;
 	}
 
 }

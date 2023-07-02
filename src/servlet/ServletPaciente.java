@@ -1,5 +1,5 @@
 package servlet;
-
+import java.lang.reflect.Field;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -81,12 +81,14 @@ public class ServletPaciente extends HttpServlet {
 				pac.setTelefono(request.getParameter("txtTel"));
 								
 				
-				
-				pacienteDao pacNeg = new pacienteDao(); 
-				seGuardo = pacNeg.agregarPaciente(pac);
-				request.setAttribute("seGuardo", seGuardo);
+				if (ValidoCamposPaciente(pac)) { 
+					pacienteDao pacNeg = new pacienteDao(); 
+					seGuardo = pacNeg.agregarPaciente(pac);
+					request.setAttribute("seGuardo", seGuardo);
+				} 
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
 				rd.forward(request, response);
+
 			}
 			
 			if(request.getParameter("btnModificarPaciente")!= null) {
@@ -111,13 +113,18 @@ public class ServletPaciente extends HttpServlet {
 				pac.setCorreoElectronico(request.getParameter("txtEmail"));
 				pac.setTelefono(request.getParameter("txtTel"));
 				
-				
-				
 				pacienteDao pacNeg = new pacienteDao(); 
-				seGuardo = pacNeg.ActualizarPaciente(pac);
-				request.setAttribute("seGuardo", seGuardo);
-				RequestDispatcher rd = request.getRequestDispatcher("/MenuPaciente.jsp");
-				rd.forward(request, response);
+				if (ValidoCamposPaciente (pac)) {
+					seGuardo = pacNeg.ActualizarPaciente(pac);
+					request.setAttribute("seGuardo", seGuardo);
+					RequestDispatcher rd = request.getRequestDispatcher("/MenuPaciente.jsp");
+					rd.forward(request, response);
+				} else {
+					RequestDispatcher rd = request.getRequestDispatcher("/NuevoPaciente.jsp");
+					rd.forward(request, response);
+				}
+				
+				
 				
 			}
 			
@@ -132,4 +139,16 @@ public class ServletPaciente extends HttpServlet {
 		//doGet(request, response);
 	}
 
+	public Boolean ValidoCamposPaciente (Paciente pac) { 
+		Boolean camposCargado = true;
+		if (pac.getNombre() == null || pac.getApellido() == null || pac.getDni() == null || pac.getSexo() == null || pac.getNacionalidad() == null || pac.getFechaNacimiento() == null || pac.getDireccion() == null || pac.getLocalidad() == null || pac.getProvincia() == null || pac.getCorreoElectronico() == null || pac.getTelefono() == null) {
+			camposCargado=false;
+		} else { 
+			
+			if (pac.getNombre() == "" || pac.getApellido() == "" || pac.getDni() == "" || pac.getSexo() == "" || pac.getFechaNacimiento() == "" || pac.getDireccion() == "" ||  pac.getCorreoElectronico() == "" || pac.getTelefono() == "") {
+				camposCargado=false;
+			}
+		}
+		return camposCargado;
+	}
 }

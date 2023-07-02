@@ -21,10 +21,10 @@
 	<nav class="nav-bar">
 		<ul>
 			<li>
-				<a href="" class="active">Turnos</a>
+				<a href="NuevoTurno.jsp" class="active">Turnos</a>
 			</li>
 			<li>
-				<a href="" class="active">Medicos</a>
+				<a href="MenuMedico.jsp" class="active">Medicos</a>
 			</li>
 			<li>
 				<a href="MenuPaciente.jsp" class="active">Pacientes</a>

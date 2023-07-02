@@ -1,3 +1,10 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dominio.Paciente" %>
+<%@ page import="negocio.pacienteDao" %>
+<%@ page import="dominio.Especialidad" %>
+<%@ page import="negocio.EspecialidadDao" %>
+<%@ page import="dominio.Medico" %>
+<%@ page import="negocio.MedicoDao" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,34 +21,62 @@
 <div class="form-t" >
 	<h2>NUEVO TURNO</h2>
 	
- 	<form method="post" action="ServletHTML">
+ 	<form method="post" action="servletTurno">
  		<div class="input-t">
  			<label for="especialidad">Especialidad</label>
-			<select id=especialidad required name="Sespecialidad">
+			<select id=especialidad required name="especialidad">
 			<option disabled selected>Selecciona una Especialidad</option> 
+				<% ArrayList<Especialidad> listaEspecialidad = new ArrayList<Especialidad> ();
+ 				EspecialidadDao especialidadDao = new EspecialidadDao ();
+ 			    listaEspecialidad = especialidadDao.obtenerEspecialidades();	
+				for (Especialidad objeto : listaEspecialidad) { %>
+				<option value="<%= objeto.getId() %>"> <%= objeto.getEspecialidad() %></option><%}%>
 			</select>
+			
  		</div>
  		<div class="input-t">
  			<label for="medico">Buscar Medico</label>
-			<input id=medico type="search" placeholder="Ingrese nombre del Medico"  name="BusquedaMedico" required name="medico"></input>
+			<select id="medico" required name="medico">
+				<option disabled selected>Selecciona un medico</option> 
+				
+				<%  MedicoDao medNeg = new MedicoDao(); 
+				ArrayList<Medico> lstMedicos = medNeg.obtenerMedicos();  
+	  			  for(Medico med : lstMedicos){  %>
+	  				  
+	  				  <option value="<%= med.getDni() %>"> <%= med.getApellido() + ", "+ med.getNombre() %></option>
+	  			  <%} %>
+
+			</select>
  		</div>
  		<div class="input-t">
  			<label for="fechaTurno">Fecha del turno</label>
-			<input id=fechaTurno type="date" required name="fechaTurno">
+			<input id="fechaTurno" type="date" required name="fechaTurno">
  		</div>
  		<div class="input-t">
  			<label for="horaTurno">Hora del turno</label>
-			<input id=horaTurno type="time" name="Hora" required name="horaTurno"></input>
+			<input id="horaTurno" type="number" min="1" max="24" required name="horaTurno"></input>
  		</div>
  		<div class="input-t">
  			<label for="paciente">Busqueda Paciente</label>
-			<input id=paciente type="search" placeholder="Ingrese DNI del paciente"  name="BusquedaPaciente" required name="paciente"></input>
+			<select id=especialidad required name="SPaciente">
+			<option disabled selected>Selecciona un paciente</option> 
+					<%ArrayList<Paciente> listaPaciente = new ArrayList<Paciente>();
+          			pacienteDao pacNegocio = new pacienteDao ();
+ 					listaPaciente = pacNegocio.obtenerPacientes();	
+				for (Paciente objeto : listaPaciente) { %>
+				<option value="<%= objeto.getDni() %>"> <%= objeto.getDatoGeneralesPaciente() %></option><%}%> 
+			</select>
  		</div>
  		
  		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar" required name="btnGuardarTurno">
- 		
  	</form>
- 	
  </div>
+ 
+  	<%
+ 	int valorParametro = 0;
+ 	
+ 	if (request.getAttribute("noCoincideMedicoEspecialidad")!= null) {%>
+ 		<p style= "color: red;">El medico Seleccionado no trabaja para la especialidad seleccionada.</p>
+ 	<%}  %>
 </body>
 </html>
