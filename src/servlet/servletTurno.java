@@ -64,6 +64,7 @@ public class servletTurno extends HttpServlet {
 				// Agrega Turno a la base
 				
 				turDao.agregarTurno(tur);
+				request.setAttribute("SeAgregoCorrectamente", 1);
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoTurno.jsp");
 				rd.forward(request, response);
 				

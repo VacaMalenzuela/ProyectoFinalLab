@@ -78,5 +78,11 @@
  	if (request.getAttribute("noCoincideMedicoEspecialidad")!= null) {%>
  		<p style= "color: red;">El medico Seleccionado no trabaja para la especialidad seleccionada.</p>
  	<%}  %>
+ 	
+ 	<% if (request.getAttribute("SeAgregoCorrectamente")!= null) { %>
+ 		<p style= "color: green;">El turno se agrego correctamente..</p>
+ 	<% } %>
+ 	
+ 	
 </body>
 </html>
