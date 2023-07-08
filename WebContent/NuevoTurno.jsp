@@ -79,6 +79,14 @@
  		<p style= "color: red;">El medico Seleccionado no trabaja para la especialidad seleccionada.</p>
  	<%}  %>
  	
+ 	
+ 	  	<%
+ 	int valorParametroDias = 0;
+ 	
+ 	if (request.getAttribute("noCoincideHorarioPorMedico")!= null) {%>
+ 		<p style= "color: red;">El medico No trabaja en ese dia/hora seleccionada.</p>
+ 	<%}  %>
+ 	
  	<% if (request.getAttribute("SeAgregoCorrectamente")!= null) { %>
  		<p style= "color: green;">El turno se agrego correctamente..</p>
  	<% } %>
