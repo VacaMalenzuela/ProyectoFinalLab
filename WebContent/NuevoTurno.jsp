@@ -54,7 +54,7 @@
  		</div>
  		<div class="input-t">
  			<label for="horaTurno">Hora del turno</label>
-			<input id="horaTurno" type="number" min="1" max="24" required name="horaTurno"></input>
+			<input id="horaTurno" type="time" required name="horaTurno"></input>
  		</div>
  		<div class="input-t">
  			<label for="paciente">Busqueda Paciente</label>
@@ -64,7 +64,7 @@
           			pacienteDao pacNegocio = new pacienteDao ();
  					listaPaciente = pacNegocio.obtenerPacientes();	
 				for (Paciente objeto : listaPaciente) { %>
-				<option value="<%= objeto.getDni() %>"> <%= objeto.getDatoGeneralesPaciente() %></option><%}%> 
+				<option value="<%= objeto.getDni() %>"> <%= objeto.getDatoGenerales() %></option><%}%> 
 			</select>
  		</div>
  		

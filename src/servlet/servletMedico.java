@@ -61,9 +61,13 @@ public class servletMedico extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doGet(request, response);
 		if(request.getParameter("btnGuardarMedico") != null) {
-			int filasAgregaEspecialidades = 0;
-			int filasAgregaUsuario = AgregarUsuario(request.getParameter("txtUsuario"),request.getParameter("txtContrasena"));
-			if (filasAgregaUsuario == 1) { 
+			int filasAgregaMedico = 0;
+			int filasAgregaUsuario = 0; 
+			if (validaUsuario(request.getParameter("txtContrasena"), request.getParameter("txtContrasena1"))){
+				filasAgregaUsuario=AgregarUsuario(request.getParameter("txtUsuario"),request.getParameter("txtContrasena"));
+			}
+			
+			if (filasAgregaUsuario != 0) { 
 				Usuario usu = new Usuario(); 
 				UsuarioDao usuNeg = new UsuarioDao(); 
 				usu = usuNeg.obtenerUltimoUsuario();
@@ -96,14 +100,19 @@ public class servletMedico extends HttpServlet {
 			    	   
 			        }
 				
-				if (validaCampoMedico(med)) { 
+				if (validaCampoMedico(med, true)) { 
 					MedicoDao medicoNeg = new MedicoDao(); 
-					medicoNeg.agregarMedico(med);
+					filasAgregaMedico= medicoNeg.agregarMedico(med);
 				}
+				request.setAttribute("MedicoAgregado", filasAgregaMedico);
 				RequestDispatcher rd = request.getRequestDispatcher("/NuevoMedico.jsp");
 				rd.forward(request, response);
 			
-			}	
+			} else {
+				request.setAttribute("ContrasenasDistintas", 1);
+				RequestDispatcher rd = request.getRequestDispatcher("/NuevoMedico.jsp");
+				rd.forward(request, response);
+			}
 		} 
 		
 		if(request.getParameter("btnModificarMedico")!= null) {
@@ -135,7 +144,7 @@ public class servletMedico extends HttpServlet {
 		    	   
 		        }
 		    
-		    if (validaCampoMedico(med)) { 
+		    if (validaCampoMedico(med,false)) { 
 				MedicoDao medDao = new MedicoDao(); 
 				//Primero Elimina los horarios q contiene 
 				medDao.ElimnaHorariosXMedico(med.getDni().toString()); 
@@ -175,17 +184,39 @@ public class servletMedico extends HttpServlet {
 		return lstHoras;
 	}
 	
-	public Boolean validaCampoMedico(Medico med) { 
+	public Boolean validaCampoMedico(Medico med, Boolean esNuevoMedico) { 
 		Boolean camposCargado = true;
-		if (med.getNombre() == null || med.getApellido() == null || med.getDni() == null || med.getSexo() == null || med.getNacionalidad() == null || med.getFechaNacimiento() == null || med.getDireccion() == null || med.getLocalidad() == null || med.getProvincia() == null || med.getCorreoElectronico() == null || med.getTelefono() == null || med.getEspecialidad() == null || med.getUsuario() == null) {
-			camposCargado=false;
-		} else { 
-			
-			if (med.getNombre() == "" || med.getApellido() == "" || med.getDni() == "" || med.getSexo() == "" || med.getFechaNacimiento() == "" || med.getDireccion() == "" ||  med.getCorreoElectronico() == "" || med.getTelefono() == "" || med.getUsuario().getNombre() == "" || med.getUsuario().getClave() == "") {
+		
+		if (esNuevoMedico) { 
+			if (med.getNombre() == null || med.getApellido() == null || med.getDni() == null || med.getSexo() == null || med.getNacionalidad() == null || med.getFechaNacimiento() == null || med.getDireccion() == null || med.getLocalidad() == null || med.getProvincia() == null || med.getCorreoElectronico() == null || med.getTelefono() == null || med.getEspecialidad() == null || med.getUsuario() == null) {
 				camposCargado=false;
+			} else { 
+				
+				if (med.getNombre() == "" || med.getApellido() == "" || med.getDni() == "" || med.getSexo() == "" || med.getFechaNacimiento() == "" || med.getDireccion() == "" ||  med.getCorreoElectronico() == "" || med.getTelefono() == "" || med.getUsuario().getNombre() == "" || med.getUsuario().getClave() == "") {
+					camposCargado=false;
+				}
+			}
+		} else {
+			if (med.getNombre() == null || med.getApellido() == null || med.getDni() == null || med.getSexo() == null || med.getNacionalidad() == null || med.getFechaNacimiento() == null || med.getDireccion() == null || med.getLocalidad() == null || med.getProvincia() == null || med.getCorreoElectronico() == null || med.getTelefono() == null || med.getEspecialidad() == null) {
+				camposCargado=false;
+			} else { 
+				
+				if (med.getNombre() == "" || med.getApellido() == "" || med.getDni() == "" || med.getSexo() == "" || med.getFechaNacimiento() == "" || med.getDireccion() == "" ||  med.getCorreoElectronico() == "" || med.getTelefono() == "") {
+					camposCargado=false;
+				}
 			}
 		}
+
 		return camposCargado;
+	}
+	
+	public Boolean validaUsuario (String contrasena, String contrasena2) {
+		if (contrasena.toString().trim().equals(contrasena2.toString().trim())) {
+			return true; 
+		} else { 
+			return false;
+		}
+			
 	}
 
 }

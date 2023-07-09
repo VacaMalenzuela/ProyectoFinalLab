@@ -82,6 +82,10 @@ public void setTelefono(String telefono) {
 	Telefono = telefono;
 }
 
+public String getDatoGenerales() {
+    return this.getApellido() + " " + this.getNombre()+ " - (" + this.getDni() + " )";
+} 
+
 //CONSTRUCTOR 
 
 public Persona () { 

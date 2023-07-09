@@ -161,7 +161,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
         <%-- Genera los checkboxes para cada registro --%>
         <% for (Horarios registro : lstHorarios) { %>
             <label style="color:white;">
-                <input   type="checkbox" name="especialidad" value="<%= registro.getId() %>" />
+                <input   type="checkbox" name="horarios" value="<%= registro.getId() %>" />
                 <%= registro.getTurno() %>
             </label><br>
         <% } %>
@@ -207,7 +207,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
           	
           	<div class="input-fila">
           		<label style="color:white;" for="dni">DNI</label>
-				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objMedico.getDni() %>" >
+				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objMedico.getDni() %>" disabled>
 
           		
           	</div>
@@ -338,6 +338,25 @@ if(request.getParameter("btnModificarMedico")!= null) {
           
        	<% }%>
 	 </form>
-</div>                
+</div> 
+
+
+  	<%
+ 	int valorParametro = 0;
+ 	
+ 	if (request.getAttribute("ContrasenasDistintas")!= null) {%>
+ 		<p style= "color: red;">Las contraseñas no coinciden.</p>
+ 	<%}  %>        
+ 	
+ 	  	<%
+ 	int valorParametro1 = 0;
+ 	
+ 	if (request.getAttribute("MedicoAgregado")!= null) {
+ 		valorParametro1 = Integer.parseInt(request.getAttribute("MedicoAgregado").toString()); ; 
+ 		if (valorParametro1 != 0){ %>
+ 		<p style= "color: red;">Medico agregado correctamente.</p>
+ 		<%} 
+ 		
+ 	}  %>        
 </body>
 </html>

@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 import dominio.Usuario;
 import negocio.UsuarioDao;
 
@@ -34,6 +34,7 @@ public class ServletLogin extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		int ingresoCorrectamente = 1;
 		try {
 			if(request.getParameter("btnIngresar") != null) {
@@ -42,8 +43,18 @@ public class ServletLogin extends HttpServlet {
 				
 				usuario = usNeg.validoUsuarioLogueado(request.getParameter("txtUsuarioLogin"), request.getParameter("txtClaveLogin"));
 				if (usuario.getNombre() != null) { 
-					RequestDispatcher rd = request.getRequestDispatcher("/MenuPrincipal.jsp");
+					if (usuario.getTipo().getId() == 1) { 
+						session.setAttribute("usuarioLogueado", usuario);
+						RequestDispatcher rd = request.getRequestDispatcher("/MenuPrincipal.jsp");
 					rd.forward(request, response);
+					}
+					else { 
+						session.setAttribute("usuarioLogueado", usuario);
+						RequestDispatcher rd = request.getRequestDispatcher("/MisTurnos.jsp");
+						rd.forward(request, response);
+					}
+					
+					
 				} else { 
 					ingresoCorrectamente = 0; 
 					request.setAttribute("errorAlIngresar", ingresoCorrectamente);

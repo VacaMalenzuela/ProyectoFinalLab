@@ -57,7 +57,7 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           	
           	<div class="input-fila">
           		<label style="color:white;" for="dni">DNI</label>
-				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objpaciente.getDni() %>" >
+				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objpaciente.getDni() %>" disabled>
 
           		
           	</div>

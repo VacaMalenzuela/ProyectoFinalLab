@@ -177,6 +177,58 @@ public class MedicoDao {
 	
 	
 	
+	public Medico ObtenerMedicoPorUsuario(Usuario usu)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Medico med = new Medico();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			
+			
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Dni, Nombre, Apellido, sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono, idEspecialidad FROM MEDICOS WHERE Estado = 1 AND idUsuario = ? ;");
+			miSentencia.setInt(1, usu.getId()); //Cargo el ID recibido
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			med.setDni(resultado.getString(1));
+			med.setNombre(resultado.getString(2));
+			med.setApellido(resultado.getString(3));
+			med.setSexo(resultado.getString(4));
+				NacionalidadDao nacDao = new NacionalidadDao(); 
+				Nacionalidad nac = nacDao.obtenerNacionalidadPorId(resultado.getInt(5));
+				med.setNacionalidad(nac);
+			med.setFechaNacimiento(resultado.getString(6));
+			med.setDireccion(resultado.getString(7));
+				LocalidadDao locDao = new LocalidadDao();
+				Localidad loc = locDao.obtenerLocalidadPorId(resultado.getInt(8));
+				med.setLocalidad(loc);
+				ProvinciaDao provDao = new ProvinciaDao(); 
+				Provincia prov = provDao.obtenerProvinciaPorId(resultado.getInt(9));
+				med.setProvincia(prov);
+			med.setCorreoElectronico(resultado.getString(10));
+			med.setTelefono(resultado.getString(11));
+				EspecialidadDao espeDao = new EspecialidadDao(); 
+				Especialidad espe = espeDao.obtenerEspecialidadPorId(resultado.getInt(12));
+			med.setEspecialidad(espe);
+			
+			med.setUsuario(usu);
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return med;
+	}
 	public Medico obtenerMedicoPorDni(String id)
 	{
 		try {

@@ -21,7 +21,7 @@
 	<nav class="nav-bar">
 		<ul>
 			<li>
-				<a href="NuevoTurno.jsp" class="active">Turnos</a>
+				<a href="MisTurnos.jsp" class="active">Turnos</a>
 			</li>
 			<li>
 				<a href="MenuMedico.jsp" class="active">Medicos</a>
@@ -36,6 +36,9 @@
 	</nav>	
 </header>	
 
-
+	<div>
+	
+	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : ADMINISTRADOR </h3>
+	</div>
 </body>
 </html>

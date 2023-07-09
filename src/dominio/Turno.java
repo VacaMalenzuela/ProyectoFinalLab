@@ -3,11 +3,23 @@ package dominio;
 public class Turno {
 
 	private int Id; 
-	private Medico medico;
 	private String fecha;
-	private int hora;
+	private String hora;
+	private String observacion;
+	
 	private Paciente paciente;
 	private EstadoTurno estado;
+	private Medico medico;
+	
+	
+	public String getObservacion() {
+		return observacion;
+	}
+
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
 	
 	public Turno() {}
 
@@ -30,10 +42,10 @@ public class Turno {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public int getHora() {
+	public String getHora() {
 		return hora;
 	}
-	public void setHora(int hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
 	public Paciente getPaciente() {
@@ -48,6 +60,10 @@ public class Turno {
 	public void setEstado(EstadoTurno estado) {
 		this.estado = estado;
 	}
+	public String getFechaTurno() {
+        return this.getFecha()+ " - " + this.getHora();
+    }
+	
 	
 	
 }

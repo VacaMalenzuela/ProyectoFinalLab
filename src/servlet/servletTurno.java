@@ -51,7 +51,8 @@ public class servletTurno extends HttpServlet {
 		
 		if(request.getParameter("btnGuardarTurno") != null) {
 			if (validarEspecialidadXMedico(request.getParameter("especialidad").toString(), request.getParameter("medico")) == true){ 
-				if ( validaHorarioPorMedico(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(), Integer.parseInt(request.getParameter("horaTurno")))== true) {
+				Boolean coincideHorario =  validaHorarioPorMedico(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(), request.getParameter("horaTurno"));
+				if ( validaHorarioPorMedico(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(), request.getParameter("horaTurno"))) {
 					//Carga Objeto turno 
 					Turno tur = new Turno(); 
 						MedicoDao medDao= new MedicoDao(); 
@@ -64,7 +65,7 @@ public class servletTurno extends HttpServlet {
 					
 					
 					tur.setFecha(request.getParameter("fechaTurno"));
-					tur.setHora(Integer.parseInt(request.getParameter("horaTurno")));
+					tur.setHora(request.getParameter("horaTurno"));
 						TurnoDao turDao = new TurnoDao(); 
 					EstadoTurno estado = turDao.obtenerEstadoDefault();
 					tur.setEstado(estado);
@@ -119,9 +120,12 @@ public class servletTurno extends HttpServlet {
 	}
 	
 	
-	public Boolean validaHorarioPorMedico (String dni, String fecha, int hora) { 
+	public Boolean validaHorarioPorMedico (String dni, String fecha, String time) { 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         
+        int hora = Integer.parseInt(time.substring(0, time.indexOf(":")));
+        
+        //int horaParseada = Integer.parseInt(hora);
         Boolean CoincideHorarioXturno = false;
         try { 
         	Date fechaDate = format.parse(fecha);
@@ -148,11 +152,13 @@ public class servletTurno extends HttpServlet {
 		Medico med = medDao.obtenerMedicoPorDni(dni); 
 		Boolean trabajaEnEseHorario = false;
 		for(Horarios hs : med.getHorarios()) { 
-			if (hs.getDia() == dia &&  hora>= hs.getHorarioInicio() && hora <= hs.getHorarioFin()) { 
-				trabajaEnEseHorario= true; 
-				break;
-				
+			if (hs.getDia().equals(dia)) {
+				if (hora>= hs.getHorarioInicio() && hora <= hs.getHorarioFin()) { 
+					trabajaEnEseHorario= true; 
+					break;
+				}
 			}
+
 		}
 		
 		return trabajaEnEseHorario;
