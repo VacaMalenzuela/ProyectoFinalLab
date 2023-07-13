@@ -8,6 +8,8 @@
 <%@ page import="dominio.Localidad" %>
 <%@ page import="negocio.pacienteDao" %>
 <%@ page import="dominio.Paciente" %>
+
+<%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,31 +40,15 @@
 </head>
 <body>
 <div class=adm>
+
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<% if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
 	
 	 	<h2>Administrar Pacientes</h2>
 		
 		<form method="get" action="ServletPaciente">
-
-			<div class="fila">
-	          	<div class="input-fila">
-		          	<label for="BuscarPaciente">Buscar Paciente</label>
-					<input id=BuscarPaciente type="search" placeholder="Buscar"  name="Busqueda"></input>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-	          		<label for="Provincia">Provincia</label>
-					<select id=Provincia>
-					<option disabled selected>Filtrar por Provincia</option> 
-					</select>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-					<label for="fechaNac">Filtrar pot fecha de nacimiento</label>
-					<input id=fechaNac type="date">
-	          	</div>
- 	
-          	</div>
-			          <% 
+<% 
           pacienteDao traeTodos = new pacienteDao();
      ArrayList<Paciente> lstPaciente= traeTodos.obtenerPacientes();
   
@@ -135,5 +121,11 @@
 	     	<%} %>
 	     	
 	</div>
+	
+	<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página.");
+	response.sendRedirect("Error.jsp");
+	
+}%>
 </body>
 </html>

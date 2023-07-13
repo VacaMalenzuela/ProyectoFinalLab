@@ -2,7 +2,7 @@
 <%@ page import="negocio.EspecialidadDao" %>
 <%@ page import="java.util.ArrayList" %>
 
-
+<%@ page import="dominio.Usuario" %>
 <%@ page import="dominio.Nacionalidad" %>
 <%@ page import="negocio.NacionalidadDao" %>
 <%@ page import="negocio.ProvinciaDao" %>
@@ -27,6 +27,10 @@
 <title>Nuevo medico</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
+
 <%	
 Medico objMedico = new Medico();
 if(request.getParameter("btnModificarMedico")!= null) {
@@ -193,28 +197,28 @@ if(request.getParameter("btnModificarMedico")!= null) {
 	<div class="fila">
           	<div class="input-fila">
           	<label style="color:white;" for="apellido">Apellidos</label>
-          	<input id=apellido type="text" placeholder="Ingrese Apellidos" required name="txtApellido" value = "<%= objMedico.getApellido() %>">
+          	<input id=apellido type="text" placeholder="Ingrese Apellidos" required name="txtApellidoModif" value = "<%= objMedico.getApellido() %>">
    
           		
           	</div>
           	
           	<div class="input-fila">
           		<label style="color:white;" for="nombre">Nombres</label>
-				<input id=nombre type="text" placeholder="Ingrese Nombres" required name="txtNombre" value="<%= objMedico.getNombre() %>" >
+				<input id=nombre type="text" placeholder="Ingrese Nombres" required name="txtNombreModif" value="<%= objMedico.getNombre() %>" >
           	
           		
           	</div>
           	
           	<div class="input-fila">
           		<label style="color:white;" for="dni">DNI</label>
-				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objMedico.getDni() %>" disabled>
+				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objMedico.getDni() %>">
 
           		
           	</div>
           	
           <div class="input-fila">
           		<label style="color:white;" for="mail">Sexo</label>
-          			<select id=sexo required name="sexo"> 
+          			<select id=sexo required name="sexoModif"> 
 					<option disabled selected>Selecciona un Sexo</option> 
 					<option value="hombre" <%= "hombre".equals(objMedico.getSexo()) ? "selected" : "" %>>Hombre</option>
 					<option value="mujer" <%= "mujer".equals(objMedico.getSexo()) ? "selected" : "" %>>Mujer</option>
@@ -227,7 +231,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
 
           	<div class="input-fila">
           		<label style="color:white;" for="nacionalidad">Nacionalidad</label>
-          	<select id=nacionalidad required name="nacionalidad"> 
+          	<select id=nacionalidad required name="nacionalidadModif"> 
 				<option disabled selected>Selecciona una nacionalidad</option> 
 				<% ArrayList<Nacionalidad> listaNac = new ArrayList<Nacionalidad> ();
           				NacionalidadDao nacNegocio = new NacionalidadDao ();
@@ -244,7 +248,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
           	 
           	<div class="input-fila">
           		<label style="color:white;" for="fechaNac">Fecha de Nacimiento</label>
-				<input id=fechaNac type="date" required name="fechaNac" value="<%= objMedico.getFechaNacimiento() %>" >
+				<input id=fechaNac type="date" required name="fechaNacModif" value="<%= objMedico.getFechaNacimiento() %>" >
           	
           	
           		
@@ -252,12 +256,12 @@ if(request.getParameter("btnModificarMedico")!= null) {
 
           	<div class="input-fila">
           		<label style="color:white;" for="direccion">Direccion</label>
-				<input id=direccion type="text" placeholder="Ingrese Direccion" required name="txtDireccion" value="<%= objMedico.getDireccion() %>" >
+				<input id=direccion type="text" placeholder="Ingrese Direccion" required name="txtDireccionModif" value="<%= objMedico.getDireccion() %>" >
           	</div>
           	
           	<div class="input-fila">
           		<label style="color:white;" for="mail">Provincia</label>
-				<select id=provincia required name="Sprovincia"> 
+				<select id=provincia required name="SprovinciaModif"> 
 				<option disabled selected>Selecciona una Provincia</option> 
 						<% ArrayList<Provincia> listaProv = new ArrayList<Provincia>();
           				ProvinciaDao provNegocio = new ProvinciaDao ();
@@ -273,7 +277,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
        	
           	<div class="input-fila">
           		<label style="color:white;" for="mail">Localidad</label>
-				<select id=localidad required name="Slocalidad">
+				<select id=localidad required name="SlocalidadModif">
 				<option disabled selected>Selecciona una Localidad</option>  
 										<% ArrayList<Localidad> listaLoc = new ArrayList<Localidad>();
           				LocalidadDao localidadNegocio = new LocalidadDao ();
@@ -290,17 +294,17 @@ if(request.getParameter("btnModificarMedico")!= null) {
           	
           	<div class="input-fila">
           		<label style="color:white;" for="mail">Correo Electronico</label>
-				<input id=mail type="email" placeholder="Ingrese Correo electrronico" required name="txtEmail" value="<%= objMedico.getCorreoElectronico() %>">
+				<input id=mail type="email" placeholder="Ingrese Correo electrronico" required name="txtEmailModif" value="<%= objMedico.getCorreoElectronico() %>">
           	</div>
           	
           	<div class="input-fila">
           		<label style="color:white;" for="tel">Telefono</label>
-				<input id=tel type="number" maxlenght="20" placeholder="Ingrese Telefono" required name="txtTel" value="<%= objMedico.getTelefono() %>" >
+				<input id=tel type="number" maxlenght="20" placeholder="Ingrese Telefono" required name="txtTelModif" value="<%= objMedico.getTelefono() %>" >
           	</div>
           	
           	<div class="input-fila">
           		<label for="especialidad">Especialidad</label>
-				<select id=especialidad required name="Sespecialidad"> 
+				<select id=especialidad required name="SespecialidadModif"> 
 				<option disabled selected>Selecciona una Especialidad</option> 
 												<% ArrayList<Especialidad> listaEspe = new ArrayList<Especialidad> ();
           				EspecialidadDao espeNegocio = new EspecialidadDao ();
@@ -314,7 +318,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
           	</div>
           	
           <div class = "input-fila">
-			<label for="horarios" > Horarios</label>
+			<label for="horariosModif" > Horarios</label>
 			
         <% ArrayList<Horarios> lstHorarios = new ArrayList<Horarios>();
 		HorariosDao hsNeg = new HorariosDao(); 
@@ -324,7 +328,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
         <%-- Genera los checkboxes para cada registro --%>
         <% for (Horarios registro : lstHorarios) { %>
             <label style="color:white;">
-            <input type="checkbox" name="horarios" value="<%= registro.getId() %>" <% if (objMedico.getHorarios().contains(registro)== true) { %> checked <% } %>> <%= registro.getTurno() %>
+            <input type="checkbox" name="horariosModif" value="<%= registro.getId() %>" <% if (objMedico.getHorarios().contains(registro)== true) { %> checked <% } %>> <%= registro.getTurno() %>
             </label><br>
         <% } %>
           	</div>
@@ -354,9 +358,28 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	if (request.getAttribute("MedicoAgregado")!= null) {
  		valorParametro1 = Integer.parseInt(request.getAttribute("MedicoAgregado").toString()); ; 
  		if (valorParametro1 != 0){ %>
- 		<p style= "color: red;">Medico agregado correctamente.</p>
+ 		<p style= "color: green;">Medico agregado correctamente.</p>
  		<%} 
  		
- 	}  %>        
+ 	}  %>     
+ 	
+ 	
+ 	 	  	<%
+ 	int valorParametro2 = 0;
+ 	
+ 	if (request.getAttribute("YaExisteDni")!= null) {
+ 		valorParametro2 = Integer.parseInt(request.getAttribute("YaExisteDni").toString()); ; 
+ 		if (valorParametro1 != 0){ %>
+ 		<p style= "color: red;">El dni ingresado ya existe.</p>
+ 		<%} 
+ 		
+ 	}  %>  
+ 	
+ 	
+ 	<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+	response.sendRedirect("Error.jsp");
+	
+}%>  
 </body>
 </html>

@@ -6,6 +6,7 @@
 <%@ page import="negocio.LocalidadDao" %>
 <%@ page import="dominio.Localidad" %>
 <%@ page import="dominio.Paciente" %>
+<%@ page import="dominio.Usuario" %>
 <%@ page import="negocio.pacienteDao" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -20,6 +21,10 @@
 <title>Nuevo paciente</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
+
 <%	
 Paciente objpaciente = new Paciente();
 if(request.getParameter("btnModificarPaciente")!= null) {
@@ -57,7 +62,7 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           	
           	<div class="input-fila">
           		<label style="color:white;" for="dni">DNI</label>
-				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objpaciente.getDni() %>" disabled>
+				<input id=dni type="text" maxlenght="8" placeholder="Ingrese DNI" required name="txtDni" value="<%= objpaciente.getDni() %>">
 
           		
           	</div>
@@ -294,6 +299,10 @@ if(request.getAttribute("seGuardo") != null){
 <%}%>
     
 </div>             
-
+<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+	response.sendRedirect("Error.jsp");
+	
+}%> 
 </body>
 </html>

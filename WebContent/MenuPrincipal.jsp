@@ -1,3 +1,5 @@
+
+<%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +13,9 @@
 <title>Inicio</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<% if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
 <header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
@@ -29,16 +34,19 @@
 			<li>
 				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
 			</li>
-			<li>
-				<a href="" class="active">Usuarios</a>
-			</li>
 		</ul>
 	</nav>	
 </header>	
 
 	<div>
 	
-	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : ADMINISTRADOR </h3>
+	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : ADMINISTRADOR </h4>
 	</div>
+	
+	<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página.");
+	response.sendRedirect("Error.jsp");
+	
+}%>
 </body>
 </html>

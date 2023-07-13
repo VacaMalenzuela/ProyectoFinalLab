@@ -364,7 +364,7 @@ public class MedicoDao {
 		{
 			cn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = cn.createStatement();
-			String query1 = "UPDATE MEDICOS SET Nombre='"+med.getNombre()+"', APELLIDO = '"+med.getApellido()+"', sexo='"+med.getSexo()+"', idNacionalidad = "+med.getNacionalidad().getId()+", fechaNacimiento = '"+med.getFechaNacimiento()+"', Direccion = '"+med.getDireccion()+"', idLocalidad = "+med.getLocalidad().getId()+", idProvincia = "+med.getProvincia().getId()+", CorreoElectronico = '"+med.getCorreoElectronico()+"', Telefono = '"+med.getTelefono()+"', idEspecialidad = "+med.getEspecialidad().getId()+" where Dni = '43383650';";
+			String query1 = "UPDATE MEDICOS SET Nombre='"+med.getNombre()+"', APELLIDO = '"+med.getApellido()+"', sexo='"+med.getSexo()+"', idNacionalidad = "+med.getNacionalidad().getId()+", fechaNacimiento = '"+med.getFechaNacimiento()+"', Direccion = '"+med.getDireccion()+"', idLocalidad = "+med.getLocalidad().getId()+", idProvincia = "+med.getProvincia().getId()+", CorreoElectronico = '"+med.getCorreoElectronico()+"', Telefono = '"+med.getTelefono()+"', idEspecialidad = "+med.getEspecialidad().getId()+" where Dni = '"+med.getDni()+"' ;";
 	
 			filas+=st.executeUpdate(query1);		
 		}

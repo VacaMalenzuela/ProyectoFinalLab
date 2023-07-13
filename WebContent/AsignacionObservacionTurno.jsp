@@ -1,6 +1,7 @@
 <%@ page import="dominio.Turno" %>
 <%@ page import="negocio.TurnoDao" %>
 <%@ page import="dominio.EstadoTurno" %>
+<%@ page import="dominio.Usuario" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -15,6 +16,10 @@
 <title>Turno</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<%if (usuLogueado != null && usuLogueado.getTipo().getId() == 2){%>
+	
 
 <%	
 Turno objTurno = new Turno();
@@ -57,8 +62,17 @@ if(request.getParameter("btnModificarTurno")!= null) {
  			<label for="observacion">Observacion</label>
 			<input id="observacion" type="text"  name="observacion"></input>
  		</div>
- 		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar" name="btnGuardarTurno">
+ 		<input type="hidden" name="idTurno" value="<%= objTurno.getId() %> ">
+  <input class="boton" type="submit" value="Enviar">
+ 		
     </form>
 </div> 
+
+<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+	response.sendRedirect("Error.jsp");
+	
+}%>
+
 </body>
 </html>

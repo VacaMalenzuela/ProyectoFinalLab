@@ -51,33 +51,41 @@ public class servletTurno extends HttpServlet {
 		
 		if(request.getParameter("btnGuardarTurno") != null) {
 			if (validarEspecialidadXMedico(request.getParameter("especialidad").toString(), request.getParameter("medico")) == true){ 
-				Boolean coincideHorario =  validaHorarioPorMedico(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(), request.getParameter("horaTurno"));
+				
 				if ( validaHorarioPorMedico(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(), request.getParameter("horaTurno"))) {
-					//Carga Objeto turno 
-					Turno tur = new Turno(); 
-						MedicoDao medDao= new MedicoDao(); 
-						Medico med = medDao.obtenerMedicoPorDni(request.getParameter("medico")); 
-					tur.setMedico(med);
-						pacienteDao pacDao = new pacienteDao(); 
-						Paciente pac = pacDao.obtenerPacientePorDni(request.getParameter("SPaciente"));
-					tur.setPaciente(pac);
 					
+					if (validaTurnosEnHorarioSeleccionado(request.getParameter("medico").toString(), request.getParameter("fechaTurno").toString(),request.getParameter("horaTurno"))) {
+						//Carga Objeto turno 
+						Turno tur = new Turno(); 
+							MedicoDao medDao= new MedicoDao(); 
+							Medico med = medDao.obtenerMedicoPorDni(request.getParameter("medico")); 
+						tur.setMedico(med);
+							pacienteDao pacDao = new pacienteDao(); 
+							Paciente pac = pacDao.obtenerPacientePorDni(request.getParameter("SPaciente"));
+						tur.setPaciente(pac);
+						
+						
+						
+						tur.setFecha(request.getParameter("fechaTurno"));
+						tur.setHora(request.getParameter("horaTurno"));
+							TurnoDao turDao = new TurnoDao(); 
+						EstadoTurno estado = turDao.obtenerEstadoDefault();
+						tur.setEstado(estado);
+						
+						
+						
+						// Agrega Turno a la base
+						
+						turDao.agregarTurno(tur);
+						request.setAttribute("SeAgregoCorrectamente", 1);
+						RequestDispatcher rd = request.getRequestDispatcher("/NuevoTurno.jsp");
+						rd.forward(request, response);
+					} else {
+						request.setAttribute("TieneTurnoEnHorarioSeleccionado", 1);
+						RequestDispatcher rd = request.getRequestDispatcher("/NuevoTurno.jsp");
+						rd.forward(request, response);
+					}
 					
-					
-					tur.setFecha(request.getParameter("fechaTurno"));
-					tur.setHora(request.getParameter("horaTurno"));
-						TurnoDao turDao = new TurnoDao(); 
-					EstadoTurno estado = turDao.obtenerEstadoDefault();
-					tur.setEstado(estado);
-					
-					
-					
-					// Agrega Turno a la base
-					
-					turDao.agregarTurno(tur);
-					request.setAttribute("SeAgregoCorrectamente", 1);
-					RequestDispatcher rd = request.getRequestDispatcher("/NuevoTurno.jsp");
-					rd.forward(request, response);
 				} else {
 					request.setAttribute("noCoincideHorarioPorMedico", 1);
 					RequestDispatcher rd = request.getRequestDispatcher("/NuevoTurno.jsp");
@@ -188,5 +196,22 @@ public class servletTurno extends HttpServlet {
 		
 		
 		return "";
+	}
+	
+	
+	public Boolean validaTurnosEnHorarioSeleccionado (String Dni, String Fecha, String Hora) { 
+		int idTurno=0;
+		TurnoDao turNegocio = new TurnoDao(); 
+		int horaSinMin = Integer.parseInt(Hora.substring(0, 2));
+		Turno tur = turNegocio.ObtenerTurnosPorFechaYhora (Dni, Fecha, horaSinMin);
+		idTurno = tur.getId();
+		
+		if (idTurno != 0) {
+			return false;
+		} else { 
+			return true;
+		}
+		
+		
 	}
 }

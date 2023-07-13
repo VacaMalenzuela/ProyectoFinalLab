@@ -1,7 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dominio.Medico" %>
 <%@ page import="negocio.MedicoDao" %>
-
+<%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,38 +15,18 @@
 <title>Administrar Medicos</title>
 </head>
 <body>
-
+<% Usuario us =  (Usuario)session.getAttribute("usuarioLogueado");
+if (us != null && us.getTipo().getId()==1){ %>
+	
 	<div class=adm>
 	
 	 	<h2>Administrar Médicos</h2>
 		
 		<form method="get" action="servletMedico">
 
-			<div class="fila">
-	          	<div class="input-fila">
-		          	<label for="buscarTurno">Buscar turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-	          		<label for="especialidad">Filtrar por especialidad</label>
-					<select id=especialidad>
-					<option disabled selected>Elegir especialidad</option> 
-					</select>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-	          		<label for="provincia">Filtrar por provincia</label>
-					<select id=provincia>
-					<option disabled selected>Elegir provincia</option> 
-					</select>
-	          	</div>
- 	
-          	</div>
-						          <% 
+<% 
           MedicoDao traeTodos = new MedicoDao();
      ArrayList<Medico> lstMedico= traeTodos.obtenerMedicos();
-  
     %>
 			<table class="tabla">
 				<thead>
@@ -92,6 +72,9 @@
 					border-radius: 4px; text-decoration:none;">Nuevo Medico</a>
 	     	</form>	
 	</div>
-	
+	<%} else {  
+		session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página.");
+		response.sendRedirect("Error.jsp");
+	}%>
 </body>
 </html>

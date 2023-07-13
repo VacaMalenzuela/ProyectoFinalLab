@@ -5,6 +5,8 @@
 <%@ page import="negocio.EspecialidadDao" %>
 <%@ page import="dominio.Medico" %>
 <%@ page import="negocio.MedicoDao" %>
+
+<%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,6 +20,9 @@
 <title>Nuevo turno</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
 <div class="form-t" >
 	<h2>NUEVO TURNO</h2>
 	
@@ -87,10 +92,21 @@
  		<p style= "color: red;">El medico No trabaja en ese dia/hora seleccionada.</p>
  	<%}  %>
  	
+ 	 	  	<%
+ 	int valorParametroTurnoEnDiaSelec = 0;
+ 	
+ 	if (request.getAttribute("TieneTurnoEnHorarioSeleccionado")!= null) {%>
+ 		<p style= "color: red;">El medico ya tiene turnos asignados en el horario seleccionado.</p>
+ 	<%}  %>
+ 	
  	<% if (request.getAttribute("SeAgregoCorrectamente")!= null) { %>
  		<p style= "color: green;">El turno se agrego correctamente..</p>
  	<% } %>
  	
- 	
+ 	<%} else { 
+	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+	response.sendRedirect("Error.jsp");
+	
+}%>
 </body>
 </html>

@@ -11,7 +11,7 @@
 <%@ page import="dominio.Medico" %>
 <%@ page import="negocio.TurnoDao" %>
 <%@ page import="dominio.Turno" %>
-
+<%@ page import="dominio.EstadoTurno" %>
 <%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -28,30 +28,32 @@
 <body>
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
-
+<%if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+response.sendRedirect("Error.jsp");}%>
 <%if (usuLogueado.getTipo().getId()== 1){ %>
 		<div class=adm>
 	
 	 	<h2>Administrar Turnos</h2>
-		
+		<form method="get" action="servletObservacionTurno">
 		
 
 			<div class="fila">
 	          	<div class="input-fila">
-		          	<label for="fechaTurno">Buscar Turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
-	          	</div>
-	          	
-	          	<div class="input-fila">
 	          		<label for="estado">Estado</label>
-					<select id=estado>
-					<option disabled selected>Filtrar por estado</option> 
-					</select>
+						<select id="estados" required name="estados"> 
+				<option disabled selected>Selecciona el estado</option> 
+			<% ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
+          				TurnoDao turnoNegocio = new TurnoDao ();
+ 					listaEstados = turnoNegocio.obtenerEstadosTurnos();
+          	if(listaEstados != null){ 	
+				for (EstadoTurno objeto : listaEstados) { %>
+				<option value="<%= objeto.getId() %>"> <%= objeto.getEstado() %></option>
+  <% } }%> 
+  </select>
 	          	</div>
-	          	
 	          	<div class="input-fila">
-					<label for="fechaTurno">Fecha del turno</label>
-					<input id=fechaTurno type="date">
+					<input class="boton" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
+					
 	          	</div>
  	
           	</div>
@@ -73,9 +75,16 @@
 				<tbody>
 					<tr>
 			     		<% TurnoDao turNeg = new TurnoDao(); 
-			     		ArrayList<Turno> lstTurno = turNeg.obtenerTurnos(); 
-							
-     if (lstTurno!=null) 
+			     		ArrayList<Turno> lstTurno;
+			     		int idEstadoFiltrar =0;
+			     		if (request.getAttribute("estadoSeleccionado") != null){ 
+			     			 idEstadoFiltrar = Integer.parseInt(request.getAttribute("estadoSeleccionado").toString()); 
+			     			lstTurno = turNeg.obtenerTurnos(idEstadoFiltrar);
+			     		} else {
+			     			lstTurno = turNeg.obtenerTurnos(idEstadoFiltrar);
+			     		}
+			     				
+    
 	 for(Turno item : lstTurno) {%>
      <tr>
      	<td> <%=item.getPaciente().getApellido() %></td>   
@@ -91,6 +100,7 @@
 				</tbody>
 
 		     	</table>
+		     	</form>	
 		     	<br><br>
 		     		<a href="NuevoTurno.jsp" style="	width: 150px;
 					background: black;
@@ -111,20 +121,21 @@
 
 			<div class="fila">
 	          	<div class="input-fila">
-		          	<label for="fechaTurno">Buscar Turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
-	          	</div>
-	          	
-	          	<div class="input-fila">
 	          		<label for="estado">Estado</label>
-					<select id=estado>
-					<option disabled selected>Filtrar por estado</option> 
-					</select>
+						<select id="estados" required name="estados"> 
+				<option disabled selected>Selecciona el estado</option> 
+			<% ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
+          				TurnoDao turnoNegocio = new TurnoDao ();
+ 					listaEstados = turnoNegocio.obtenerEstadosTurnos();
+          	if(listaEstados != null){ 	
+				for (EstadoTurno objeto : listaEstados) { %>
+				<option value="<%= objeto.getId() %>"> <%= objeto.getEstado() %></option>
+  <% } }%> 
+  </select>
 	          	</div>
-	          	
 	          	<div class="input-fila">
-					<label for="fechaTurno">Fecha del turno</label>
-					<input id=fechaTurno type="date">
+					<input class="boton" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
+					
 	          	</div>
  	
           	</div>
@@ -148,9 +159,18 @@
 			     		MedicoDao medNeg = new MedicoDao(); 
 							Medico med = medNeg.ObtenerMedicoPorUsuario(usuLogueado);
 			     		TurnoDao turNeg = new TurnoDao(); 
-			     		ArrayList<Turno> lstTurno = turNeg.ObtenerTurnosPorMedico(med); 
+			     		ArrayList<Turno> lstTurno; 
+			     		
+			     		
+			     		int idEstadoFiltrar =0;
+			     		if (request.getAttribute("estadoSeleccionado") != null){ 
+			     			 idEstadoFiltrar = Integer.parseInt(request.getAttribute("estadoSeleccionado").toString()); 
+			     			lstTurno = turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar);
+			     		} else {
+			     			lstTurno= turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar); 
+			     		}
 							
-     if (lstTurno!=null) 
+     
 	 for(Turno item : lstTurno) {%>
      <tr>
      	<td> <%=item.getPaciente().getApellido() %></td>   
@@ -172,7 +192,7 @@
 	
 	<div>
 	
-	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : <%= med.getDatoGenerales() %> </h3>
+	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : <%= med.getDatoGenerales() %> </h4>
 	</div>
 <%} %>
 

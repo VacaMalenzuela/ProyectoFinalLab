@@ -186,7 +186,7 @@ public class TurnoDao {
 		
 	}
 	
-	public ArrayList<Turno> obtenerTurnos() {
+	public ArrayList<Turno> obtenerTurnos(int filtro) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -198,8 +198,13 @@ public class TurnoDao {
 		try{
 			conn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = conn.createStatement();
+			ResultSet rs;
+			if (filtro == 0) { 
+				 rs = st.executeQuery("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones FROM Turnos;");
+			} else { 
+				 rs = st.executeQuery("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones FROM Turnos WHERE IdEstado= "+filtro+";");
+			}
 			
-			ResultSet rs = st.executeQuery("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones FROM Turnos;");
 			
 			while(rs.next()){
 				Turno tur = new Turno(); 
@@ -231,7 +236,7 @@ public class TurnoDao {
 	}
 	
 	
-	public ArrayList<Turno> ObtenerTurnosPorMedico (Medico med) { 
+	public ArrayList<Turno> ObtenerTurnosPorMedico (Medico med,int filtro) { 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -243,8 +248,13 @@ public class TurnoDao {
 		try{
 			conn = DriverManager.getConnection(host+dbName, user,pass);
 			Statement st = conn.createStatement();
-			
-			ResultSet rs = st.executeQuery("Select Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones from Turnos WHERE dniMedico = "+med.getDni()+" ;");
+			ResultSet rs;
+			if (filtro == 0) {
+				rs = st.executeQuery("Select Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones from Turnos WHERE dniMedico = "+med.getDni()+" ;");
+			} else {
+				rs = st.executeQuery("Select Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones from Turnos WHERE dniMedico = "+med.getDni()+" AND IdEstado = "+filtro+"  ;");
+			}
+			 
 			
 			while(rs.next()){
 				
@@ -271,6 +281,72 @@ public class TurnoDao {
 		}
 		
 		return lista;
+	}
+	
+	
+	public int ActualizarTurno (Turno tur) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int filas=0;
+		Connection cn = null;
+		try
+		{
+			cn = DriverManager.getConnection(host+dbName, user,pass);
+			Statement st = cn.createStatement();
+			String query = "UPDATE Turnos SET IdEstado = " + tur.getEstado().getId()+" , Observaciones = '"+tur.getObservacion()+"' where Id = "+tur.getId()+";";
+			filas=st.executeUpdate(query);
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return filas;
+		
+	}
+	
+	public Turno ObtenerTurnosPorFechaYhora (String Dni, String Fecha, int Hora) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Turno tur = new Turno();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado FROM TURNOS where dniMedico = '"+Dni+"' AND Fecha = '"+Fecha+"' AND Hora = "+Hora+" ;"); 
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			tur.setId(resultado.getInt(1));
+			MedicoDao medNeg = new MedicoDao(); 
+			Medico med = medNeg.obtenerMedicoPorDni(resultado.getString(2));
+			tur.setMedico(med);
+			tur.setFecha(resultado.getString(3));
+			tur.setHora(resultado.getString(4));
+			
+			pacienteDao pacDao = new pacienteDao(); 
+			Paciente pac = pacDao.obtenerPacientePorDni(resultado.getString(5));
+			tur.setPaciente(pac);
+			EstadoTurno est = this.obtenerEstadoPorId(resultado.getString(6));
+			tur.setEstado(est);
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return tur;
 	}
 
 }
