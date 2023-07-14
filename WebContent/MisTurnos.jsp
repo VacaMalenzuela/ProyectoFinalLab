@@ -52,7 +52,7 @@ response.sendRedirect("Error.jsp");}%>
   </select>
 	          	</div>
 	          	<div class="input-fila">
-					<input class="boton" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
+					<input class="botonAdm" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
 					
 	          	</div>
  	

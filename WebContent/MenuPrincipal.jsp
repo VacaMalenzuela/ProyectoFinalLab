@@ -34,6 +34,9 @@
 			<li>
 				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
 			</li>
+			<li>
+				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
 		</ul>
 	</nav>	
 </header>	

@@ -163,7 +163,7 @@ FOREIGN KEY (IdEstado) REFERENCES EstadosTurnos (Id)
    
    
 
-   Insert into Horarios (dia, horarioInicio, horarioFin)values ('Lunes', 7,15);
+  	 Insert into Horarios (dia, horarioInicio, horarioFin)values ('Lunes', 7,15);
      Insert into Horarios (dia, horarioInicio, horarioFin)values ('Lunes', 15,24);
      Insert into Horarios (dia, horarioInicio, horarioFin)values ('Martes', 7,15);
      Insert into Horarios (dia, horarioInicio, horarioFin)values ('Martes', 15,24);

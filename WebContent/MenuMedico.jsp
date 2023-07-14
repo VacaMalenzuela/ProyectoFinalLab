@@ -18,11 +18,33 @@
 <% Usuario us =  (Usuario)session.getAttribute("usuarioLogueado");
 if (us != null && us.getTipo().getId()==1){ %>
 	
-	<div class=adm>
+<div class=adm>
 	
 	 	<h2>Administrar Médicos</h2>
 		
 		<form method="get" action="servletMedico">
+		
+		<div class="fila">
+	          	<div class="input-fila">
+		          	<label for="buscarTurno">Buscar turno</label>
+					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="especialidad">Filtrar por especialidad</label>
+					<select id=especialidad>
+					<option disabled selected>Elegir especialidad</option> 
+					</select>
+	          	</div>
+	          	
+	          	<div class="input-fila">
+	          		<label for="provincia">Filtrar por provincia</label>
+					<select id=provincia>
+					<option disabled selected>Elegir provincia</option> 
+					</select>
+	          	</div>
+ 	
+          	</div>
 
 <% 
           MedicoDao traeTodos = new MedicoDao();
