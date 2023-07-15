@@ -73,7 +73,7 @@
 			</select>
  		</div>
  		
- 		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar" required name="btnGuardarTurno">
+ 		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar">
  	</form>
  </div>
  

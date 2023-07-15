@@ -24,7 +24,6 @@
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-	
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8"
@@ -53,7 +52,7 @@
      ArrayList<Paciente> lstPaciente= traeTodos.obtenerPacientes();
   
     %>
-			<table id="datatble" class="tabla">
+			<table id="datatable" class="tabla">
 				<thead>
 					<tr>
 			     		<th>APELLIDO</th>

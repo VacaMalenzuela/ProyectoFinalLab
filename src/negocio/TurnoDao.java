@@ -348,5 +348,64 @@ public class TurnoDao {
 		}
 		return tur;
 	}
+	
+	public Turno ObtenerTurnosEntreFechas (String FechaDesde, string FechaHasta) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Turno tur = new Turno();
+		ArrayList<Turno> lista = new ArrayList<Turno>();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado FROM TURNOS where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" ;"); 
+			ResultSet resultado = miSentencia.executeQuery();
+			/*resultado.next();
+			
+			tur.setId(resultado.getInt(1));
+			MedicoDao medNeg = new MedicoDao(); 
+			Medico med = medNeg.obtenerMedicoPorDni(resultado.getString(2));
+			tur.setMedico(med);
+			tur.setFecha(resultado.getString(3));
+			tur.setHora(resultado.getString(4));
+			
+			pacienteDao pacDao = new pacienteDao(); 
+			Paciente pac = pacDao.obtenerPacientePorDni(resultado.getString(5));
+			tur.setPaciente(pac);
+			EstadoTurno est = this.obtenerEstadoPorId(resultado.getString(6));
+			tur.setEstado(est);*/
+			
+			while(resultado.next()){
+				
+				Turno tur = new Turno(); 
+				tur.setId(rs.getInt("Id"));
+				tur.setFecha(rs.getString("Fecha"));
+				tur.setHora(rs.getString("Hora"));
+				tur.setObservacion(rs.getString("Observaciones"));
+				tur.setMedico(med);
+				
+				pacienteDao pacNegocio = new pacienteDao(); 
+				Paciente pac = pacNegocio.obtenerPacientePorDni(rs.getString("dniPaciente"));
+				tur.setPaciente(pac);
+				
+				EstadoTurno estadoTurno = this.obtenerEstadoPorId(rs.getString("IdEstado"));
+				tur.setEstado(estadoTurno);
+				lista.add(tur);
+			}
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return lista;
+	}
 
 }

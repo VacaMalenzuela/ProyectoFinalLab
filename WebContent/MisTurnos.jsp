@@ -23,6 +23,20 @@
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
 </style>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#datatable').DataTable();
+	});
+</script>
+
 <title>Administrar turnos</title>
 </head>
 <body>
@@ -39,8 +53,7 @@ response.sendRedirect("Error.jsp");}%>
 
 			<div class="fila">
 	          	<div class="input-fila">
-	          		<label for="estado">Estado</label>
-						<select id="estados" required name="estados"> 
+						<select id="estados"> 
 				<option disabled selected>Selecciona el estado</option> 
 			<% ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
           				TurnoDao turnoNegocio = new TurnoDao ();
@@ -52,13 +65,13 @@ response.sendRedirect("Error.jsp");}%>
   </select>
 	          	</div>
 	          	<div class="input-fila">
-					<input class="botonAdm" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
+					<input class="botonAdm" id="btnFiltraPorEstado" type="submit" value="Filtrar">
 					
 	          	</div>
- 	
+	          	<div class="input-fila"></div>
           	</div>
 			
-			<table class="tabla">
+			<table id="datatable" class="tabla">
 				<thead>
 					<tr>
 			     		<th>APELLIDO PACIENTE</th>
