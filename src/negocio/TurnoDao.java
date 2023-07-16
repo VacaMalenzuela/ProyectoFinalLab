@@ -407,5 +407,33 @@ public class TurnoDao {
 		}
 		return lista;
 	}
+	
+	public Turno PorcentajeOcupados (String FechaDesde, string FechaHasta) { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Turno tur = new Turno();
+		int porcentaje = 0;
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT (SELECT Count(*) where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" AND IdEstado = 1) / (SELECT Count(*) where Fecha between '"+FechaDesde+"' AND "+FechaHasta+") FROM TURNOS  ;");
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return resultado;
+	}
 
 }

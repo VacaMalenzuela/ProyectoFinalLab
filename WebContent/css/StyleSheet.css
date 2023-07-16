@@ -341,7 +341,7 @@ form .fila .input-fila{
 .tabla{
 	width:100%;
 	border-radius: 6px;
-	padding: 20px;
+	padding: 10px;
 	background: #A9DFBF ;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 	color: black;
@@ -351,7 +351,7 @@ form .fila .input-fila{
 
 
 .tabla th {
-	padding: 5px;
+	padding: 3px;
 }
 
 .botonAdm{

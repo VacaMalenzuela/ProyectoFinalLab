@@ -24,7 +24,30 @@
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
 <%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
-
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="MisTurnos.jsp" class="active">Turnos</a>
+			</li>
+			<li>
+				<a href="MenuMedico.jsp" class="active">Medicos</a>
+			</li>
+			<li>
+				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
+			</li>
+			<li>
+				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
 <%	
 Paciente objpaciente = new Paciente();
 if(request.getParameter("btnModificarPaciente")!= null) {

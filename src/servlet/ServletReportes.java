@@ -48,7 +48,6 @@ public class ServletReportes extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/Reportes.jsp");
 			rd.forward(request, response);
 			
-			
 		}
 	}
 

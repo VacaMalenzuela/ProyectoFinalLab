@@ -40,6 +40,30 @@
 
 </head>
 <body>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="MisTurnos.jsp" class="active">Turnos</a>
+			</li>
+			<li>
+				<a href="MenuMedico.jsp" class="active">Medicos</a>
+			</li>
+			<li>
+				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
+			</li>
+			<li>
+				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
 <div class=adm>
 
 	<h2>Reportes</h2>
@@ -61,6 +85,21 @@
 	 		</div>
 		</div>
 		
+		<% 
+			     		ArrayList<Turno> lstTurno = null; 
+			    		if (request.getAttribute("listaT") != null){
+			    			lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");%>
+		
+		<div class=form-r>
+			<h2>ESTADOS</h2>
+			<div class=fila>
+				<label for="libres">LIBRES</label> <label for=porcLibres></label>
+				<label for="ocupados">OCUPADOS</label> <label for=porcOcupados></label>
+				<label for="ausentes">AUSENTES</label> <label for=porcAusentes></label>	
+				<label for="presentes">PRESENTES</label> <label for=porcPresentes></label>
+			</div>
+		</div>
+		
 		<table id="datatable" class="tabla">
 				<thead>
 					<tr>
@@ -76,19 +115,7 @@
 				</thead>
 				<tbody>
 					<tr>
-			     		<% 
-			     		ArrayList<Turno> lstTurno = null; 
-			    		if (request.getAttribute("listaT") != null){
-			    			lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");
-			    		}
-			     		/*int idEstadoFiltrar =0;
-			     		if (request.getAttribute("estadoSeleccionado") != null){ 
-			     			 idEstadoFiltrar = Integer.parseInt(request.getAttribute("estadoSeleccionado").toString()); 
-			     			lstTurno = turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar);
-			     		} else {
-			     			lstTurno= turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar); 
-			     		}*/
-							
+			     		<%=	
      					if (lstTurno != null)
 						 for(Turno item : lstTurno) {%>
 					     <tr>

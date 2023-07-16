@@ -38,6 +38,30 @@
 <title>Administrar Pacientes</title>
 </head>
 <body>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="MisTurnos.jsp" class="active">Turnos</a>
+			</li>
+			<li>
+				<a href="MenuMedico.jsp" class="active">Medicos</a>
+			</li>
+			<li>
+				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
+			</li>
+			<li>
+				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
 <div class=adm>
 
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
