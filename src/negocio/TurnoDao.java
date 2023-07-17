@@ -349,7 +349,7 @@ public class TurnoDao {
 		return tur;
 	}
 	
-	public Turno ObtenerTurnosEntreFechas (String FechaDesde, string FechaHasta) { 
+	public ArrayList<Turno> ObtenerTurnosEntreFechas (String FechaDesde, String FechaHasta) { 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -363,7 +363,7 @@ public class TurnoDao {
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
 			PreparedStatement miSentencia = con.prepareStatement("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado FROM TURNOS where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" ;"); 
-			ResultSet resultado = miSentencia.executeQuery();
+			ResultSet rs = miSentencia.executeQuery();
 			/*resultado.next();
 			
 			tur.setId(resultado.getInt(1));
@@ -379,7 +379,7 @@ public class TurnoDao {
 			EstadoTurno est = this.obtenerEstadoPorId(resultado.getString(6));
 			tur.setEstado(est);*/
 			
-			while(resultado.next()){
+			while(rs.next()){
 				
 				Turno tur = new Turno(); 
 				tur.setId(rs.getInt("Id"));
@@ -408,7 +408,7 @@ public class TurnoDao {
 		return lista;
 	}
 	
-	public Turno PorcentajeOcupados (String FechaDesde, string FechaHasta) { 
+	/*public Turno PorcentajeOcupados (String FechaDesde, string FechaHasta) { 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -434,6 +434,6 @@ public class TurnoDao {
 		{
 		}
 		return resultado;
-	}
+	}*/
 
 }

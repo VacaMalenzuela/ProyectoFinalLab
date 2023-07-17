@@ -100,37 +100,7 @@
 			</div>
 		</div>
 		
-		<table id="datatable" class="tabla">
-				<thead>
-					<tr>
-			     		<th>APELLIDO PACIENTE</th>
-			     		<th>NOMBRE PACIENTE</th>
-			     		 <th>DNI PACIENTE</th>
-			     		 <th>APELLIDO MEDICO</th>
-			     		 <th>NOMBRE MEDICO</th>
-			     		 <th>ESPECIALIDAD</th>
-			     		 <th>FECHA</th>
-			     		 <th>ESTADO</th>
-		     		</tr>
-				</thead>
-				<tbody>
-					<tr>
-			     		<%=	
-     					if (lstTurno != null)
-						 for(Turno item : lstTurno) {%>
-					     <tr>
-					     	<td> <%=item.getPaciente().getApellido() %></td>   
-					     	<td><%=item.getPaciente().getNombre() %> </td>  
-					     	<td> <%=item.getPaciente().getDni() %></td>  
-					     	<td> <%=item.getMedico().getApellido() %></td>    
-					     	<td> <%=item.getMedico().getNombre() %></td>  
-					     	<td> <%=item.getMedico().getEspecialidad() %></td> 
-					     	<td> <%=item.getFechaTurno() %></td> 
-					     	<td> <%=item.getEstado().getEstado() %></td>
 
-				     </tr>
-				     <%} %>
-				</tbody>
 	</form>
 </div>
 	
