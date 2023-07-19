@@ -44,7 +44,7 @@
 
 <%if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
 response.sendRedirect("Error.jsp");}%>
-<%if (usuLogueado.getTipo().getId()== 1){ %>
+<%if (usuLogueado.getTipo().getId()> 0){ %>
 
 <header>
 	<div class="logo">CLINICA MEDICA</div>
@@ -52,6 +52,9 @@ response.sendRedirect("Error.jsp");}%>
 		<div class="line"></div>
 		<div class="line"></div>
 		<div class="line"></div>
+	</div>
+	</div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
 		<ul>
@@ -66,6 +69,9 @@ response.sendRedirect("Error.jsp");}%>
 			</li>
 			<li>
 				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
 			</li>
 		</ul>
 	</nav>	
@@ -111,7 +117,6 @@ response.sendRedirect("Error.jsp");}%>
 				</thead>
 					
 				<tbody>
-					<tr>
 			     		<% TurnoDao turNeg = new TurnoDao(); 
 			     		ArrayList<Turno> lstTurno;
 			     		int idEstadoFiltrar =0;
@@ -225,13 +230,7 @@ response.sendRedirect("Error.jsp");}%>
 		     	</table>
 	     	</form>	
 	</div>
-	
-	
-	
-	<div>
-	
-	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : <%= med.getDatoGenerales() %> </h4>
-	</div>
+
 <%} %>
 
 

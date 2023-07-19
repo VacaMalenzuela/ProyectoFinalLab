@@ -52,6 +52,9 @@
 			<li>
 				<a href="Reportes.jsp" class="active">Reportes</a>
 			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
 		</ul>
 	</nav>	
 </header>

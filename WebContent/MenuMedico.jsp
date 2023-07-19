@@ -12,17 +12,35 @@
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
 </style>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#datatable').DataTable();
+	});
+</script>
+
 <title>Administrar Medicos</title>
 </head>
 <body>
-<% Usuario us =  (Usuario)session.getAttribute("usuarioLogueado");
-if (us != null && us.getTipo().getId()==1){ %>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<% if (usuLogueado != null){%>
+
 <header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
 		<div class="line"></div>
 		<div class="line"></div>
 		<div class="line"></div>
+	</div>
+	</div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
 		<ul>
@@ -38,42 +56,22 @@ if (us != null && us.getTipo().getId()==1){ %>
 			<li>
 				<a href="Reportes.jsp" class="active">Reportes</a>
 			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
 		</ul>
 	</nav>	
 </header>	
 <div class=adm>
-	
-	 	<h2>Administrar Médicos</h2>
+		 	<h2>Administrar Médicos</h2>
 		
 		<form method="get" action="servletMedico">
-		
-		<div class="fila">
-	          	<div class="input-fila">
-		          	<label for="buscarTurno">Buscar turno</label>
-					<input id=BuscarTurno type="search" placeholder="Buscar"  name="Busqueda"></input>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-	          		<label for="especialidad">Filtrar por especialidad</label>
-					<select id=especialidad>
-					<option disabled selected>Elegir especialidad</option> 
-					</select>
-	          	</div>
-	          	
-	          	<div class="input-fila">
-	          		<label for="provincia">Filtrar por provincia</label>
-					<select id=provincia>
-					<option disabled selected>Elegir provincia</option> 
-					</select>
-	          	</div>
- 	
-          	</div>
 
 <% 
           MedicoDao traeTodos = new MedicoDao();
      ArrayList<Medico> lstMedico= traeTodos.obtenerMedicos();
     %>
-			<table class="tabla">
+			<table  id="datatable" class="tabla">
 				<thead>
 					<tr>
 			     		<th>APELLIDO</th>
@@ -87,7 +85,6 @@ if (us != null && us.getTipo().getId()==1){ %>
 				</thead>
 					
 				<tbody>
-					<tr>
 						     <%
      if (lstMedico!=null) 
 	 for(Medico item : lstMedico) {%>

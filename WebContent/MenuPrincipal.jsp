@@ -15,7 +15,7 @@
 <body>
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
-<% if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
+<% if (usuLogueado != null){%>
 <header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
@@ -23,6 +23,10 @@
 		<div class="line"></div>
 		<div class="line"></div>
 	</div>
+	
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
+	</div>
+	
 	<nav class="nav-bar">
 		<ul>
 			<li>
@@ -37,14 +41,15 @@
 			<li>
 				<a href="Reportes.jsp" class="active">Reportes</a>
 			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
 		</ul>
 	</nav>	
 </header>	
 
 	<div>
 	
-	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : ADMINISTRADOR </h4>
-	</div>
 	
 	<%} else { 
 	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página.");

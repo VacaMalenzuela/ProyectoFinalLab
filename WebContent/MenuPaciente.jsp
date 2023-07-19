@@ -8,7 +8,6 @@
 <%@ page import="dominio.Localidad" %>
 <%@ page import="negocio.pacienteDao" %>
 <%@ page import="dominio.Paciente" %>
-
 <%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -38,12 +37,18 @@
 <title>Administrar Pacientes</title>
 </head>
 <body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
+
+<% if (usuLogueado != null){%>
 <header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
 		<div class="line"></div>
 		<div class="line"></div>
 		<div class="line"></div>
+	</div>
+	</div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
 		<ul>
@@ -59,15 +64,14 @@
 			<li>
 				<a href="Reportes.jsp" class="active">Reportes</a>
 			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
 		</ul>
 	</nav>	
 </header>
 <div class=adm>
 
-<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
-
-<% if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
-	
 	 	<h2>Administrar Pacientes</h2>
 		
 		<form method="get" action="ServletPaciente">

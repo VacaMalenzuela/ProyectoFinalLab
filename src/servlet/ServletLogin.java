@@ -43,16 +43,16 @@ public class ServletLogin extends HttpServlet {
 				
 				usuario = usNeg.validoUsuarioLogueado(request.getParameter("txtUsuarioLogin"), request.getParameter("txtClaveLogin"));
 				if (usuario.getNombre() != null) { 
-					if (usuario.getTipo().getId() == 1) { 
+					//if (usuario.getTipo().getId() == 1 ) { 
 						session.setAttribute("usuarioLogueado", usuario);
 						RequestDispatcher rd = request.getRequestDispatcher("/MenuPrincipal.jsp");
 					rd.forward(request, response);
-					}
-					else { 
+					//}
+					/*else { 
 						session.setAttribute("usuarioLogueado", usuario);
 						RequestDispatcher rd = request.getRequestDispatcher("/MisTurnos.jsp");
 						rd.forward(request, response);
-					}
+					}*/
 					
 					
 				} else { 

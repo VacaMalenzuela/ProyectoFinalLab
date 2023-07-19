@@ -18,7 +18,7 @@ String comentarioError = (String)session.getAttribute("ErrorSession");
 %>
 
 <h3 style="color:#99A3A4; text-align:center;"> <%= comentarioError.toString()%></h3>
-
+<a href="Login.jsp" style="display: flex; justify-content: center" >Volver a ingresar</a>
 
 
 </body>
