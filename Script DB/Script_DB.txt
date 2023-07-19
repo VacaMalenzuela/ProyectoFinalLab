@@ -1,4 +1,4 @@
---DROP SCHEMA clinicamedica;
+DROP SCHEMA clinicamedica;
 
 CREATE SCHEMA clinicamedica;
 USE clinicamedica;
@@ -51,7 +51,7 @@ CREATE TABLE Usuarios (
     Clave varchar(50) DEFAULT NULL,
     idTipoUsuario int NOT NULL,
     FOREIGN KEY (idTipoUsuario) REFERENCES Tipousuarios (Id),
-    PRIMARY KEY (Id),
+    PRIMARY KEY (Id)
 );
 
 CREATE TABLE Medicos (
@@ -169,7 +169,7 @@ INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('San Luis', (select i
 INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santa Cruz', (select id from nacionalidades where nacionalidad = 'Argentina'));
 INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santa Fe', (select id from nacionalidades where nacionalidad = 'Argentina'));
 INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santiago del Estero', (select id from nacionalidades where nacionalidad = 'Argentina'));
-INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', (select id from nacionalidades where nacionalidad = 'Argentina'));
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Tierra del Fuego', (select id from nacionalidades where nacionalidad = 'Argentina'));
 INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Tucumán', (select id from nacionalidades where nacionalidad = 'Argentina'));
 
 INSERT INTO Localidades (localidad, idprovincia) VALUES ('La Plata', (select id from provincias where provincia = 'Buenos Aires'));
