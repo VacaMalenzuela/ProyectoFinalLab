@@ -7,15 +7,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import dominio.Especialidad;
 import dominio.EstadoTurno;
-import dominio.Localidad;
 import dominio.Medico;
-import dominio.Nacionalidad;
 import dominio.Paciente;
-import dominio.Provincia;
 import dominio.Turno;
-import dominio.Usuario;
 
 
 public class TurnoDao {
@@ -51,6 +46,51 @@ public class TurnoDao {
 		return filas;
 	}
 	
+	public ArrayList<Turno> ObtenerTurnos () { 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ArrayList<Turno> lista = new ArrayList<Turno>();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			Statement miSentencia = con.createStatement(); 
+			ResultSet rs = miSentencia.executeQuery("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones FROM TURNOS");
+			
+			
+			while(rs.next()){
+				
+				Turno tur = new Turno(); 
+				tur.setId(rs.getInt("Id"));
+				tur.setFecha(rs.getString("Fecha"));
+				tur.setHora(rs.getString("Hora"));
+				tur.setObservacion(rs.getString("Observaciones"));
+				MedicoDao medNeg = new MedicoDao(); 
+				Medico med = medNeg.obtenerMedicoPorDni(rs.getString(2));
+				tur.setMedico(med);
+				pacienteDao pacNegocio = new pacienteDao(); 
+				Paciente pac = pacNegocio.obtenerPacientePorDni(rs.getString("dniPaciente"));
+				tur.setPaciente(pac);
+				EstadoTurno estadoTurno = this.obtenerEstadoPorId(rs.getString("IdEstado"));
+				tur.setEstado(estadoTurno);
+				
+				lista.add(tur);
+			}
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return lista;
+	}
 	
 	public EstadoTurno obtenerEstadoDefault () { 
 		try {
@@ -356,28 +396,13 @@ public class TurnoDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//Turno tur = new Turno();
+
 		ArrayList<Turno> lista = new ArrayList<Turno>();
 		Connection con = null;
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("SELECT Id, dniMedico, Fecha, Hora, dniPaciente, IdEstado FROM TURNOS where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" ;"); 
-			ResultSet rs = miSentencia.executeQuery();
-			/*resultado.next();
-			
-			tur.setId(resultado.getInt(1));
-			MedicoDao medNeg = new MedicoDao(); 
-			Medico med = medNeg.obtenerMedicoPorDni(resultado.getString(2));
-			tur.setMedico(med);
-			tur.setFecha(resultado.getString(3));
-			tur.setHora(resultado.getString(4));
-			
-			pacienteDao pacDao = new pacienteDao(); 
-			Paciente pac = pacDao.obtenerPacientePorDni(resultado.getString(5));
-			tur.setPaciente(pac);
-			EstadoTurno est = this.obtenerEstadoPorId(resultado.getString(6));
-			tur.setEstado(est);*/
+			Statement miSentencia = con.createStatement(); 
+			ResultSet rs = miSentencia.executeQuery("SELECT Id, dniMedico, Fecha, dniPaciente, IdEstado FROM TURNOS where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" ;");
 			
 			while(rs.next()){
 				
@@ -386,14 +411,15 @@ public class TurnoDao {
 				tur.setFecha(rs.getString("Fecha"));
 				tur.setHora(rs.getString("Hora"));
 				tur.setObservacion(rs.getString("Observaciones"));
+				MedicoDao medNeg = new MedicoDao(); 
+				Medico med = medNeg.obtenerMedicoPorDni(rs.getString(2));
 				tur.setMedico(med);
-				
 				pacienteDao pacNegocio = new pacienteDao(); 
 				Paciente pac = pacNegocio.obtenerPacientePorDni(rs.getString("dniPaciente"));
 				tur.setPaciente(pac);
-				
 				EstadoTurno estadoTurno = this.obtenerEstadoPorId(rs.getString("IdEstado"));
 				tur.setEstado(estadoTurno);
+				
 				lista.add(tur);
 			}
 		    

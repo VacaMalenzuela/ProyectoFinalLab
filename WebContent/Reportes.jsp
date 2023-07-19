@@ -1,18 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dominio.Nacionalidad" %>
-<%@ page import="negocio.NacionalidadDao" %>
-<%@ page import="negocio.ProvinciaDao" %>
-<%@ page import="dominio.Provincia" %>
-<%@ page import="negocio.LocalidadDao" %>
-<%@ page import="dominio.Localidad" %>
-<%@ page import="negocio.pacienteDao" %>
-<%@ page import="dominio.Paciente" %>
-<%@ page import="negocio.MedicoDao" %>
-<%@ page import="dominio.Medico" %>
-<%@ page import="negocio.TurnoDao" %>
 <%@ page import="dominio.Turno" %>
-<%@ page import="dominio.EstadoTurno" %>
-<%@ page import="dominio.Usuario" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -86,9 +74,11 @@
 		</div>
 		
 		<% 
-			     		ArrayList<Turno> lstTurno = null; 
-			    		if (request.getAttribute("listaT") != null){
-			    			lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");%>
+		ArrayList<Turno> lstTurno = null; 
+		if (request.getAttribute("listaT") != null){
+			lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");
+		}   		
+		%>
 		
 		<div class=form-r>
 			<h2>ESTADOS</h2>
@@ -100,7 +90,37 @@
 			</div>
 		</div>
 		
-
+		<table id="datatable" class="tabla">
+				<thead>
+					<tr>
+			     		<th>APELLIDO PACIENTE</th>
+			     		<th>NOMBRE PACIENTE</th>
+			     		 <th>DNI PACIENTE</th>
+			     		 <th>APELLIDO MEDICO</th>
+			     		 <th>NOMBRE MEDICO</th>
+			     		 <th>ESPECIALIDAD</th>
+			     		 <th>FECHA</th>
+			     		 <th>ESTADO</th>
+		     		</tr>
+				</thead>
+				<tbody>
+					<tr>
+			     		<%	
+     					if (lstTurno != null)
+						 for(Turno item : lstTurno) {%>
+					     <tr>
+					     	<td> <%=item.getPaciente().getApellido() %></td>   
+					     	<td><%=item.getPaciente().getNombre() %> </td>  
+					     	<td> <%=item.getPaciente().getDni() %></td>  
+					     	<td> <%=item.getMedico().getApellido() %></td>    
+					     	<td> <%=item.getMedico().getNombre() %></td>  
+					     	<td> <%=item.getMedico().getEspecialidad() %></td> 
+					     	<td> <%=item.getFechaTurno() %></td> 
+					     	<td> <%=item.getEstado().getEstado() %></td>
+				     </tr>
+				     <%} %>
+				</tbody>
+			</table>
 	</form>
 </div>
 	

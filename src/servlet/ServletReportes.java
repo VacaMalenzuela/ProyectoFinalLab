@@ -44,7 +44,7 @@ public class ServletReportes extends HttpServlet {
 		if(request.getParameter("btnReporte") != null) {
 			TurnoDao turNeg = new TurnoDao();
 			ArrayList<Turno> lista = turNeg.ObtenerTurnosEntreFechas(request.getParameter("desde").toString(), request.getParameter("hasta").toString()) ; 
-			request.setAttribute("listaT", "lista");
+			request.setAttribute("listaT", lista);
 			RequestDispatcher rd = request.getRequestDispatcher("/Reportes.jsp");
 			rd.forward(request, response);
 			
