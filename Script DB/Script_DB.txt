@@ -13,7 +13,7 @@ CREATE TABLE Provincias (
     Id int(11) NOT NULL AUTO_INCREMENT,
     Provincia varchar(50) NOT NULL,
     idNacionalidad int DEFAULT NULL,
-    FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id)
+    FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id),
     PRIMARY KEY (Id)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE Localidades (
     Id int NOT NULL AUTO_INCREMENT,
     Localidad varchar(50) DEFAULT NULL,
     idProvincia int DEFAULT NULL,
-    FOREIGN KEY (idProvincia) REFERENCES Provincias (Id)
+    FOREIGN KEY (idProvincia) REFERENCES Provincias (Id),
     PRIMARY KEY (Id)
 ); 
 
@@ -50,9 +50,8 @@ CREATE TABLE Usuarios (
     Nombre varchar(50) DEFAULT NULL,
     Clave varchar(50) DEFAULT NULL,
     idTipoUsuario int NOT NULL,
+    FOREIGN KEY (idTipoUsuario) REFERENCES Tipousuarios (Id),
     PRIMARY KEY (Id),
-    KEY idTipoUsuario (idTipoUsuario),
-    FOREIGN KEY (idTipoUsuario) REFERENCES Tipousuarios (Id)
 );
 
 CREATE TABLE Medicos (
