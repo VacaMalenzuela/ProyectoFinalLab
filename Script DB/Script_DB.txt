@@ -3,11 +3,27 @@
 CREATE SCHEMA clinicamedica;
 USE clinicamedica;
 
+CREATE TABLE Nacionalidades (
+    Id int NOT NULL AUTO_INCREMENT,
+    Nacionalidad varchar(50) DEFAULT NULL,
+    PRIMARY KEY (Id)
+);
+
 CREATE TABLE Provincias (
     Id int(11) NOT NULL AUTO_INCREMENT,
     Provincia varchar(50) NOT NULL,
+    idNacionalidad int DEFAULT NULL,
+    FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id)
     PRIMARY KEY (Id)
 );
+
+CREATE TABLE Localidades (
+    Id int NOT NULL AUTO_INCREMENT,
+    Localidad varchar(50) DEFAULT NULL,
+    idProvincia int DEFAULT NULL,
+    FOREIGN KEY (idProvincia) REFERENCES Provincias (Id)
+    PRIMARY KEY (Id)
+); 
 
 CREATE TABLE Especialidades (
     Id int NOT NULL AUTO_INCREMENT,
@@ -23,18 +39,6 @@ CREATE TABLE Horarios (
     PRIMARY KEY (Id)
 ); 
 
-CREATE TABLE Localidades (
-    Id int NOT NULL AUTO_INCREMENT,
-    Localidad varchar(50) DEFAULT NULL,
-    PRIMARY KEY (Id)
-); 
-
-CREATE TABLE Nacionalidades (
-    Id int NOT NULL AUTO_INCREMENT,
-    Nacionalidad varchar(50) DEFAULT NULL,
-    PRIMARY KEY (Id)
-);
-
 CREATE TABLE Tipousuarios (
     Id int NOT NULL AUTO_INCREMENT,
     tipo varchar(50) DEFAULT NULL,
@@ -48,9 +52,8 @@ CREATE TABLE Usuarios (
     idTipoUsuario int NOT NULL,
     PRIMARY KEY (Id),
     KEY idTipoUsuario (idTipoUsuario),
-    FOREIGN KEY (idTipoUsuario) REFERENCES tipousuarios (Id)
+    FOREIGN KEY (idTipoUsuario) REFERENCES Tipousuarios (Id)
 );
-
 
 CREATE TABLE Medicos (
     Dni varchar(50) NOT NULL UNIQUE,
@@ -68,11 +71,11 @@ CREATE TABLE Medicos (
     idUsuario int NOT NULL,
     Estado tinyint (1) not null,
     PRIMARY KEY (Dni),
-    FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
-    FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
-    FOREIGN KEY (idLocalidad) REFERENCES localidades (ID),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios (Id),
-    FOREIGN KEY (idEspecialidad) REFERENCES especialidades (Id)
+    FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id),
+    FOREIGN KEY (idProvincia) REFERENCES Provincias (Id),
+    FOREIGN KEY (idLocalidad) REFERENCES Localidades (ID),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (Id),
+    FOREIGN KEY (idEspecialidad) REFERENCES Especialidades (Id)
 );
 
 CREATE TABLE Pacientes (
@@ -89,9 +92,9 @@ CREATE TABLE Pacientes (
     Telefono varchar(50) NOT NULL,
     Estado tinyint(1) NOT NULL,
     PRIMARY KEY (Dni),
-    FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades (Id),
-    FOREIGN KEY (idProvincia) REFERENCES provincias (Id),
-    FOREIGN KEY (idLocalidad) REFERENCES localidades (Id)
+    FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id),
+    FOREIGN KEY (idProvincia) REFERENCES Provincias (Id),
+    FOREIGN KEY (idLocalidad) REFERENCES Localidades (Id)
 ); 
 
 CREATE TABLE MedicoXhorario (
@@ -99,8 +102,8 @@ CREATE TABLE MedicoXhorario (
     dniMedico varchar(50) NOT NULL,
     idHorario int NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (dniMedico) REFERENCES medicos (Dni),
-    FOREIGN KEY (idHorario) REFERENCES horarios (Id)
+    FOREIGN KEY (dniMedico) REFERENCES Medicos (Dni),
+    FOREIGN KEY (idHorario) REFERENCES Horarios (Id)
 );
 
 CREATE TABLE EstadosTurnos (
@@ -118,8 +121,8 @@ CREATE TABLE Turnos (
     IdEstado int NOT NULL,
     Observaciones varchar(100) null,
     PRIMARY KEY (Id),
-    FOREIGN KEY (dniMedico) REFERENCES medicos (Dni),
-    FOREIGN KEY (dniPaciente) REFERENCES pacientes (Dni),
+    FOREIGN KEY (dniMedico) REFERENCES Medicos (Dni),
+    FOREIGN KEY (dniPaciente) REFERENCES Pacientes (Dni),
     FOREIGN KEY (IdEstado) REFERENCES EstadosTurnos (Id)
 );
 
@@ -128,42 +131,79 @@ INSERT INTO EstadosTurnos (Estado) VALUES ('Libre');
 INSERT INTO EstadosTurnos (Estado) VALUES ('Ocupado'); 
 INSERT INTO EstadosTurnos (Estado) VALUES ('Presente'); 
 
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Alemania'); 
 INSERT INTO Nacionalidades (nacionalidad) VALUES ('Argentina'); 
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Australia');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Brasil');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Chile');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('China');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Colombia');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Egipto'); 
 INSERT INTO Nacionalidades (nacionalidad) VALUES ('España');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Estados Unidos');
 INSERT INTO Nacionalidades (nacionalidad) VALUES ('Italia');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Japón');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Namibia');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Nueva Zelanda');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Sudáfrica');
+INSERT INTO Nacionalidades (nacionalidad) VALUES ('Uruguay');
 
-INSERT INTO Provincias (provincia) VALUES ('Buenos Aires', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Capital Federal', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Catamarca', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Chaco', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Chubut', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Córdoba', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Corrientes', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Entre Ríos', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Formosa', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Jujuy', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('La Pampa', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('La Rioja', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Mendoza', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Misiones', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Neuquén', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Río Negro', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Salta', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('San Juan', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('San Luis', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Santa Cruz', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Santa Fe', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Santiago del Estero', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', (select id from nacionalidades where nacionalidad = 'Argentina');
-INSERT INTO Provincias (provincia) VALUES ('Tucumán', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Buenos Aires', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Capital Federal', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Catamarca', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Chaco', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Chubut', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Córdoba', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Corrientes', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Entre Ríos', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Formosa', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Jujuy', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('La Pampa', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('La Rioja', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Mendoza', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Misiones', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Neuquén', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Río Negro', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Salta', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('San Juan', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('San Luis', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santa Cruz', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santa Fe', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Santiago del Estero', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', (select id from nacionalidades where nacionalidad = 'Argentina');
+INSERT INTO Provincias (provincia, idnacionalidad) VALUES ('Tucumán', (select id from nacionalidades where nacionalidad = 'Argentina');
 
-INSERT INTO Especialidades (especialidad) VALUES ('Pediatría');
-INSERT INTO Especialidades (especialidad) VALUES ('Oftalmología');
-INSERT INTO Especialidades (especialidad) VALUES ('Ortopedia');
-INSERT INTO Especialidades (especialidad) VALUES ('Neumología');
-INSERT INTO Especialidades (especialidad) VALUES ('Nefrología');
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('La Plata', (select id from provincias where provincia = 'Buenos Aires'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Pilar', (select id from provincias where provincia = 'Buenos Aires'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('San Isidro', (select id from provincias where provincia = 'Buenos Aires'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Tandil', (select id from provincias where provincia = 'Buenos Aires'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Tigre', (select id from provincias where provincia = 'Buenos Aires'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Uspallata', (select id from provincias where provincia = 'Mendoza'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Malargüe', (select id from provincias where provincia = 'Mendoza'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Mendoza', (select id from provincias where provincia = 'Mendoza'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Venado Tuerdo', (select id from provincias where provincia = 'Santa Fe'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Esperanza', (select id from provincias where provincia = 'Santa Fe'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Totoras', (select id from provincias where provincia = 'Santa Fe'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Santa Rosa', (select id from provincias where provincia = 'La Pampa'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Toay', (select id from provincias where provincia = 'La Pampa'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Caleta Olivia', (select id from provincias where provincia = 'Santa Cruz'));
+INSERT INTO Localidades (localidad, idprovincia) VALUES ('Río Gallegos', (select id from provincias where provincia = 'Santa Cruz'));
+
+INSERT INTO Especialidades (especialidad) VALUES ('Cardiología');
+INSERT INTO Especialidades (especialidad) VALUES ('Clínico');
+INSERT INTO Especialidades (especialidad) VALUES ('Dermatología');
+INSERT INTO Especialidades (especialidad) VALUES ('Gastroenterología');
 INSERT INTO Especialidades (especialidad) VALUES ('Hematología');
+INSERT INTO Especialidades (especialidad) VALUES ('Nefrología');
+INSERT INTO Especialidades (especialidad) VALUES ('Neumología');
+INSERT INTO Especialidades (especialidad) VALUES ('Obstetricia');
+INSERT INTO Especialidades (especialidad) VALUES ('Odontología');
+INSERT INTO Especialidades (especialidad) VALUES ('Oftalmología');
 INSERT INTO Especialidades (especialidad) VALUES ('Oncología Pediátrica');
+INSERT INTO Especialidades (especialidad) VALUES ('Otorrinolaringología');
+INSERT INTO Especialidades (especialidad) VALUES ('Pediatría');
+INSERT INTO Especialidades (especialidad) VALUES ('Radiología');
+INSERT INTO Especialidades (especialidad) VALUES ('Traumatología');
 
 INSERT INTO TipoUsuarios(tipo) VALUES ('Administrador');
 INSERT INTO TipoUsuarios(tipo) VALUES ('Medico');
@@ -201,26 +241,25 @@ INSERT INTO Usuarios (Nombre, Clave, idTipoUsuario) VALUES ('sanchez', 'sanchez'
 INSERT INTO Usuarios (Nombre, Clave, idTipoUsuario) VALUES ('torres', 'torres', 2);
 INSERT INTO Usuarios (Nombre, Clave, idTipoUsuario) VALUES ('alvarez', 'alvarez', 2);
 
--- No está idLocalidad (¿mejor dejamos "localidad" como varchar?)
-INSERT INTO Pacientes (Dni, Nombre, Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idProvincia, CorreoElectronico, Telefono, Estado) VALUES
-('39569388', 'Benjamín', 'Acosta', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569389', 'Catalina', 'Benítez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569390', 'Elena', 'Diaz', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569391', 'Emilia', 'Fernández', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569392', 'Juan', 'Flores', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569393', 'Lucía', 'García', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569394', 'Martina', 'González', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569395', 'María', 'Gómez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569396', 'Mateo', 'López', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569397', 'Matías', 'Martínez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569398', 'Nicolás', 'Pérez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569399', 'Paula', 'Ramírez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569400', 'Pedro', 'Rodríguez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569401', 'Santiago', 'Rojas', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569402', 'Santino', 'Romero', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569403', 'Sofía', 'Ruiz', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569404', 'Thiago', 'Sosa', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569405', 'Tomás', 'Sánchez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569406', 'Valentina', 'Torres', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-('39569407', 'Zoe', 'Álvarez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
-;
+INSERT INTO Pacientes (Dni, Nombre, Apellido, Sexo, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, Telefono, Estado) VALUES
+('39569388', 'Benjamín', 'Acosta', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569389', 'Catalina', 'Benítez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569390', 'Elena', 'Diaz', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569391', 'Emilia', 'Fernández', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569392', 'Juan', 'Flores', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569393', 'Lucía', 'García', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569394', 'Martina', 'González', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569395', 'María', 'Gómez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569396', 'Mateo', 'López', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569397', 'Matías', 'Martínez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569398', 'Nicolás', 'Pérez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569399', 'Paula', 'Ramírez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569400', 'Pedro', 'Rodríguez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569401', 'Santiago', 'Rojas', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569402', 'Santino', 'Romero', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569403', 'Sofía', 'Ruiz', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569404', 'Thiago', 'Sosa', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569405', 'Tomás', 'Sánchez', 'M', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569406', 'Valentina', 'Torres', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
+('39569407', 'Zoe', 'Álvarez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
+
