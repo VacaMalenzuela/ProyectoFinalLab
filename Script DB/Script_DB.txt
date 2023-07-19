@@ -69,12 +69,12 @@ CREATE TABLE Medicos (
     idEspecialidad int NOT NULL,
     idUsuario int NOT NULL,
     Estado tinyint (1) not null,
-    PRIMARY KEY (Dni),
     FOREIGN KEY (idNacionalidad) REFERENCES Nacionalidades (Id),
     FOREIGN KEY (idProvincia) REFERENCES Provincias (Id),
     FOREIGN KEY (idLocalidad) REFERENCES Localidades (ID),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (Id),
-    FOREIGN KEY (idEspecialidad) REFERENCES Especialidades (Id)
+    FOREIGN KEY (idEspecialidad) REFERENCES Especialidades (Id),
+    PRIMARY KEY (Dni)
 );
 
 CREATE TABLE Pacientes (
@@ -262,3 +262,24 @@ INSERT INTO Pacientes (Dni, Nombre, Apellido, Sexo, idNacionalidad, FechaNacimie
 ('39569406', 'Valentina', 'Torres', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1),
 ('39569407', 'Zoe', 'Álvarez', 'F', (select id from nacionalidades where nacionalidad = 'Argentina'), '1998-01-01', 'Rivadavia 101', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', '47443253', 1);
 
+INSERT INTO Medicos (Dni, Nombre, Apellido, Sexo, Telefono, idNacionalidad, FechaNacimiento, Direccion, idLocalidad, idProvincia, CorreoElectronico, idEspecialidad, idUsuario, Estado) VALUES
+('39569408', 'Zoe', 'Acosta', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'acosta'), 1),
+('39569409', 'Valentina', 'Benítez', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'benitez'), 1),
+('39569410', 'Tomás', 'Diaz', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'diaz'), 1),
+('39569411', 'Thiago', 'Fernández', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'fernandez'), 1),
+('39569412', 'Sofía', 'Flores', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'flores'), 1),
+('39569413', 'Santino', 'García', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'garcia'), 1),
+('39569414', 'Santiago', 'González', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'gonzalez'), 1),
+('39569415', 'Pedro', 'Gómez', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'gomez'), 1),
+('39569416', 'Paula', 'López', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'lopez'), 1),
+('39569417', 'Nicolás', 'Martínez', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'martinez'), 1),
+('39569418', 'Matías', 'Pérez', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'perez'), 1),
+('39569419', 'Mateo', 'Ramírez', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'ramirez'), 1),
+('39569420', 'María', 'Rodríguez', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'rodriguez'), 1),
+('39569421', 'Martina', 'Rojas', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'rojas'), 1),
+('39569422', 'Lucía', 'Romero', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'romero'), 1),
+('39569423', 'Juan', 'Ruiz', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'ruiz'), 1),
+('39569424', 'Emilia', 'Sosa', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'sosa'), 1),
+('39569425', 'Elena', 'Sánchez', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'sanchez'), 1),
+('39569426', 'Catalina', 'Torres', 'F', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'torres'), 1),
+('39569427', 'Benjamín', 'Álvarez', 'M', '47443253', (select id from nacionalidades where nacionalidad = 'Argentina'), '1968-01-01', 'Rivadavia 102', 1, (select id from provincias where provincia = 'Buenos Aires'), 'noloda@noloda.com', 1, (select id from usuarios where nombre = 'alvarez'), 1);
