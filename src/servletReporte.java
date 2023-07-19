@@ -1,4 +1,4 @@
-package servlet;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,16 +14,16 @@ import dominio.Turno;
 import negocio.TurnoDao;
 
 /**
- * Servlet implementation class ServletReportes
+ * Servlet implementation class servletReporte
  */
-@WebServlet("/ServletReportes")
-public class ServletReportes extends HttpServlet {
+@WebServlet("/servletReporte")
+public class servletReporte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletReportes() {
+    public servletReporte() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,8 +33,7 @@ public class ServletReportes extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 		if(request.getParameter("btnReporte") != null) {
 			TurnoDao turNeg = new TurnoDao();
 			ArrayList<Turno> lista = turNeg.ObtenerTurnosEntreFechas(request.getParameter("desde").toString(), request.getParameter("hasta").toString()) ; 
@@ -50,7 +49,7 @@ public class ServletReportes extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		doGet(request, response);
 	}
 
 }

@@ -67,27 +67,27 @@
 
 	<h2>Reportes</h2>
 
-	<form method="post" action="ServletReportes">
+	<form method="get" action="servletReporte">
 	
 		<div class="fila">
 			<div class="input-fila">
 				<label for="desde">Desde</label>
-				<input id=desde type="date" required name="fechadesde">
+				<input id=desde type="date" required name="desde">
 			</div>
 			          	
 			<div class="input-fila">
 			    <label for="hasta">Hasta</label>
-				<input id=hasta type="date" required name="fechahasta">
+				<input id=hasta type="date" required name="hasta">
 	 		</div>
 	 		<div class="input-fila">
-	 			<input class="botonAdm" id="btnReporte" type="submit" value="Listar turnos">
+	 			<input class="botonAdm" id="btnReporte" type="submit" value="Listar turnos" name="btnReporte" >
 	 		</div>
 		</div>
 		
 		<% 
 		ArrayList<Turno> lstTurno = null; 
 		if (request.getAttribute("listaT") != null){
-			lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");
+		lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");
 		}   		
 		%>
 		

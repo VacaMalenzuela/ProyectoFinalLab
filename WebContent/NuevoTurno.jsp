@@ -20,9 +20,10 @@
 <title>Nuevo turno</title>
 </head>
 <body>
-<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
-
-<%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");
+if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+response.sendRedirect("Error.jsp");}
+if (usuLogueado.getTipo().getId()==1 ){ %>
 
 <header>
 	<div class="logo">CLINICA MEDICA</div>
@@ -51,6 +52,27 @@
 		</ul>
 	</nav>	
 </header>
+<%} else {%>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	</div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
+<%}%>
+
 <div class="form-t" >
 	<h2>NUEVO TURNO</h2>
 	
@@ -131,10 +153,5 @@
  		<p style= "color: green;">El turno se agrego correctamente..</p>
  	<% } %>
  	
- 	<%} else { 
-	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
-	response.sendRedirect("Error.jsp");
-	
-}%>
 </body>
 </html>

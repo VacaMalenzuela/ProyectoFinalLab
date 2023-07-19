@@ -39,12 +39,12 @@
 
 <title>Administrar turnos</title>
 </head>
-<body>
-<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
-<%if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
-response.sendRedirect("Error.jsp");}%>
-<%if (usuLogueado.getTipo().getId()> 0){ %>
+<body>
+<%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");
+if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
+response.sendRedirect("Error.jsp");} 
+else { if (usuLogueado.getTipo().getId()==1 ){ %>
 
 <header>
 	<div class="logo">CLINICA MEDICA</div>
@@ -53,7 +53,7 @@ response.sendRedirect("Error.jsp");}%>
 		<div class="line"></div>
 		<div class="line"></div>
 	</div>
-	</div>
+	<div>
 	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
@@ -76,32 +76,49 @@ response.sendRedirect("Error.jsp");}%>
 		</ul>
 	</nav>	
 </header>
+<%} else {%>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
+<%} }%>
 		<div class=adm>
 	
 	 	<h2>Administrar Turnos</h2>
 		<form method="get" action="servletObservacionTurno">
-		
-
 			<div class="fila">
 	          	<div class="input-fila">
-						<select id="estados"> 
-				<option disabled selected>Selecciona el estado</option> 
-			<% ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
+					<select id="estados"> 
+					<option disabled selected>Selecciona el estado</option> 
+					<% 	ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
           				TurnoDao turnoNegocio = new TurnoDao ();
- 					listaEstados = turnoNegocio.obtenerEstadosTurnos();
-          	if(listaEstados != null){ 	
-				for (EstadoTurno objeto : listaEstados) { %>
-				<option value="<%= objeto.getId() %>"> <%= objeto.getEstado() %></option>
-  <% } }%> 
-  </select>
+ 						listaEstados = turnoNegocio.obtenerEstadosTurnos();
+          			if(listaEstados != null){ 	
+						for (EstadoTurno objeto : listaEstados) { %>
+					<option value="<%= objeto.getId() %>"> <%= objeto.getEstado() %></option>
+ 					<% } }%> 
+ 					</select>	
+ 					 			 
 	          	</div>
 	          	<div class="input-fila">
 					<input class="botonAdm" id="btnFiltraPorEstado" type="submit" value="Filtrar">
-					
 	          	</div>
 	          	<div class="input-fila"></div>
-          	</div>
-			
+          		</div>
 			<table id="datatable" class="tabla">
 				<thead>
 					<tr>
@@ -117,7 +134,7 @@ response.sendRedirect("Error.jsp");}%>
 				</thead>
 					
 				<tbody>
-			     		<% TurnoDao turNeg = new TurnoDao(); 
+			     	<% TurnoDao turNeg = new TurnoDao(); 
 			     		ArrayList<Turno> lstTurno;
 			     		int idEstadoFiltrar =0;
 			     		if (request.getAttribute("estadoSeleccionado") != null){ 
@@ -155,88 +172,5 @@ response.sendRedirect("Error.jsp");}%>
 					border: 1px solid black;
 					border-radius: 4px; text-decoration:none;">Nuevo Turno</a>
 	</div>
-<%} else {%>
-	<div class=adm>
-	
-	 	<h2>Administrar Turnos</h2>
-		
-		<form method="get" action="servletObservacionTurno">
-
-			<div class="fila">
-	          	<div class="input-fila">
-	          		<label for="estado">Estado</label>
-						<select id="estados" required name="estados"> 
-				<option disabled selected>Selecciona el estado</option> 
-			<% ArrayList<EstadoTurno> listaEstados = new ArrayList<EstadoTurno>();
-          				TurnoDao turnoNegocio = new TurnoDao ();
- 					listaEstados = turnoNegocio.obtenerEstadosTurnos();
-          	if(listaEstados != null){ 	
-				for (EstadoTurno objeto : listaEstados) { %>
-				<option value="<%= objeto.getId() %>"> <%= objeto.getEstado() %></option>
-  <% } }%> 
-  </select>
-	          	</div>
-	          	<div class="input-fila">
-					<input class="boton" id="btnFiltraPorEstado" type="submit" value="Filtrar" required name="btnFiltraPorEstado">
-					
-	          	</div>
- 	
-          	</div>
-			
-			<table class="tabla">
-				<thead>
-					<tr>
-			     		<th>APELLIDO PACIENTE</th>
-			     		<th>NOMBRE PACIENTE</th>
-			     		 <th>DNI PACIENTE</th>
-			     		 <th>FECHA</th>
-			     		 <th>ESTADO</th>
-			     		 <th>OBSERVACION</th>
-			     		 <th>MODIFICAR</th>
-		     		</tr>
-				</thead>
-					
-				<tbody>
-					<tr>
-			     		<% 
-			     		MedicoDao medNeg = new MedicoDao(); 
-							Medico med = medNeg.ObtenerMedicoPorUsuario(usuLogueado);
-			     		TurnoDao turNeg = new TurnoDao(); 
-			     		ArrayList<Turno> lstTurno; 
-			     		
-			     		
-			     		int idEstadoFiltrar =0;
-			     		if (request.getAttribute("estadoSeleccionado") != null){ 
-			     			 idEstadoFiltrar = Integer.parseInt(request.getAttribute("estadoSeleccionado").toString()); 
-			     			lstTurno = turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar);
-			     		} else {
-			     			lstTurno= turNeg.ObtenerTurnosPorMedico(med, idEstadoFiltrar); 
-			     		}
-							
-     
-	 for(Turno item : lstTurno) {%>
-     <tr>
-     	<td> <%=item.getPaciente().getApellido() %></td>   
-     	<td><%=item.getPaciente().getNombre() %> </td>  
-     	<td> <%=item.getPaciente().getDni() %></td>   
-     	<td> <%=item.getFechaTurno() %></td> 
-     	<td> <%=item.getEstado().getEstado() %></td>
-     	<td> <%=item.getObservacion() %></td> 
-     	<th><button class="botonTabla" type="submit" name="btnModificarTurno" value="<%= item.getId() %>" >Modificar</button></th> 
-     	</tr>
-     <%} %>
-				</tbody>
-
-		     	</table>
-	     	</form>	
-	</div>
-
-<%} %>
-
-
-
-
-
-
 </body>
 </html>

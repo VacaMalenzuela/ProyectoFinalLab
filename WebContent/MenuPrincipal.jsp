@@ -15,7 +15,7 @@
 <body>
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
-<% if (usuLogueado != null){%>
+<% if (usuLogueado != null ){%>
 <header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
