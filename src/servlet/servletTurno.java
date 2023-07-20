@@ -42,16 +42,16 @@ public class servletTurno extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		if(request.getParameter("Param") != null) {
-			TurnoDao turNeg = new TurnoDao();
-			ArrayList<Turno> lista = turNeg.ObtenerTurnos() ; 
-			request.setAttribute("listaT", lista);
-			RequestDispatcher rd = request.getRequestDispatcher("/Turnos.jsp");
-			rd.forward(request, response);
+		//if(request.getParameter("Param") != null) {
+			//TurnoDao turNeg = new TurnoDao();
+			//ArrayList<Turno> lista = turNeg.ObtenerTurnos() ; 
+			//request.setAttribute("listaT", lista);
+			//RequestDispatcher rd = request.getRequestDispatcher("/Turnos.jsp");
+			//rd.forward(request, response);
 			
-		}
+		//}
 	}
 
 

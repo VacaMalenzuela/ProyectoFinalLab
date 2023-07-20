@@ -104,7 +104,7 @@ public class TurnoDao {
 		Connection con = null;
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("select Id, Estado from EstadosTurnos where estado = 'Libre';");
+			PreparedStatement miSentencia = con.prepareStatement("select Id, Estado from EstadosTurnos where estado = 'Ocupado';");
 			ResultSet resultado = miSentencia.executeQuery();
 			resultado.next();
 			
@@ -119,8 +119,7 @@ public class TurnoDao {
 		finally
 		{
 		}
-		return estado;
-		
+		return estado;	
 	}
 	public ArrayList<EstadoTurno> obtenerEstadosTurnos() {
 		try {
@@ -402,7 +401,7 @@ public class TurnoDao {
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
 			Statement miSentencia = con.createStatement(); 
-			ResultSet rs = miSentencia.executeQuery("SELECT Id, dniMedico, Fecha, dniPaciente, IdEstado FROM TURNOS where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" ;");
+			ResultSet rs = miSentencia.executeQuery("SELECT id, dniMedico, Fecha, Hora, dniPaciente, IdEstado, Observaciones FROM TURNOS where Fecha >= '"+FechaDesde+"' AND Fecha<= '"+FechaHasta+"' ;");
 			
 			while(rs.next()){
 				
@@ -412,7 +411,7 @@ public class TurnoDao {
 				tur.setHora(rs.getString("Hora"));
 				tur.setObservacion(rs.getString("Observaciones"));
 				MedicoDao medNeg = new MedicoDao(); 
-				Medico med = medNeg.obtenerMedicoPorDni(rs.getString(2));
+				Medico med = medNeg.obtenerMedicoPorDni(rs.getString("dniMedico"));
 				tur.setMedico(med);
 				pacienteDao pacNegocio = new pacienteDao(); 
 				Paciente pac = pacNegocio.obtenerPacientePorDni(rs.getString("dniPaciente"));
@@ -434,7 +433,9 @@ public class TurnoDao {
 		return lista;
 	}
 	
-	/*public Turno PorcentajeOcupados (String FechaDesde, string FechaHasta) { 
+	public int CantidadOcupado(String FechaDesde, String FechaHasta) { 
+
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -442,14 +443,15 @@ public class TurnoDao {
 			e.printStackTrace();
 		}
 		
-		//Turno tur = new Turno();
-		int porcentaje = 0;
+		int cantidadLibre=0;
 		Connection con = null;
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("SELECT (SELECT Count(*) where Fecha between '"+FechaDesde+"' AND "+FechaHasta+" AND IdEstado = 1) / (SELECT Count(*) where Fecha between '"+FechaDesde+"' AND "+FechaHasta+") FROM TURNOS  ;");
+			PreparedStatement miSentencia = con.prepareStatement("SELECT COUNT(*) FROM TURNOS WHERE IDESTADO = 3 AND fecha>= '"+FechaDesde+"' AND Fecha<= '"+FechaHasta+"' ;");
 			ResultSet resultado = miSentencia.executeQuery();
 			resultado.next();
+			
+			cantidadLibre= resultado.getInt(1);
 		    
 		    con.close();
 		}
@@ -459,7 +461,7 @@ public class TurnoDao {
 		finally
 		{
 		}
-		return resultado;
-	}*/
+		return cantidadLibre;
+	}
 
 }

@@ -67,7 +67,7 @@
 
 	<h2>Reportes</h2>
 
-	<form method="get" action="servletReporte">
+	<form method="get" action="ServletReportes">
 	
 		<div class="fila">
 			<div class="input-fila">
@@ -91,10 +91,19 @@
 		}   		
 		%>
 		
+		<%int ocupado = 0; 
+		if (request.getAttribute("cantidadOcupado") != null){ 
+			ocupado = Integer.parseInt(request.getAttribute("cantidadOcupado").toString());
+		}
+				
+			%>
+		
 		<div class=form-r>
 			<h2>ESTADOS</h2>
 			<div class=fila>
-				<label for="libres">LIBRES</label> <label for=porcLibres></label>
+
+			
+				<label for="libres">LIBRES <%= ocupado %></label><label for=porcLibres></label> 
 				<label for="ocupados">OCUPADOS</label> <label for=porcOcupados></label>
 				<label for="ausentes">AUSENTES</label> <label for=porcAusentes></label>	
 				<label for="presentes">PRESENTES</label> <label for=porcPresentes></label>
@@ -124,7 +133,7 @@
 					     	<td> <%=item.getPaciente().getDni() %></td>  
 					     	<td> <%=item.getMedico().getApellido() %></td>    
 					     	<td> <%=item.getMedico().getNombre() %></td>  
-					     	<td> <%=item.getMedico().getEspecialidad() %></td> 
+					     	<td> <%=item.getMedico().getEspecialidad().getEspecialidad() %></td> 
 					     	<td> <%=item.getFechaTurno() %></td> 
 					     	<td> <%=item.getEstado().getEstado() %></td>
 				     </tr>

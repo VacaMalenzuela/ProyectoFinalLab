@@ -98,8 +98,8 @@ if(request.getParameter("btnModificarMedico")!= null) {
           		<label for="mail">Sexo</label>
 				<select id=sexo required name="sexo"> 
 					<option disabled selected>Selecciona un Sexo</option> 
-					<option value= "hombre">Hombre</option>
-					<option value= "mujer">Mujer</option>
+					<option value= "M">Hombre</option>
+					<option value= "F">Mujer</option>
 				</select>
           	</div>
           	
@@ -247,8 +247,8 @@ if(request.getParameter("btnModificarMedico")!= null) {
           		<label style="color:white;" for="mail">Sexo</label>
           			<select id=sexo required name="sexoModif"> 
 					<option disabled selected>Selecciona un Sexo</option> 
-					<option value="hombre" <%= "hombre".equals(objMedico.getSexo()) ? "selected" : "" %>>Hombre</option>
-					<option value="mujer" <%= "mujer".equals(objMedico.getSexo()) ? "selected" : "" %>>Mujer</option>
+					<option value="M" <%= "M".equals(objMedico.getSexo()) ? "selected" : "" %>>Hombre</option>
+					<option value="F" <%= "F".equals(objMedico.getSexo()) ? "selected" : "" %>>Mujer</option>
 				</select>
           		
 				

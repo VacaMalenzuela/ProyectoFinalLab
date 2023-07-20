@@ -97,8 +97,8 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           		<label style="color:white;" for="mail">Sexo</label>
           			<select id=sexo required name="sexo"> 
 					<option disabled selected>Selecciona un Sexo</option> 
-					<option value="hombre" <%= "hombre".equals(objpaciente.getSexo()) ? "selected" : "" %>>Hombre</option>
-					<option value="mujer" <%= "mujer".equals(objpaciente.getSexo()) ? "selected" : "" %>>Mujer</option>
+					<option value="M" <%= "M".equals(objpaciente.getSexo()) ? "selected" : "" %>>Hombre</option>
+					<option value="F" <%= "F".equals(objpaciente.getSexo()) ? "selected" : "" %>>Mujer</option>
 				</select>
           		
 				
@@ -219,8 +219,8 @@ if(request.getParameter("btnModificarPaciente")!= null) {
           		<label style="color:white;" for="mail">Sexo</label>
           			<select id=sexo required name="sexo"> 
 					<option disabled selected>Selecciona un Sexo</option> 
-					<option value="hombre">Hombre</option>
-					<option value="mujer">Mujer</option>
+					<option value="M">Hombre</option>
+					<option value="F">Mujer</option>
 				</select>
           		
 				

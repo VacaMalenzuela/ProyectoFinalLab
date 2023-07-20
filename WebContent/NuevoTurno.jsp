@@ -122,8 +122,7 @@ if (usuLogueado.getTipo().getId()==1 ){ %>
 				<option value="<%= objeto.getDni() %>"> <%= objeto.getDatoGenerales() %></option><%}%> 
 			</select>
  		</div>
- 		
- 		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar">
+ 		<input class="boton" id="btnGuardarTurno" type="submit" value="Guardar"  name="btnGuardarTurno">
  	</form>
  </div>
  
