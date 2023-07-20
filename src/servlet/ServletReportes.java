@@ -39,13 +39,12 @@ public class ServletReportes extends HttpServlet {
 			TurnoDao turNeg = new TurnoDao();
 			ArrayList<Turno> lista = turNeg.ObtenerTurnosEntreFechas(request.getParameter("desde").toString(), request.getParameter("hasta").toString()) ; 
 			
-			int cantOcupado= turNeg.CantidadOcupado(request.getParameter("desde").toString(), request.getParameter("hasta").toString()); 
-			//float porcOcupado  = ObtenerPorcentaje( 1); 
-			//float porcPresente = ObtenerPorcentaje( 1); 
-			//float porcAusente = ObtenerPorcentaje( 1); 
-			
-			request.setAttribute("cantidadOcupado", cantOcupado);
-			
+			int cantOcupados= turNeg.CantidadOcupados(request.getParameter("desde").toString(), request.getParameter("hasta").toString()); 
+			int cantPresentes= turNeg.CantidadPresentes(request.getParameter("desde").toString(), request.getParameter("hasta").toString()); 
+			int cantAusentes= turNeg.CantidadAusentes(request.getParameter("desde").toString(), request.getParameter("hasta").toString()); 
+			request.setAttribute("cantidadOcupados", cantOcupados);
+			request.setAttribute("cantidadPresentes", cantPresentes);
+			request.setAttribute("cantidadAusentes", cantAusentes);
 			request.setAttribute("listaT", lista);
 			RequestDispatcher rd = request.getRequestDispatcher("/Reportes.jsp");
 			rd.forward(request, response);

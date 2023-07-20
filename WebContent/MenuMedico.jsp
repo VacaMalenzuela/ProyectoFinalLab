@@ -28,6 +28,7 @@
 <title>Administrar Medicos</title>
 </head>
 <body>
+
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
 <% if (usuLogueado != null){%>
@@ -39,7 +40,7 @@
 		<div class="line"></div>
 		<div class="line"></div>
 	</div>
-	</div>
+	<div>
 	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">

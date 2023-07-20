@@ -433,9 +433,7 @@ public class TurnoDao {
 		return lista;
 	}
 	
-	public int CantidadOcupado(String FechaDesde, String FechaHasta) { 
-
-		
+	public int CantidadOcupados(String FechaDesde, String FechaHasta) { 	
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -443,7 +441,7 @@ public class TurnoDao {
 			e.printStackTrace();
 		}
 		
-		int cantidadLibre=0;
+		int cantidadOcupados=0;
 		Connection con = null;
 		try{
 			con = DriverManager.getConnection(host + dbName, user, pass);
@@ -451,7 +449,7 @@ public class TurnoDao {
 			ResultSet resultado = miSentencia.executeQuery();
 			resultado.next();
 			
-			cantidadLibre= resultado.getInt(1);
+			cantidadOcupados = resultado.getInt(1);
 		    
 		    con.close();
 		}
@@ -461,7 +459,65 @@ public class TurnoDao {
 		finally
 		{
 		}
-		return cantidadLibre;
+		return cantidadOcupados;
+	}
+	
+	public int CantidadPresentes(String FechaDesde, String FechaHasta) { 	
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int cantidadPresentes=0;
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT COUNT(*) FROM TURNOS WHERE IDESTADO = 4 AND fecha>= '"+FechaDesde+"' AND Fecha<= '"+FechaHasta+"' ;");
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			cantidadPresentes = resultado.getInt(1);
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return cantidadPresentes;
+	}
+	
+	public int CantidadAusentes(String FechaDesde, String FechaHasta) { 	
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int cantidadAusentes=0;
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("SELECT COUNT(*) FROM TURNOS WHERE IDESTADO = 1 AND fecha>= '"+FechaDesde+"' AND Fecha<= '"+FechaHasta+"' ;");
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			cantidadAusentes = resultado.getInt(1);
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+		}
+		finally
+		{
+		}
+		return cantidadAusentes;
 	}
 
 }

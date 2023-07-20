@@ -40,7 +40,7 @@
 		<div class="line"></div>
 		<div class="line"></div>
 	</div>
-	</div>
+	<div>
 	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
@@ -91,22 +91,26 @@
 		}   		
 		%>
 		
-		<%int ocupado = 0; 
+		<%int ocupados = 0; 
+		  int ausentes = 0;
+		  int presentes = 0;
 		if (request.getAttribute("cantidadOcupado") != null){ 
-			ocupado = Integer.parseInt(request.getAttribute("cantidadOcupado").toString());
+			ocupados = Integer.parseInt(request.getAttribute("cantidadOcupado").toString());
 		}
-				
-			%>
+		if (request.getAttribute("cantidadPresentes") != null){ 
+			presentes = Integer.parseInt(request.getAttribute("cantidadPresentes").toString());
+		}
+		if (request.getAttribute("cantidadAusentes") != null){ 
+			ausentes = Integer.parseInt(request.getAttribute("cantidadAusentes").toString());
+		}
+		%>
 		
 		<div class=form-r>
-			<h2>ESTADOS</h2>
+			<h2>Cantidad de turnos</h2>
 			<div class=fila>
-
-			
-				<label for="libres">LIBRES <%= ocupado %></label><label for=porcLibres></label> 
-				<label for="ocupados">OCUPADOS</label> <label for=porcOcupados></label>
-				<label for="ausentes">AUSENTES</label> <label for=porcAusentes></label>	
-				<label for="presentes">PRESENTES</label> <label for=porcPresentes></label>
+				<label for="ocupados" style="color: blue; font-size:20px">OCUPADOS: <%= ocupados %></label> 
+				<label for="ausentes" style="color: red; font-size:20px">AUSENTES: <%= ausentes %></label> 
+				<label for="presentes" style="color: green; font-size:20px">PRESENTES: <%= presentes %></label> 
 			</div>
 		</div>
 		

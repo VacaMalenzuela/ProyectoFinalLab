@@ -31,12 +31,14 @@
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
 <%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
-<header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
 		<div class="line"></div>
 		<div class="line"></div>
 		<div class="line"></div>
+	</div>
+	<div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
 	<nav class="nav-bar">
 		<ul>
@@ -365,7 +367,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
           	
           	
           </div>
-          	<input class="boton" id="btnModificarMedico" type="submit" value="Guardar" required name="btnModificarMedico">
+          	<input class="boton" id="btnModificarMedico" type="submit" value="Guardar" name="btnModificarMedico">
           
        	<% }%>
 	 </form>
@@ -376,7 +378,9 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	int valorParametro = 0;
  	
  	if (request.getAttribute("ContrasenasDistintas")!= null) {%>
- 		<p style= "color: red;">Las contraseñas no coinciden.</p>
+ 		<%--<p style= "color: red;">Las contraseñas no coinciden.</p>--%>
+ 		<script>alert("Las contraseñas no coinciden.");</script>
+ 		
  	<%}  %>        
  	
  	  	<%
@@ -385,7 +389,7 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	if (request.getAttribute("MedicoAgregado")!= null) {
  		valorParametro1 = Integer.parseInt(request.getAttribute("MedicoAgregado").toString()); ; 
  		if (valorParametro1 != 0){ %>
- 		<p style= "color: green;">Medico agregado correctamente.</p>
+ 		<script>alert("Medico agregado correctamente.");</script>
  		<%} 
  		
  	}  %>     
@@ -397,12 +401,13 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	if (request.getAttribute("YaExisteDni")!= null) {
  		valorParametro2 = Integer.parseInt(request.getAttribute("YaExisteDni").toString()); ; 
  		if (valorParametro1 != 0){ %>
- 		<p style= "color: red;">El dni ingresado ya existe.</p>
+ 		<%--<p style= "color: red;">El dni ingresado ya existe.</p> --%>
+ 		<script>alert("El dni ingresado ya existe.");</script>
  		<%} 
  		
  	}  %>  
  	
- 	
+
  	<%} else { 
 	session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
 	response.sendRedirect("Error.jsp");

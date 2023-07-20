@@ -88,9 +88,7 @@ public class MedicoDao {
 		return filas;
 	}
 	
-	
-	
-	
+
 	public ArrayList<Medico> obtenerMedicos() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
