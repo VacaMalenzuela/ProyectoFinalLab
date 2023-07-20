@@ -31,7 +31,8 @@
 <body>
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
-<% if (usuLogueado != null){%>
+<% if (usuLogueado != null && usuLogueado.getTipo().getId()== 1){%>
+
 
 <header>
 	<div class="logo">CLINICA MEDICA</div>
@@ -69,6 +70,20 @@
 
 	<form method="get" action="ServletReportes">
 	
+			<% 
+		String ocupados = "0"; 
+		String ausentes = "0";
+		String presentes = "0";
+		if (request.getAttribute("cantidadOcupados") != null){ 
+			ocupados = request.getAttribute("cantidadOcupados").toString();
+		}
+		if (request.getAttribute("cantidadPresentes") != null){ 
+			presentes = request.getAttribute("cantidadPresentes").toString();
+		}
+		if (request.getAttribute("cantidadAusentes") != null){ 
+			ausentes = request.getAttribute("cantidadAusentes").toString();
+		}
+		%>
 		<div class="fila">
 			<div class="input-fila">
 				<label for="desde">Desde</label>
@@ -88,29 +103,16 @@
 		ArrayList<Turno> lstTurno = null; 
 		if (request.getAttribute("listaT") != null){
 		lstTurno = (ArrayList<Turno>) request.getAttribute("listaT");
-		}   		
-		%>
+		} %>  		
 		
-		<%int ocupados = 0; 
-		  int ausentes = 0;
-		  int presentes = 0;
-		if (request.getAttribute("cantidadOcupado") != null){ 
-			ocupados = Integer.parseInt(request.getAttribute("cantidadOcupado").toString());
-		}
-		if (request.getAttribute("cantidadPresentes") != null){ 
-			presentes = Integer.parseInt(request.getAttribute("cantidadPresentes").toString());
-		}
-		if (request.getAttribute("cantidadAusentes") != null){ 
-			ausentes = Integer.parseInt(request.getAttribute("cantidadAusentes").toString());
-		}
-		%>
+
 		
 		<div class=form-r>
 			<h2>Cantidad de turnos</h2>
 			<div class=fila>
-				<label for="ocupados" style="color: blue; font-size:20px">OCUPADOS: <%= ocupados %></label> 
-				<label for="ausentes" style="color: red; font-size:20px">AUSENTES: <%= ausentes %></label> 
-				<label for="presentes" style="color: green; font-size:20px">PRESENTES: <%= presentes %></label> 
+				<label for="ocupados" style="color: blue; font-size:20px">OCUPADOS: </label> <p><%= ocupados %> </p>
+				<label for="ausentes" style="color: red; font-size:20px">AUSENTES: </label> <p> <%= ausentes %></p>
+				<label for="presentes" style="color: green; font-size:20px">PRESENTES: </label> <p><%= presentes %> </p>
 			</div>
 		</div>
 		

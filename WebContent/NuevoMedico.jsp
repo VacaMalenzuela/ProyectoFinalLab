@@ -31,6 +31,7 @@
 <%Usuario usuLogueado = (Usuario)session.getAttribute("usuarioLogueado");%>
 
 <%if (usuLogueado != null && usuLogueado.getTipo().getId() == 1){%>
+<header>
 	<div class="logo">CLINICA MEDICA</div>
 	<div class="hamburger">
 		<div class="line"></div>
@@ -40,6 +41,7 @@
 	<div>
 	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
 	</div>
+	
 	<nav class="nav-bar">
 		<ul>
 			<li>
