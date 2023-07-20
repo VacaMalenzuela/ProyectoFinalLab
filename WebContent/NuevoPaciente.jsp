@@ -317,11 +317,10 @@ if(request.getAttribute("seGuardo") != null){
 
 
 <% if(request.getAttribute("seGuardo") != null && filas == 0){ %>
-	Los campos ingresados no son correctos.
-	
+	<script>alert("Los campos ingresados no son correctos.");</script>
 <%}%>
 <%if(filas!=0){ %>
-	Usuario agregado correctamente.
+	<script>alert("Usuario agregado correctamente.");</script>
 <%}%>
     
 </div>             

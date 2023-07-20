@@ -380,7 +380,6 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	int valorParametro = 0;
  	
  	if (request.getAttribute("ContrasenasDistintas")!= null) {%>
- 		<%--<p style= "color: red;">Las contraseñas no coinciden.</p>--%>
  		<script>alert("Las contraseñas no coinciden.");</script>
  		
  	<%}  %>        
@@ -403,7 +402,6 @@ if(request.getParameter("btnModificarMedico")!= null) {
  	if (request.getAttribute("YaExisteDni")!= null) {
  		valorParametro2 = Integer.parseInt(request.getAttribute("YaExisteDni").toString()); ; 
  		if (valorParametro1 != 0){ %>
- 		<%--<p style= "color: red;">El dni ingresado ya existe.</p> --%>
  		<script>alert("El dni ingresado ya existe.");</script>
  		<%} 
  		

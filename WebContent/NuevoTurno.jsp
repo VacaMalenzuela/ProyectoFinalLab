@@ -130,7 +130,7 @@ if (usuLogueado.getTipo().getId()==1 ){ %>
  	int valorParametro = 0;
  	
  	if (request.getAttribute("noCoincideMedicoEspecialidad")!= null) {%>
- 		<p style= "color: red;">El medico Seleccionado no trabaja para la especialidad seleccionada.</p>
+ 		<script>alert("El medico Seleccionado no trabaja para la especialidad seleccionada.");</script>
  	<%}  %>
  	
  	
@@ -138,18 +138,18 @@ if (usuLogueado.getTipo().getId()==1 ){ %>
  	int valorParametroDias = 0;
  	
  	if (request.getAttribute("noCoincideHorarioPorMedico")!= null) {%>
- 		<p style= "color: red;">El medico No trabaja en ese dia/hora seleccionada.</p>
+ 		<script>alert("El medico No trabaja en ese dia/hora seleccionada.");</script>
  	<%}  %>
  	
  	 	  	<%
  	int valorParametroTurnoEnDiaSelec = 0;
  	
  	if (request.getAttribute("TieneTurnoEnHorarioSeleccionado")!= null) {%>
- 		<p style= "color: red;">El medico ya tiene turnos asignados en el horario seleccionado.</p>
+ 		<script>alert("El medico ya tiene turnos asignados en el horario seleccionado.");</script>
  	<%}  %>
  	
  	<% if (request.getAttribute("SeAgregoCorrectamente")!= null) { %>
- 		<p style= "color: green;">El turno se agrego correctamente..</p>
+ 		<script>alert("El turno se agrego correctamente.");</script>
  	<% } %>
  	
 </body>

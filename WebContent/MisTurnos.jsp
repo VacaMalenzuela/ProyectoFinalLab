@@ -23,6 +23,18 @@
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
 </style>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#datatable').DataTable();
+	});
+</script>
 <title>Administrar turnos</title>
 </head>
 <body>
@@ -31,6 +43,36 @@
 <%if (usuLogueado == null){session.setAttribute("ErrorSession", "Error debes loguearte/no puede acceder a esta página");
 response.sendRedirect("Error.jsp");}%>
 <%if (usuLogueado.getTipo().getId()== 1){ %>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="MisTurnos.jsp" class="active">Turnos</a>
+			</li>
+			<li>
+				<a href="MenuMedico.jsp" class="active">Medicos</a>
+			</li>
+			<li>
+				<a href="MenuPaciente.jsp" class="active">Pacientes</a>
+			</li>
+			<li>
+				<a href="Reportes.jsp" class="active">Reportes</a>
+			</li>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
 		<div class=adm>
 	
 	 	<h2>Administrar Turnos</h2>
@@ -58,7 +100,7 @@ response.sendRedirect("Error.jsp");}%>
  	
           	</div>
 			
-			<table class="tabla">
+			<table id="datatable" class="tabla">
 				<thead>
 					<tr>
 			     		<th>APELLIDO PACIENTE</th>
@@ -113,6 +155,24 @@ response.sendRedirect("Error.jsp");}%>
 					border-radius: 4px; text-decoration:none;">Nuevo Turno</a>
 	</div>
 <%} else {%>
+<header>
+	<div class="logo">CLINICA MEDICA</div>
+	<div class="hamburger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<div>
+	<h4 Style= "color: #B2BABB;">BIENVENIDO : <%=usuLogueado.getNombre() %> </h4>
+	</div>
+	<nav class="nav-bar">
+		<ul>
+			<li>
+				<a href="Login.jsp" class="active" style="font-size: 10px; color: green;" >Cerrar sesión</a>
+			</li>
+		</ul>
+	</nav>	
+</header>
 	<div class=adm>
 	
 	 	<h2>Administrar Turnos</h2>
@@ -140,7 +200,7 @@ response.sendRedirect("Error.jsp");}%>
  	
           	</div>
 			
-			<table class="tabla">
+			<table id="datatable" class="tabla">
 				<thead>
 					<tr>
 			     		<th>APELLIDO PACIENTE</th>
@@ -186,13 +246,6 @@ response.sendRedirect("Error.jsp");}%>
 
 		     	</table>
 	     	</form>	
-	</div>
-	
-	
-	
-	<div>
-	
-	<h4 Style= "color: #B2BABB; text-align:center; font-family: Abadi Extra Light; ">BIENVENIDO : <%= med.getDatoGenerales() %> </h4>
 	</div>
 <%} %>
 
